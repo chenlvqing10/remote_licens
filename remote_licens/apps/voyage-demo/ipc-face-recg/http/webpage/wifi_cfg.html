@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+ 	<meta charset="utf-8">
+        <title></title>
+        
+        <meta http-equiv="pragma" content="no-cache">
+        <meta http-equiv="cache-control" content="no-cache">
+        
+        <link rel="stylesheet" text="text/css" href="ui.css">
+        <script type="text/javascript" src="jquery.min.js"></script>
+        <script type="text/javascript" src="jquery.ui.min.js"></script>
+
+
+</head>
+<body>
+	<script type="text/javascript">
+		
+		function gethot(){
+			$.ajax({
+				type:'GET',
+				url:"/action/wifihot",
+				dataType:'json',
+				success:function(data){
+					console.log(data);
+					alert("获取成功");
+					$('#dlisthot').datalist('loadData', data);
+				},
+				error:function(xhr,status,error){
+					alert("获取失败");
+				}
+			});
+		}
+	
+		function save(){
+			var b; 
+			b = $('#cboxwifi').is(':checked');
+			var wififlg = (b==true)?'1':'0';
+			
+			b = $('#cboxhot').is(':checked');
+			var hotflg = (b==true)?'1':'0';
+			
+			var passwd = $('#tboxpw').textbox('getValue');
+			
+			$.ajax({
+				type:'POST',
+				url:'/action/wificfg',
+				dataType:'text',
+				data:{
+					wifi: wififlg,
+					hot: hotflg,
+					passwd: passwd
+				},
+				success:function(data){
+					alert("保存成功");
+				},
+				error:function(xhr,status,error){
+					alert("保存失败");
+				}
+			
+			
+			});
+		}
+		
+	</script>
+	
+	<div style="height:643px;">
+		<div style="padding-top:20px; padding-left:50px;">
+		<label>无线网络:</label><input id="cboxwifi" type="checkbox" > 
+		</div>
+		<div style="padding-top:20px; padding-left:50px;">
+			<ul id="dlisthot" class="easyui-datalist" style="width:500px;height:200px" data-options="lines:false">
+				<li value="re1">热点1名</li>
+				<li value="re2">热点2名</li>
+				<li value="re3">热点3名</li>
+				<li value="re1">热点5名</li>
+				<li value="re2">热点6名</li>
+				<li value="re3">热点7名</li>
+				<li value="re3">热点8名</li>
+				<li value="re1">热点9名</li>
+				<li value="re2">热点10名</li>
+				<li value="re3">热点11名</li>
+			</ul>
+		</div>
+		<div style="padding-top:10px; padding-left:50px;">
+			<button id="btngethot" style="width:80px;height:30px;" onclick="gethot()">获取热点</button>
+		</div>
+		
+		<div style="padding-top:20px; padding-left:50px;">
+		<label>热点:</label><input id="cboxhot" type="checkbox" > 
+		</div>
+		
+		<div style="padding-top:20px; padding-left:50px;">
+		<label>密码:</label> <input id="tboxpw" class="easyui-textbox" value="" style="width:65%;height:30px;" data-options="required:false">
+		</div>
+		
+		<div style="padding-top:70px; padding-left:50px;">
+			<button id="btnsave" style="width:80px;height:30px;" onclick="save()">保存</button>
+		</div>
+		
+	</div>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+ 	<meta charset="utf-8">
+        <title></title>
+        
+        <meta http-equiv="pragma" content="no-cache">
+        <meta http-equiv="cache-control" content="no-cache">
+        
+        <link rel="stylesheet" text="text/css" href="ui.css">
+        <script type="text/javascript" src="jquery.min.js"></script>
+        <script type="text/javascript" src="jquery.ui.min.js"></script>
+
+
+</head>
+<body>
+	<script type="text/javascript">
+		function factdefault(){
+			
+			var isok = confirm("是否确认恢复出厂设置?");
+			if(isok == true){
+				console.log("确认出厂设置");
+				
+				$.ajax({
+					type:'POST',
+					url:'/action/factorydefault',
+					dataType:'text',
+					async:false,
+					data:{
+						flag:'1'
+					},
+					success:function(data){
+						alert("恢复出厂设置成功");
+					},
+					error:function(xhr,status,error){
+						alert("恢复出厂设置失败");
+					}
+				});
+			
+			}else{
+				console.log("取消出厂设置");
+			}
+			
+			
+		}
+	</script>
+	
+	<div style="height:643px;">
+		<div style="padding-top:50px; padding-left:40px;">
+			<label style="padding-left:10px; font-size:24px; color:red;">恢复出厂设置会删除所有设置,人员信息,识别记录。谨慎操作!</label>
+		</div>
+		<div style="padding-top:120px;padding-left:300px;">
+			<button id="btn1" style="width:100px;height:30px;" onclick="factdefault()">恢复出厂设置</button>
+		</div>
+	</div>
+</body>
+</html>

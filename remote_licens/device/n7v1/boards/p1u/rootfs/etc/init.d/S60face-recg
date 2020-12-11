@@ -1,0 +1,22 @@
+#!/bin/sh
+
+export LD_PRELOAD=/usr/lib/libdebugger.so
+
+# QT env
+source /etc/profile
+
+case "$1" in
+  start)
+    logcat -v time -r2048 -n 5 -f "/data/log/`date +%Y%m%d-%H-%M-%S`.log" &
+    aio -qws > /dev/null &
+    ;;
+  stop)
+    pkill -9 aio
+    pgrep wpa_supplicant | xargs kill -9
+    pgrep viss_isp | xargs kill -9
+    sleep 1
+    #pgrep aio | xargs kill -9
+    ;;
+  *)
+    ;;
+esac

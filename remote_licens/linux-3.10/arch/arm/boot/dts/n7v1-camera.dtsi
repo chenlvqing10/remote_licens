@@ -1,0 +1,487 @@
+/*
+ * n7v1-camera.dts - camera device tree configurations for N7V1 platform
+ *
+ * Copyright (C) 2016-2018, LomboTech Co.Ltd.
+ * Author: lomboswer <lomboswer@lombotech.com>
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program; if not, write to the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ */
+
+
+/ {
+	camera {
+		compatible = "lombo,cccore", "simple-bus";
+
+		status = "disabled";
+
+		/*
+		dvp_reset_pin = <&gpb 7 0>;
+		dvp_pwdn_pin = <&gpb 6 0>;
+		mcsi_reset_pin = <&gpb 11 0>;
+		mcsi_pwdn_pin = <&gpb 10 0>;
+		*/
+
+		/* if set, use the first mipi-csi/dvp sensor without detect */
+		/* skip_detect; */
+
+		/******************************************************
+		 * mipi-csi sensors
+		 *****************************************************/
+		gc2145_mipi: gc2145_mipi@3c {
+			compatible = "gc2145_mipi";
+			status = "disabled";
+			i2c_bus = <1>;
+			/* lombo,vdd_1_8; */
+			/* mirror; */
+			/* vflip; */
+			isp_path=<0>;
+
+			i2c_addr = <0x3c>;
+			clock-frequency = <24000000>;
+
+			if-type = <4>;
+			if-mode = <0>;
+		};
+
+		ov2718_mipi: ov2718_mipi@36 {
+			compatible = "ov2718_mipi";
+			status = "disabled";
+			i2c_bus = <1>;
+			/* lombo,vdd_1_8; */
+			isp_path=<1>;
+
+			i2c_addr = <0x36>;
+			clock-frequency = <24000000>;
+
+			if-type = <4>;
+			if-mode = <0>;
+		};
+
+		f37_mipi: f37_mipi@40 {
+			compatible = "f37_mipi";
+			status = "disabled";
+			i2c_bus = <1>;
+			/* lombo,vdd_1_8; */
+			isp_path=<1>;
+
+			i2c_addr = <0x40>;
+			clock-frequency = <24000000>;
+
+			if-type = <4>;
+			if-mode = <0>;
+		};
+
+		gc2053_mipi: gc2053_mipi@37 {
+			compatible = "gc2053_mipi";
+			status = "disabled";
+			i2c_bus = <1>;
+			/* lombo,vdd_1_8; */
+			/* mirror; */
+			/* vflip; */
+			isp_path=<0>;
+
+			i2c_addr = <0x37>;
+			clock-frequency = <24000000>;
+
+			if-type = <4>;
+			if-mode = <0>;
+		};
+
+		imx307_mipi: imx307_mipi@1a {
+			compatible = "imx307_mipi";
+			status = "disabled";
+			i2c_bus = <1>;
+			/* lombo,vdd_1_8; */
+			/* mirror; */
+			/* vflip; */
+			isp_path=<1>;
+
+			i2c_addr = <0x1a>;
+			clock-frequency = <37125000>;
+
+			if-type = <4>;
+			if-mode = <0>;
+		};
+
+		imx327_mipi: imx327_mipi@1a {
+			compatible = "imx327_mipi";
+			status = "disabled";
+			i2c_bus = <1>;
+			/* lombo,vdd_1_8; */
+			/* mirror; */
+			/* vflip; */
+			isp_path=<1>;
+
+			i2c_addr = <0x1a>;
+			clock-frequency = <24000000>;
+
+			if-type = <4>;
+			if-mode = <0>;
+		};
+
+		ov8858_mipi: ov8858_mipi@36 {
+			compatible = "ov8858_mipi";
+			status = "disabled";
+			i2c_bus = <1>;
+			/* lombo,vdd_1_8; */
+			isp_path=<1>;
+
+			i2c_addr = <0x36>;
+			clock-frequency = <24000000>;
+
+			if-type = <4>;
+			if-mode = <0>;
+		};
+
+		xc6130_sc2363p_mipi: xc6130_sc2363p_mipi@32 {
+			compatible = "xc6130_sc2363p_mipi";
+			status = "disabled";
+			i2c_bus = <1>;
+			/* lombo,vdd_1_8; */
+			isp_path=<0>;
+
+			i2c_addr = <0x32>;
+			i2c_ext_addr = <0x1B>;
+			clock-frequency = <24000000>;
+
+			if-type = <4>;
+			if-mode = <0>;
+		};
+
+		ov9281_mipi: ov9281_mipi@60 {
+			compatible = "ov9281_mipi";
+			status = "disabled";
+			i2c_bus = <1>;
+			/* lombo,vdd_1_8; */
+			isp_path=<0>;
+
+			i2c_addr = <0x60>;
+			clock-frequency = <24000000>;
+
+			if-type = <4>;
+			if-mode = <0>;
+		};
+
+		ov5640_mipi: ov5640_mipi@3c {
+			compatible = "ov5640_mipi";
+			status = "disabled";
+			i2c_bus = <1>;
+			/* lombo,vdd_1_8; */
+			isp_path=<0>;
+
+			i2c_addr = <0x3c>;
+			clock-frequency = <24000000>;
+
+			if-type = <4>;
+			if-mode = <0>;
+		};
+
+		ov2735_mipi: ov2735_mipi@3c {
+			compatible = "ov2735_mipi";
+			status = "disabled";
+			i2c_bus = <1>;
+			/* lombo,vdd_1_8; */
+			isp_path=<0>;
+
+			i2c_addr = <0x3c>;
+			clock-frequency = <24000000>;
+
+			if-type = <4>;
+			if-mode = <0>;
+		};
+
+		os02k10_mipi: os02k10_mipi@36 {
+			compatible = "os02k10_mipi";
+			status = "disabled";
+			i2c_bus = <1>;
+			/* lombo,vdd_1_8; */
+			isp_path=<1>;
+
+			i2c_addr = <0x36>;
+			clock-frequency = <24000000>;
+
+			if-type = <4>;
+			if-mode = <0>;
+		};
+
+		ov4689_mipi: ov4689_mipi@21 {
+			compatible = "ov4689_mipi";
+			status = "disabled";
+			i2c_bus = <1>;
+			/* lombo,vdd_1_8; */
+			isp_path=<0>;
+
+			i2c_addr = <0x21>;
+			clock-frequency = <24000000>;
+
+			if-type = <4>;
+			if-mode = <0>;
+		};
+
+		ov10640_mipi: ov10640_mipi@37 {
+			compatible = "ov10640_mipi";
+			status = "disabled";
+			i2c_bus = <1>;
+			/* lombo,vdd_1_8; */
+			isp_path=<0>;
+
+			i2c_addr = <0x37>;
+			clock-frequency = <24000000>;
+
+			if-type = <4>;
+			if-mode = <0>;
+		};
+
+		ov2685_mipi: ov2685_mipi@10 {
+			compatible = "ov2685_mipi";
+			status = "disabled";
+			i2c_bus = <1>;
+			/* lombo,vdd_1_8; */
+			isp_path=<0>;
+
+			i2c_addr = <0x10>;
+			clock-frequency = <24000000>;
+
+			if-type = <4>;
+			if-mode = <0>;
+		};
+
+		gc1054_mipi: gc1054_mipi@21 {
+			compatible = "gc1054_mipi";
+			status = "disabled";
+			i2c_bus = <1>;
+			/* lombo,vdd_1_8; */
+			isp_path=<0>;
+
+			i2c_addr = <0x21>;
+			clock-frequency = <24000000>;
+
+			if-type = <4>;
+			if-mode = <0>;
+		};
+		/******************************************************
+		 * dvp sensors
+		 *****************************************************/
+		ar0230_dvp: ar0230_dvp@10 {
+			compatible = "ar0230_dvp";
+			status = "disabled";
+			i2c_bus = <1>;
+			/* lombo,vdd_1_8; */
+			/* mirror; */
+			/* vflip; */
+			isp_path=<1>;
+
+			i2c_addr = <0x10>;
+			clock-frequency = <27000000>;
+
+			if-type = <0>;
+			if-mode = <2>;
+		};
+
+		ar0230_dvp_s: ar0230_dvp_s@10 {
+			compatible = "ar0230_dvp_s";
+			status = "disabled";
+			i2c_bus = <1>;
+			/* lombo,vdd_1_8; */
+			/* mirror; */
+			/* vflip; */
+			isp_path=<1>;
+
+			i2c_addr = <0x10>;
+			clock-frequency = <27000000>;
+
+			if-type = <0>;
+			if-mode = <2>;
+		};
+
+		gc2145_dvp: gc2145_dvp@3c {
+			compatible = "gc2145_dvp";
+			status = "disabled";
+			i2c_bus = <1>;
+			/* lombo,vdd_1_8; */
+			/* mirror; */
+			/* vflip; */
+			isp_path=<0>;
+
+			i2c_addr = <0x3c>;
+			clock-frequency = <24000000>;
+
+			if-type = <0>;
+			if-mode = <2>;
+		};
+
+		ov5640_dvp: ov5640_dvp@3c {
+			compatible = "ov5640_dvp";
+			status = "disabled";
+			i2c_bus = <1>;
+			/* lombo,vdd_1_8; */
+			isp_path=<0>;
+
+			i2c_addr = <0x3c>;
+			clock-frequency = <24000000>;
+
+			if-type = <0>;
+			if-mode = <2>;
+		};
+
+		tp3810_dvp: tp3810_dvp@3c {
+			compatible = "tp3810_dvp";
+			status = "disabled";
+			i2c_bus = <1>;
+			/* lombo,vdd_1_8; */
+			isp_path=<0>;
+
+			i2c_addr = <0x3c>;
+			clock-frequency = <24000000>;
+
+			if-type = <2>;
+			if-mode = <0>;
+		};
+
+		ov2718_dvp: ov2718_dvp@36 {
+			compatible = "ov2718_dvp";
+			status = "disabled";
+			i2c_bus = <1>;
+			/* lombo,vdd_1_8; */
+			isp_path=<1>;
+
+			i2c_addr = <0x36>;
+			clock-frequency = <24000000>;
+
+			if-type = <0>;
+			if-mode = <1>;
+		};
+
+		ov2710_dvp: ov2710_dvp@36 {
+			compatible = "ov2710_dvp";
+			status = "disabled";
+			i2c_bus = <1>;
+			/* lombo,vdd_1_8; */
+			isp_path=<1>;
+
+			i2c_addr = <0x36>;
+			clock-frequency = <24000000>;
+
+			if-type = <0>;
+			if-mode = <1>;
+		};
+
+		pr2000k_ahd: pr2000k_ahd@5c {
+			compatible = "pr2000k_ahd";
+			status = "disabled";
+			i2c_bus = <1>;
+			/* lombo,vdd_1_8; */
+			isp_path=<0>;
+
+			i2c_addr = <0x5c>;
+			clock-frequency = <24000000>;
+
+			if-type = <2>;
+			if-mode = <0>;
+		};
+
+		sp2305_dvp: sp2305_dvp@3c {
+			compatible = "sp2305_dvp";
+			status = "disabled";
+			i2c_bus = <1>;
+			/* lombo,vdd_1_8; */
+			isp_path=<0>;
+
+			i2c_addr = <0x3c>;
+			clock-frequency = <24000000>;
+
+			if-type = <0>;
+			if-mode = <2>;
+		};
+
+		ov2735_xc7021_dvp: ov2735_xc7021_dvp@1b {
+			compatible = "ov2735_xc7021_dvp";
+			status = "disabled";
+			i2c_bus = <1>;
+			/* lombo,vdd_1_8; */
+			isp_path=<0>;
+
+			i2c_addr = <0x1b>;
+			clock-frequency = <24000000>;
+
+			if-type = <0>;
+			if-mode = <2>;
+		};
+
+		tw2866_dvp: tw2866_dvp@28 {
+			compatible = "tw2866_dvp";
+			status = "disabled";
+			i2c_bus = <1>;
+			/* lombo,vdd_1_8; */
+			isp_path=<0>;
+
+			i2c_addr = <0x28>;/* i2c  speed 100KHZ*/
+			clock-frequency = <24000000>;
+
+			if-type = <2>;
+			if-mode = <0>;
+		};
+
+		gc0328_dvp: gc0328_dvp@21 {
+			compatible = "gc0328_dvp";
+			status = "disabled";
+			i2c_bus = <1>;
+			/* lombo,vdd_1_8; */
+			isp_path=<0>;
+
+			i2c_addr = <0x21>;
+			clock-frequency = <24000000>;
+
+			if-type = <0>;
+			if-mode = <2>;
+		};
+		/*
+		 * if-type:
+		 *	VISS_IF_TYPE_DC = 0,
+		 *	VISS_IF_TYPE_ITU_601 = 1,
+		 *	VISS_IF_TYPE_ITU_656 = 2,
+		 *	VISS_IF_TYPE_ITU_1120 = 3,
+		 *	VISS_IF_TYPE_MCSI = 4,
+		 *
+		 * if-mode:
+		 *	for VISS_IF_TYPE_DC:
+		 *		mode 0: RAW8
+		 *		mode 1: RAW10
+		 *		mode 2: RAW12
+	         *
+		 *	for VISS_IF_TYPE_ITU_601:
+		 *		mode 0: 8-bit HSYNC VSYNC
+		 *		mode 1: 8-bit HSYNC FIELD
+		 *		mode 2: 8-bit HSYNC VSYNC FIELD
+		 *		mode 3: 16-bit HSYNC VSYNC
+	         *
+		 *	for VISS_IF_TYPE_ITU_656:
+		 *		mode 0: 8-bit
+	         *
+		 *	for VISS_IF_TYPE_ITU_1120 = 3:
+		 *		mode 0: 16-bit
+		 *		mode 1: 8-bit
+	         *
+		 *	for VISS_IF_TYPE_MCSI:
+		 *		ignore
+		 *
+		 * isp_path:
+		 *	0: not use isp
+		 *      1: use isp
+		 *	2: use isp-lite
+		 *	3: use isp and isp-lite at the same time
+		 */
+	};
+
+};

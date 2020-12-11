@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.lombo.app.view.RectView
+        android:id="@+id/surfaceView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <TextView
+        android:id="@+id/tv_firmware_version"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/firmware_version"
+        android:textColor="@android:color/white"
+        android:textSize="22sp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_app_version"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/app_version"
+        android:textColor="@android:color/white"
+        android:textSize="22sp"
+        app:layout_constraintTop_toBottomOf="@+id/tv_firmware_version"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_threshold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/white"
+        android:textSize="22sp"
+        android:text="@string/threshold"
+        app:layout_constraintTop_toBottomOf="@+id/tv_firmware_version"
+        app:layout_constraintEnd_toStartOf="@+id/btn_threshold_add"
+        android:layout_marginEnd="30dp"
+        />
+
+    <TextView
+        android:id="@+id/tv_min_face_pixel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/white"
+        android:textSize="22sp"
+        android:text="@string/min_face_pixel"
+        app:layout_constraintTop_toBottomOf="@+id/tv_threshold"
+        app:layout_constraintEnd_toStartOf="@+id/btn_threshold_add"
+        android:layout_marginEnd="30dp"
+        />
+
+    <TextView
+        android:id="@+id/tv_max_face_pixel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/white"
+        android:textSize="22sp"
+        android:text="@string/max_face_pixel"
+        app:layout_constraintTop_toBottomOf="@+id/tv_min_face_pixel"
+        app:layout_constraintEnd_toStartOf="@+id/btn_threshold_add"
+        android:layout_marginEnd="30dp"
+        />
+
+    <TextView
+        android:id="@+id/tv_max_track_faces"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/white"
+        android:textSize="22sp"
+        android:text="@string/max_track_faces"
+        app:layout_constraintTop_toBottomOf="@+id/tv_max_face_pixel"
+        app:layout_constraintEnd_toStartOf="@+id/btn_threshold_add"
+        android:layout_marginEnd="30dp"
+        />
+
+    <TextView
+        android:id="@+id/tv_resolution"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/white"
+        android:textSize="22sp"
+        android:text="@string/resolution"
+        app:layout_constraintTop_toBottomOf="@+id/tv_max_track_faces"
+        app:layout_constraintEnd_toStartOf="@+id/btn_threshold_add"
+        android:layout_marginEnd="30dp"
+        />
+
+
+    <Button
+        android:id="@+id/btn1"
+        style="@style/btn_style"
+        android:text="开始预览"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <Button
+        android:id="@+id/btn2"
+        style="@style/btn_style"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn1"
+        android:text="停止预览" />
+
+
+    <EditText
+        android:id="@+id/name"
+        android:layout_width="172dp"
+        android:layout_height="62dp"
+        android:layout_marginStart="12dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn2"
+        android:background="#80323232"
+        android:textSize="35sp"
+        android:textColor="@android:color/holo_blue_dark"
+        android:hint="@string/user_name"
+        android:textColorHint="@android:color/holo_green_dark"
+        android:padding="5dp"
+        android:maxLength="12"
+        android:text="Li" />
+
+    <Button
+        android:id="@+id/btn3"
+        style="@style/btn_style"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/name"
+        android:text="注册" />
+
+    <Button
+        android:id="@+id/btn4"
+        style="@style/btn_style"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn3"
+        android:text="注销" />
+
+    <Switch
+        android:id="@+id/btn5"
+        style="@style/btn_style"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn4"
+        android:textAlignment="center"
+        android:switchMinWidth="30dp"
+        android:text="人脸框"
+        android:textOn="开"
+        android:textOff="关"
+        android:checked="true" />
+
+    <Switch
+        android:id="@+id/swh_living"
+        style="@style/btn_style"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn5"
+        android:textAlignment="center"
+        android:switchMinWidth="30dp"
+        android:text="活检"
+        android:textOn="开"
+        android:textOff="关"
+        android:checked="false"
+        />
+
+    <Button
+        android:id="@+id/bt_unregister_all"
+        style="@style/btn_style"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/swh_living"
+        android:text="注销所有用户" />
+
+    <Button
+        android:visibility="visible"
+        android:id="@+id/bt_update"
+        style="@style/btn_style"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bt_unregister_all"
+        android:text="升级固件"
+        android:onClick="onUpdate"/>
+
+    <Button
+        android:visibility="gone"
+        android:id="@+id/bt_export_register_img"
+        style="@style/btn_style"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bt_unregister_all"
+        android:text="导出最近注册人脸图片" />
+
+    <Button
+        android:id="@+id/btn_threshold_add"
+        style="@style/btn_style"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:text="阈值+0.01" />
+
+    <Button
+        android:id="@+id/btn_threshold_delete"
+        style="@style/btn_style"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_threshold_add"
+        android:text="阈值-0.01" />
+
+    <Button
+        android:id="@+id/btn_face_add"
+        style="@style/btn_style"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_threshold_delete"
+        android:text="最小识别人脸像素+10" />
+
+    <Button
+        android:id="@+id/btn_face_delete"
+        style="@style/btn_style"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_face_add"
+        android:text="最小识别人脸像素-10" />
+
+    <Button
+        android:id="@+id/btn_face_max_add"
+        style="@style/btn_style"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_face_delete"
+        android:text="最大识别人脸像素+10" />
+
+    <Button
+        android:id="@+id/btn_face_max_delete"
+        style="@style/btn_style"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_face_max_add"
+        android:text="最大识别人脸像素-10" />
+
+    <Button
+        android:id="@+id/btn_num_add"
+        style="@style/btn_style"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_face_max_delete"
+        android:text="最多识别人脸数+1" />
+
+    <Button
+        android:id="@+id/btn_num_delete"
+        style="@style/btn_style"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_num_add"
+        android:text="最多识别人脸数-1" />
+
+    <Button
+        android:id="@+id/btn_exit"
+        style="@style/btn_style"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_num_delete"
+        android:text="退出" />
+
+    <Button
+        android:visibility="gone"
+        android:id="@+id/connect"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/disconnect"
+        android:text="建立连接"
+        android:onClick="onConnect"/>
+
+    <Button
+        android:visibility="gone"
+        android:id="@+id/disconnect"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="断开连接"
+        android:onClick="onDetach"/>
+
+</merge>

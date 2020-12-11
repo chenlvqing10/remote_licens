@@ -1,0 +1,1148 @@
+/*全部背景色设置*/
+#ui_base_widget_n,
+#ui_base_widget_center_widget,
+#volume_small_dlg,
+#language_small_dlg,
+QMainWindow,
+QListView,
+QTableView,
+#employee_limit_comboBox{
+    background-color:#0a143c;
+}
+
+/*所有文字颜色*/
+.QPushButton{
+	border:none;
+}
+
+.QPushButton,#employee_limit_comboBox{
+    color:#FFF;
+	font-family: "SourceHanSansCN-Normal";
+}
+
+/*下拉列表大小设置*/
+#employee_limit_comboBox{
+	font-size:38px;
+}
+
+/*下拉列表的右边箭头样式样式*/
+#employee_limit_comboBox::drop-down {
+/*    subcontrol-origin: padding;*/
+    subcontrol-position:right;
+    width: 50px;
+}
+
+/*所有开关滑块*/
+#dhcp_enable_btn,
+#living_nir_btn,
+#debug_btn,
+#wifi_enable_btn,
+#isp_display_btn,
+#record_btn,
+#time_display_btn{
+    min-width:102px;
+    min-height:62px;
+}
+
+/*所有按扭*/
+#password_login_confirm_btn,
+#algorithm_param_save_btn,
+#user_add_confirm_save,
+#batch_import_btn,
+#batch_register_btn,
+#batch_recognition_btn,
+#extract_btn,
+#clean_btn,
+#eth_setting_saving_btn,
+#password_login_confirm_btn,
+#modify_password_save_btn,
+#camera_calibration_ok_btn{
+    font-family: "SourceHanSansCN-Normal";
+    font-size:42px;
+    border:1px solid #102050;
+    border-radius:5px;
+    background-color:#00d5cf;
+}
+
+/*每一行的高度*/
+.QListView{
+}
+
+/*所有文字*/
+.QLabel{
+    font-size:38px;
+    color:#FFF;
+}
+
+#ble_qrcode_label{
+    font-size:24px;
+    color:#FFF;
+}
+
+#main_dev_states
+{
+    background-color: rgba(1,12,29,66);
+    max-height:80px;
+}
+
+#usb_status_label,
+#wifi_status_label,
+#eth_status_label {
+    min-width:64px;
+    max-height:64px;
+    margin-left:2px;
+}
+
+#temp_box
+{
+  min-width:802px;
+  min-height:879px;
+  margin-top:160px;
+  margin-bottom:256px;
+}
+
+#main_widget_v
+{
+    min-width:164px;
+    min-height:256px;
+    margin-left:2px;
+}
+
+#main_v_label
+{
+	max-width:2px;
+	min-height:256px;
+	margin:0px 30px;
+}
+
+#menu_login_btn
+{
+    min-width:164px;
+    min-height:164px;
+    margin-left:2px;
+    border-radius:82px;
+}
+
+#company_label
+{
+    max-width:164px;
+    max-height:164px;
+    margin-left:2px;
+}
+
+#msg_layout
+{
+	min-width:256px;
+	min-height:256px;
+}
+
+#company_label
+{
+	font-size:38px;
+	color:#FFF;
+}
+
+#authentication_bg
+{
+  min-width:802px;
+  min-height:879px;
+  margin-top:80px;
+  margin-bottom:256px;
+}
+
+#authentication_label
+{
+	min-height:256px;
+	background-color:#00d2cc;
+}
+
+#search_btn,
+#output_btn {
+	min-width: 160px;
+	max-width: 160px;
+	min-height: 64px;
+	max-height: 64px;
+	margin-left: 35px;
+	padding-right: 10px;
+  font-family: "SourceHanSansCN-Normal";
+  font-size:32px;
+  color:#FFF;
+}
+#search_btn
+{
+	margin-left: 30px;
+	margin-right: 30px;
+}
+
+#attendance_dialog_number,
+#attendance_dialog_time,
+#attendance_search_number,
+#attendance_search_time
+{
+	margin-left:20px;
+}
+#attendance_dialog_number,
+#attendance_dialog_time,
+#attendance_dialog_time_start,
+#attendance_dialog_time__,
+#attendance_dialog_time_end,
+#attendance_dialog_unit_y,
+#attendance_dialog_year,
+#attendance_dialog_unit_m,
+#attendance_dialog_mon,
+#attendance_dialog_unit_d,
+#attendance_dialog_day,
+#attendance_num_edit,
+#attendance_search_number,
+#attendance_search_time,
+#attendance_search_time_start,
+#attendance_search_time__,
+#attendance_search_time_end,
+#attendance_search_unit_y,
+#attendance_search_year,
+#attendance_search_unit_m,
+#attendance_search_mon,
+#attendance_search_unit_d,
+#attendance_search_day,
+#attendance_num_edit
+{
+  font-family: "SourceHanSansCN-Normal";
+  font-size:32px;
+  background-color:#0a153c;
+  color:#FFF;
+}
+#attendance_num_edit,
+#attendance_dialog_time_start,
+#attendance_dialog_time_end,
+#attendance_num_edit,
+#attendance_search_time_start,
+#attendance_search_time_end
+{
+  padding: 4px;
+  padding-right: 14px;
+  outline: none;
+}
+#attendance_dialog_unit_y,
+#attendance_dialog_unit_m,
+#attendance_dialog_unit_d,
+#attendance_search_unit_y,
+#attendance_search_unit_m,
+#attendance_search_unit_d
+{
+  min-height:66px;
+  border:1px solid #00d5cf;
+  border-radius:5px;
+}
+
+#ui_attendance_data_dialog QRadioButton::indicator,
+#ui_attendance_search QRadioButton::indicator
+{
+   /*image: url(:icon/radio_back.png);*/
+   border-image: url(:icon/radio_back.png);
+}
+#ui_attendance_data_dialog QRadioButton:unchecked,
+#ui_attendance_search QRadioButton:unchecked
+{
+  border:1px solid #1f3e5b;
+  border-radius:5px;
+}
+#ui_attendance_data_dialog QRadioButton:checked,
+#ui_attendance_search QRadioButton:checked
+{
+  border:1px solid #00d5cf;
+  border-radius:5px;
+}
+
+/*所有顶部标题栏字体样式*/
+#user_add_title_label,
+#algorithm_title_label,
+#batch_import_title_label,
+#batch_register_title_label,
+#batch_recognition_title_label,
+#network_setting_title_label,
+#rtsp_setting_title_label,
+#title_face_input_label,
+#main_menu_label,
+#eth_title_label,
+#password_authentication_title_label,
+#system_setting_title_label,
+#user_title_label,
+#system_setting_title_label,
+#wifi_setting_title_label,
+#face_authentication_title_label,
+#factory_main_title_label,
+#factory_lcd_title_label,
+#factory_camera_title_label,
+#factory_wifi_title_label,
+#factory_ble_title_label,
+#factory_rtc_title_label,
+#factory_net_title_label,
+#factory_range_sensor_title_label,
+#factory_light_sensor_title_label,
+#factory_light_title_label,
+#factory_ir_title_label,
+#factory_speaker_title_label,
+#factory_touch_title_label,
+#factory_relay_title_label,
+#factory_rs485_title_label,
+#factory_wiegand_title_label,
+#factory_alarm_title_label,
+#factory_usb_title_label,
+#user_management_title_label,
+#debug_title_label,
+#password_login_title_label,
+#modify_password_title_label,
+#label_title_base_widget,
+#ui_base_widget_menu_widget,
+#camera_calibration_title_label,
+#system_setting_title_label,
+#zone_setting_title_label,
+#storage_title_label,
+#main_setting_title_label,
+#checkin_title_label,
+#tip_title_label
+{
+    background-color:#010c1d;
+    font-size:42px;
+}
+
+/*所有小图标的大小*/
+#wifi_icon_label,
+#eth_icon_label{
+}
+
+/*首页底部图片按钮*/
+#MainWindow,#login_btn{
+}
+
+/*系统设置页的小图标*/
+#ui_system_setting>#label_2,#label_3,#label_4,#label_5,#label_6,#label_algorithm{
+}
+
+/*顶部标题栏样式*/
+#rtsp_setting_title_widget,
+#face_input_listView,
+#user_add_title_listView,
+#batch_import_listView,
+#batch_register_listView,
+#batch_recognition_listView,
+#batch_register_listView,
+#network_setting_title_listView,
+#face_input_title_listView,
+#main_menu_widget,
+#network_setting_title_listView,
+#password_authentication_title_listView,
+#user_management_title_widget,
+#user_view_title_widget,
+#add_user_title_widget,
+#system_setting_title_widget,
+#attendance_title_widget,
+#access_title_widget,
+#access_time_title_widget,
+#debug_title_widget,
+#network_setting_title_widget,
+#wifi_setting_title_widget,
+#algorithm_setting_title_widget,
+#eth_setting_title_widget,
+#face_authentication_title_widget,
+#batch_import_title_widget,
+#batch_recognition_title_widget,
+#factory_wifi_title_widget,
+#factory_ble_title_widget,
+#factory_net_title_widget,
+#factory_rtc_title_widget,
+#factory_ir_title_widget,
+#factory_light_title_widget,
+#factory_light_sensor_title_widget,
+#factory_lcd_title_widget,
+#factory_speaker_title_widget,
+#factory_camera_title_widget,
+#factory_touch_title_widget,
+#factory_relay_title_widget,
+#factory_rs485_title_widget,
+#factory_wiegand_title_widget,
+#factory_alarm_title_widget,
+#factory_usb_title_widget,
+#camera_calibration_title_widget,
+#password_login_title_widget,
+#modify_password_title_widget,
+#wif_setting_title_listView,
+#index_listview,
+#face_authentication_listView,
+#factory_main_title_widget,
+#factory_lcd_title_listView,
+#factory_touch_title_listView,
+#factory_camera_title_listView,
+#factory_wifi_title_listView,
+#factory_ble_title_listView,
+#factory_rtc_title_listView,
+#factory_net_title_listView,
+#factory_range_sensor_title_listView,
+#factory_light_sensor_title_listView,
+#factory_light_title_listView,
+#factory_ir_title_listView,
+#factory_speaker_title_listView,
+#algorithm_title_listView,
+#debug_title_listView,
+#ui_base_widget_menu_widget,
+#camera_calibration_title_listView,
+#system_setting_title_widget,
+#zone_setting_title_widget,
+#storage_title_widget,
+#main_setting_title_widget,
+#checkin_title_widget,
+#attendance_search_widget_2 {
+    background-color:#010c1d;
+    min-height:79px;
+    border:none;
+    margin:0;
+}
+
+/*所有返回按钮样式*/
+#rtsp_setting_back_btn,
+#user_add_back_btn,
+#algorithm_setting_back_btn,
+#batch_import_back_btn,
+#batch_register_back_btn,
+#batch_recognition_back_btn,
+#eth_setting_back_btn,
+#face_input_back_btn,
+#main_menu_back_btn,
+#network_setting_back_btn,
+#password_login_back_btn,
+#system_setting_back_btn,
+#attendance_back_btn,
+#access_back_btn,
+#access_time_back_btn,
+#user_management_back_btn,
+#user_view_back_btn,
+#face_authentication_back_btn,
+#factory_main_back_btn,
+#factory_lcd_back_btn,
+#factory_touch_back_btn,
+#factory_camera_back_btn,
+#factory_wifi_back_btn,
+#factory_ble_back_btn,
+#factory_rtc_back_btn,
+#factory_net_back_btn,
+#factory_range_sensor_back_btn,
+#factory_light_sensor_back_btn,
+#factory_light_back_btn,
+#factory_ir_back_btn,
+#factory_speaker_back_btn,
+#factory_touch_back_btn,
+#factory_relay_back_btn,
+#factory_rs485_back_btn,
+#factory_wiegand_back_btn,
+#factory_usb_back_btn,
+#wifi_setting_back_btn,
+#debug_back_btn,
+#modify_password_back_btn,
+#camera_calibration_back_btn,
+#base_back_btn,
+#factory_alarm_back_btn,
+#about_setting_back_btn,
+#main_setting_back_btn,
+#zone_setting_back_btn,
+#storage_back_btn,
+#checkin_back_btn,
+#attendance_search_back_btn {
+    min-width:120px;
+    min-height:79px;
+    background-color: rgba(0,0,0,0);
+    background-image: url(:/icon/back.png);
+    background-repeat:repeat;
+    background-position:center;
+}
+
+#count_down_btn,
+#count_add_btn,
+#count_down_bt0,
+#count_add_bt0,
+#count_down_bt1,
+#count_add_bt1,
+#count_down_bt2,
+#count_add_bt2,
+#count_down_bt3,
+#count_add_bt3,
+#count_down_bt0_y,
+#count_add_bt0_y,
+#count_down_bt2_y,
+#count_add_bt2_y{
+    background-color:rgba(0,0,0,0);
+    min-width:72px;
+    min-height:72px;
+    outline: none;
+}
+
+/*主菜单页面的四个菜单大小*/
+#network_setting_btn,
+#system_setting_btn,
+#algorithm_setting_btn,
+#checkin_setting_btn,
+#attendance_setting_btn,
+#user_management_btn{
+    min-width:172px;
+    min-height:172px;
+    max-width:172px;
+    max-height:172px;
+}
+
+/*所有输入框*/
+/*
+#number_lineEdit,
+#password_lineEdit{
+    font-size:38px;
+    color:black;
+    min-width:500px;
+    min-height:72px;
+    border:1px solid #102050;
+    border-radius:5px;
+    background-color:#fff;
+}
+*/
+
+/*查看人员*/
+QTableView{
+    color:#fff;
+    border:none;
+    font-size:38px;
+}
+QTableView>QPushButton{
+}
+
+/*网络设置页的输入框*/
+#ui_eth_setting>.lineEdit{
+    background:#FFF;
+    font-size:38px;
+    color:#ccc;
+    font-family: "SourceHanSansCN-Normal";
+}
+
+/*系统设置*/
+#factory_recovery_btn{
+    border:none;
+    padding:0 30px;
+    min-height:50px;
+    border-bottom:5px solid #0b163f;
+    font-size:18px;
+    font-family: "SourceHanSansCN-Normal";
+    background-color:#0a143c;
+}
+#factory_test_btn{
+    border:none;
+    padding:0 30px;
+    min-height:50px;
+    border-bottom:5px solid #0b163f;
+    font-size:18px;
+    font-family: "SourceHanSansCN-Normal";
+    background-color:#0a143c;
+}
+#update_btn{
+    border:none;
+    padding:0 30px;
+    min-height:50px;
+    border-bottom:5px solid #0b163f;
+    font-size:18px;
+    font-family: "SourceHanSansCN-Normal";
+    background-color:#0a143c;
+}
+#face_input_btn{
+    border:none;
+    padding:0 30px;
+    min-height:50px;
+    border-bottom:5px solid #0b163f;
+    font-size:18px;
+    font-family: "SourceHanSansCN-Normal";
+    background-color:#0a143c;
+}
+
+/*首页*/
+#algorithm_listView,
+#webchat_listView{
+    border:none;
+}
+
+/*所有外边距*/
+/*#network_setting_listView,*/
+/*#user_management_listView,*/
+#dev_name_listView,
+#verson_listView,
+#factory_recovery_btn,
+#employee_number_listView,
+#employee_name_listView,
+#employee_limit_listView,
+/*#face_input_listView,*/
+#password_listView,
+#wif_enable_listView,
+#ip_addr_listView,
+#subnet_mask_listView,
+#gateway_listView,
+#dns_listView,
+#dhcp_enable_listView,
+#tcp_port_listView,
+#dev_name_listView,
+#verson_listView,
+#factory_recovery_btn,
+#factory_test_btn,
+#update_btn,
+#face_input_btn,
+#face_recg_level_listView,
+#living_detection_listView,
+#debug_listView,
+#WDR_listView,
+#user_tableView{
+    margin:0 48px;
+}
+
+/*WIFi设置*/
+#wifi_show_listView{
+/*    min-height:650px;*/
+    padding-left:50px;
+    padding-right:10px;
+    border:none;
+}
+
+#connect_label{
+    padding-left:50px;
+    padding-right:10px;
+}
+
+/*算法参数设置*/
+/*#ui_algorithm_setting>label,label2,label3{
+min-width:64px;
+min-height:64px;
+margin-left:72px;
+}*/
+
+/*.QFrame{
+min-width:1184px;
+min-height:1px;
+background-color:#FFF;
+}
+*/
+.QListView{
+border:none;
+}
+
+#rtsp_setting_listView,
+#network_setting_listView{
+min-height:620px;
+}
+
+#wifi_show_listView{
+min-height:400px;
+}
+#wifi_show_listView QScrollBar {
+	min-width:20px;
+}
+#wifi_show_listView QScrollBar::handle:vertical
+{
+	background:rgba(31,62,91,80%);
+	border-radius:10px;
+	min-height:60;
+}
+#wifi_show_listView QScrollBar::handle:vertical:hover
+{
+	background:rgba(31,62,91,90%);
+	border-radius:10px;
+	min-height:60;
+}
+
+#webchat_btn,
+#ble_qrcode_btn{
+	background:#FFF;
+}
+
+/*所有QLineEdit字体样式*/
+.QLineEdit,
+#volume_edit{
+	border-width:2px;
+	border-radius:4px;
+	font-size:38px;
+	color: white;
+	background-color:#0a143c;
+	border:2px solid #1f3e5b;
+}
+
+#password_lineEdit{
+	lineedit-password-character: 42;
+	font-size:20px;
+	min-height:66px;
+	padding-left:20px;
+	padding-right:20px;
+}
+#modify_password_listView QLineEdit {
+	lineedit-password-character: 42;
+	font-size:20px;
+	min-height:66px;
+	padding-left:20px;
+	padding-right:20px;
+}
+#user_add_listView QLineEdit,
+#eth_listView QLineEdit {
+	padding-left:20px;
+	padding-right:20px;
+}
+
+#auto_test_btn ,#volume_btn{
+    min-width:224px;
+    max-width:224px;
+    min-height:72px;
+    max-height:72px;
+    font-family: "SourceHanSansCN-Normal";
+    font-size:42px;
+    border:1px solid #102050;
+    border-radius:5px;
+    background-color:#00d5cf;
+}
+
+#auto_test_listView{
+	background-color:#060f2b;
+    min-height:98px;
+    max-height:98px;
+    border:none;
+    margin:0;
+}
+
+#ui_user_search_dialog,
+#ui_tip_dialog,
+#ui_edit_dialog,
+#ui_radio_dialog,
+#ui_count_dialog,
+#ui_time_dialog,
+#ui_input_dialog,
+#ui_attendance_data_dialog,
+#ui_system_maintenance_dialog {
+	background-color:rgba(0,0,0,60%);
+}
+
+#tip_dialog_frame,
+#count_dialog_frame,
+#time_dialog_frame,
+#input_dialog_frame,
+#attendance_dialog_frame,
+#edt_dialog_frame {
+	background-color:rgb(10,21,60);
+	min-width:680px;
+	max-width:840px;
+	max-height:574px;
+	border:2px solid #102050;
+	margin:0;
+}
+#attendance_dialog_frame {
+	max-height:630px;
+}
+
+#system_maintenance_dialog_frame {
+	background-color:rgb(10,21,60);
+	min-width:680px;
+	max-width:840px;
+	border:2px solid #102050;
+	margin:0;
+}
+
+#radio_dialog_frame {
+	background-color:rgb(10,21,60);
+	min-width:680px;
+	max-width:840px;
+	border:2px solid #102050;
+	margin:0;
+}
+
+#edt_item_1 {
+	margin-left: 20px;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+#user_search_dialog_frame{
+	background-color:rgb(10,21,60);
+	min-width:680px;
+	min-height:540px;
+	border:2px solid #102050;
+	margin:0;
+}
+
+#user_search_dialog_frame QLineEdit {
+	padding-left:10px;
+	padding-right:10px;
+}
+
+#tip_frame,
+#tip_frame_1,
+#edt_frame{
+	max-height:1px;
+	background-color:#1f3e5b;
+	color:#1f3e5b;
+}
+
+#tip_cancel_btn,
+#edt_cancel_btn,
+#radio_cancel_btn,
+#count_cancel_btn,
+#time_cancel_btn,
+#input_cancel_btn,
+#system_maintenance_cancel_btn {
+    font-family: "SourceHanSansCN-Normal";
+    font-size:42px;
+    border:1px solid #102050;
+    border-radius:5px;
+    min-width:190px;
+    max-width:190px;
+    min-height:66px;
+    max-height:66px;
+}
+
+#time_confirm_btn,
+#attendance_confirm_btn {
+    font-family: "SourceHanSansCN-Normal";
+    font-size:42px;
+    border:1px solid #102050;
+    border-radius:5px;
+    background-color:#00d5cf;
+    min-width:190px;
+    max-width:190px;
+    min-height:66px;
+    max-height:66px;
+}
+#time_setting_listView {
+    min-height:206px;
+}
+
+#tip_confirm_btn,
+#edt_confirm_btn,
+#tip_confirm_btn,
+#radio_confirm_btn,
+#count_confirm_btn,
+#time_confirm_btn,
+#input_confirm_btn,
+#system_maintenance_confirm_btn {
+    font-family: "SourceHanSansCN-Normal";
+    font-size:42px;
+    border:1px solid #102050;
+    border-radius:5px;
+    background-color:#00d5cf;
+    min-width:190px;
+    max-width:190px;
+    min-height:66px;
+    max-height:66px;
+}
+
+#count_edit,
+#time_label_0,
+#time_label_1,
+#time_label_2,
+#time_label_3,
+#time_label_0_y,
+#time_label_2_y
+{
+    font-family: "SourceHanSansCN-Normal";
+    font-size:42px;
+    min-height:66px;
+    border:1px solid #00d5cf;
+    border-radius:5px;
+}
+
+#tip_title_label,
+#attendance_num_label{
+    background-color:#0a153c;
+    font-size:48px;
+}
+
+#edt_title_label{
+    background-color:#0a153c;
+    font-size:48px;
+    padding:10px;
+    padding-bottom:20px;
+}
+
+#tip_content_label {
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+#system_maintenance_dialog_frame #tip_title_label {
+	min-height:120px;
+	max-height:120px;
+}
+#system_maintenance_dialog_frame #time_label_0,
+#system_maintenance_dialog_frame #time_label_1 {
+	min-width:80px;
+	max-width:80px;
+	min-height:60px;
+	max-height:60px;
+}
+#system_maintenance_dialog_frame #count_add_bt0,
+#system_maintenance_dialog_frame #count_add_bt1,
+#system_maintenance_dialog_frame #count_down_bt0,
+#system_maintenance_dialog_frame #count_down_bt1 {
+	min-width:64px;
+	max-width:64px;
+	min-height:64px;
+	max-height:64px;
+}
+#ui_system_maintenance_dialog .QRadioButton {
+	min-width:120px;
+    min-height:120px;
+	max-width:120px;
+    max-height:120px;
+	color:#FFF;
+	font-size:38px;
+    spacing:5px;
+	text-align: center;
+}
+#ui_system_maintenance_dialog .QRadioButton::indicator
+{
+    min-width:64px;
+    min-height:64px;
+    max-width:64px;
+    max-height:64px;
+}
+#ui_system_maintenance_dialog .QRadioButton::indicator:unchecked
+{
+	image: url(:icon/con-unchoice.png);
+}
+#ui_system_maintenance_dialog .QRadioButton::indicator:checked
+{
+	image: url(:icon/con-choice.png);
+}
+
+
+
+#ui_radio_dialog QRadioButton {
+    max-width:680px;
+    min-height:98px;
+    font-size:38px;
+    color:#FFF;
+    margin:0 48px;
+    spacing: 5px;
+    border-bottom:2px solid #1f3e5b;
+}
+
+#ui_radio_dialog QRadioButton::indicator
+{
+    min-width:48px;
+    min-height:48px;
+}
+
+#ui_radio_dialog QRadioButton::indicator:unchecked
+{
+	image: url();
+}
+
+#ui_radio_dialog QRadioButton::indicator:checked
+{
+	image: url(:/icon/back.png);
+}
+
+/* soft keyboard */
+#ui_soft_keyboard {
+	background-color: #010c1d;
+}
+
+#ui_soft_keyboard > QPushButton:hover
+{
+	background-color: rgb(127,122,117);
+}
+
+#ui_soft_keyboard QPushButton{
+	border-radius: 7px;
+	color: rgb(255,255,255);
+	font-size: 38px;
+}
+
+#factory_scrollArea,
+#factory_scrollAreaWidgetContents{
+	background-color:#0a143c;
+}
+
+/* ui_face-input */
+#record_label,
+#test_log_btn,
+#capture_btn {
+	min-width:224px;
+    max-width:224px;
+    min-height:72px;
+    max-height:72px;
+    font-family: "SourceHanSansCN-Normal";
+    font-size:42px;
+    border:1px solid #102050;
+    border-radius:5px;
+    background-color:#00d5cf;
+    margin-left: 6px;
+}
+#record_label:hover,
+#test_log_btn:hover,
+#capture_btn:hover {
+	background-color:#00d5cf;
+}
+#record_label:pressed,
+#test_log_btn:pressed,
+#capture_btn:pressed {
+	background-color:#00a6d0;
+	padding-left:3px;
+	padding-top:3px;
+}
+
+/* QScrollBar */
+QScrollBar{
+	border:none;
+	background:transparent; /* rgba(0,0,0,0%)*/
+}
+QScrollBar:vertical
+{
+	background:transparent; /* rgba(0,0,0,0%)*/
+	padding-top:0px;
+	padding-bottom:0px;
+}
+QScrollBar::handle:vertical
+{
+	background:rgba(31,62,91,80%);
+	border-radius:5px;
+	min-height:60;
+}
+QScrollBar::handle:vertical:hover
+{
+	background:rgba(31,62,91,90%);
+	border-radius:5px;
+	min-height:60;
+}
+QScrollBar::add-line:vertical
+{
+	height:0px;width:0px;
+	subcontrol-position:bottom;
+}
+QScrollBar::sub-line:vertical
+{
+	height:0px;width:0px;
+	subcontrol-position:top;
+}
+QScrollBar::add-line:vertical:hover
+{
+	height:0px;width:0px;
+	subcontrol-position:bottom;
+}
+QScrollBar::sub-line:vertical:hover
+{
+	height:0px;width:0px;
+	subcontrol-position:top;
+}
+QScrollBar::sub-page:vertical{
+	background: none;
+}
+QScrollBar::add-page:vertical
+{
+	background: none;
+}
+
+#first_btn {
+	border-image: url(:/icon/first.png);
+}
+#last_btn {
+	border-image: url(:/icon/last.png);
+}
+#next_btn {
+	border-image: url(:/icon/next.png);
+}
+#prev_btn {
+	border-image: url(:/icon/prev.png);
+}
+
+#storage_label_free{
+  background-color:#00ffff;
+}
+
+#storage_label_used{
+  background-color:#f9940e;
+}
+#storage_label_used_text,
+#storage_label_free_text {
+  font-family: "SourceHanSansCN-Normal";
+  font-size:24px;
+}
+#storage_label_used_number{
+  font-family: "SourceHanSansCN-Normal";
+  font-size:32px;
+  font-weight:bold;
+  border-image: url(:/icon/setting/aboat/storage_text.png);
+  color:#f9940e;
+}
+#storage_label_free_number{
+  font-family: "SourceHanSansCN-Normal";
+  font-size:32px;
+  font-weight:bold;
+  border-image: url(:/icon/setting/aboat/storage_text.png);
+  color:#00ffff;
+}
+#storage_label_total_number{
+  font-family: "SourceHanSansCN-Normal";
+  font-size:32px;
+  font-weight:bold;
+  border-image: url(:/icon/setting/aboat/storage_text.png);
+  color:white;
+}
+
+#time_btn_save {
+    font-family: "SourceHanSansCN-Normal";
+    font-size:42px;
+    border:1px solid #102050;
+    border-radius:5px;
+    background-color:#00d5cf;
+	margin-left: 6px;
+}
+
+#time_year_sub,
+#time_mon_sub,
+#time_day_sub,
+#time_hour_sub,
+#time_min_sub,
+#time_sec_sub {
+    border-image: url(:/icon/setting/down.png);
+}
+#time_year_add,
+#time_mon_add,
+#time_day_add,
+#time_hour_add,
+#time_min_add,
+#time_sec_add {
+    border-image: url(:/icon/setting/up.png);
+}
+#volume_label_for_title,
+#language_babel_for_title{
+	font-family: "SourceHanSansCN-Normal";
+    font-size:42px;
+}
+#volume_label_for_sub {
+	border-image: url(:/icon/setting/sub.png);
+}
+#volume_label_for_add {
+	border-image: url(:/icon/setting/add.png);
+}
+
+#language_label_for_chinese_text,
+#language_label_for_english_text {
+	font-family: "SourceHanSansCN-Normal";
+    font-size:38px;
+}
+#name_state_frame,
+#user_name_label,
+#user_state_label,
+#user_state_label_2
+{
+	border-radius:20px;
+}
+#line {
+	background:rgba(255,255,255,50%);
+}
+#name_state_frame {
+  background-color:#f2313f;
+}
+#name_state_frame,
+#user_state_label_2{
+	margin-right:35px;
+}
+#user_name_label{
+	padding-left:5px;
+	padding-right:5px;
+}

@@ -1,0 +1,30 @@
+#!/bin/sh
+
+case "$1" in
+	start)
+		printf "Starting bluetooth: \n"
+		echo 0 > /sys/class/rfkill/rfkill0/state
+		sleep 1
+		echo 1 > /sys/class/rfkill/rfkill0/state
+		sleep 0.3
+		rtk_hciattach -n -s 115200 /dev/ttySLB1 rtk_h5 &
+		start-stop-daemon -S -b -x /usr/libexec/bluetooth/bluetoothd -- -d
+		[ $? = 0 ] && echo "OK" || echo "FAIL"
+		;;
+	stop)
+		printf "Stopping bluetooth: \n"
+		start-stop-daemon -K -q -x /usr/libexec/bluetooth/bluetoothd
+		killall rtk_hciattach
+		echo 0 > /sys/class/rfkill/rfkill0/state
+		[ $? = 0 ] && echo "OK" || echo "FAIL"
+		;;
+	restart|reload)
+		$0 stop
+		$0 start
+		;;
+	*)
+		echo "Usage: $0 {start|stop|restart}"
+		exit 1
+esac
+
+exit 0

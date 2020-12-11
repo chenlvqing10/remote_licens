@@ -1,0 +1,34 @@
+config PINCTRL_N7
+	bool "lombo n7 soC pinctrl driver"
+	select PINMUX
+	select PINCONF
+	depends on ARCH_LOMBO_N7
+	help
+	  Say Y here to enable the n7 soc pinctrl driver
+
+config PINCTRL_N7_SIO
+	bool "lombo n7 sio pinctrl driver"
+	select PINMUX
+	select PINCONF
+	depends on ARCH_LOMBO_N7V1
+	help
+	  Say Y here to enable the n7 sio pinctrl driver
+
+config PINCTRL_N9
+	bool "lombo n9 soC pinctrl driver"
+	select PINMUX
+	select PINCONF
+	depends on ARCH_LOMBO_N9
+	help
+	  Say Y here to enable the n9 soc pinctrl driver.
+	  The pin bank name of soc can see defined in dts,
+	  bank A/B/C are support normal gpio, bank C can support
+	  wakeup interrutp func.
+
+config PINCTRL_N9_SIO
+	bool "lombo n9 sio pinctrl driver"
+	select PINMUX
+	select PINCONF
+	depends on ARCH_LOMBO_N9
+	help
+	  Say Y here to enable the n9 sio pinctrl driver

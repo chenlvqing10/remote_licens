@@ -1,0 +1,241 @@
+
+/*工厂测试按扭*/
+#factory_lcd_ok_btn,
+#factory_lcd_fail_btn,
+#factory_touch_test_btn,
+#factory_touch_ok_btn,
+#factory_touch_fail_btn,
+#factory_camera_ok_btn,
+#factory_camera_fail_btn,
+#open_wifi_btn,
+#search_wifi_btn,
+#close_wifi_btn,
+#factory_wifi_ok_btn,
+#factory_wifi_fail_btn,
+#open_ble_btn,
+#close_ble_btn,
+#factory_ble_ok_btn,
+#factory_ble_fail_btn,
+#factory_rtc_test_btn,
+#factory_rtc_ok_btn,
+#factory_rtc_fail_btn,
+#factory_net_test_btn,
+#factory_net_ok_btn,
+#factory_net_fail_btn,
+#factory_range_sensor_test_btn,
+#factory_range_sensor_ok_btn,
+#factory_range_sensor_fail_btn,
+#factory_light_sensor_test_btn,
+#factory_light_sensor_ok_btn,
+#factory_light_sensor_fail_btn,
+#open_light_btn,
+#close_light_btn,
+#factory_light_ok_btn,
+#factory_light_fail_btn,
+#open_ir_btn,
+#close_ir_btn,
+#factory_ir_ok_btn,
+#factory_ir_fail_btn,
+#factory_speaker_test_btn,
+#factory_speaker_ok_btn,
+#factory_speaker_fail_btn,
+#factory_relay_ok_btn,
+#factory_relay_fail_btn,
+#factory_rs485_ok_btn,
+#factory_rs485_fail_btn,
+#factory_wiegand_ok_btn,
+#factory_wiegand_fail_btn,
+#factory_alarm_ok_btn,
+#factory_alarm_fail_btn{
+    min-width:300px;
+    max-width:300px;
+    min-height:98px;
+    max-height:98px;
+    font-family: "SourceHanSansCN-Normal";
+    font-size:42px;
+    border:1px solid #102050;
+    border-radius:5px;
+}
+#factory_flowlayout_widget QPushButton {
+	min-width:300px;
+    max-width:300px;
+    min-height:98px;
+    max-height:98px;
+    font-family: "SourceHanSansCN-Normal";
+    font-size:42px;
+    border:1px solid #102050;
+    border-radius:5px;
+}
+
+#main_widget_v{
+	background-color:#0a143c;
+	min-height: 256px;
+	max-height: 256px;
+}
+
+#dtime_show_label{
+	font-family: "SourceHanSansCN-Normal";
+	font-size:68px;
+}
+
+#date_show_label{
+	font-family: "SourceHanSansCN-Normal";
+	font-size:32px;
+}
+
+#ble_qrcode_btn{
+	margin-right: 6px;
+}
+
+#user_view_foot {
+    min-height: 72px;
+    max-height: 72px;
+	margin-bottom: 70px;
+}
+
+#rec_tip_label {
+	min-height: 72px;
+  max-height: 72px;
+  margin-left: 42px;
+	font-family: "SourceHanSansCN-Normal";
+	font-size:30px;
+}
+
+#first_btn,
+#last_btn,
+#next_btn,
+#prev_btn {
+	min-width: 72px;
+	max-width: 72px;
+	min-height: 72px;
+	max-height: 72px;
+	margin-left: 10px;
+	margin-right: 10px;
+}
+
+/*顶部标题栏样式*/
+#rtsp_setting_title_widget,
+#user_add_title_listView,
+#batch_import_listView,
+#batch_register_listView,
+#batch_recognition_listView,
+#batch_register_listView,
+#network_setting_title_listView,
+#face_input_title_listView,
+#main_menu_widget,
+#network_setting_title_listView,
+#password_authentication_title_listView,
+#user_management_title_widget,
+#user_view_title_widget,
+#add_user_title_widget,
+#system_setting_title_widget,
+#attendance_title_widget,
+#access_title_widget,
+#access_time_title_widget,
+#debug_title_widget,
+#network_setting_title_widget,
+#wifi_setting_title_widget,
+#algorithm_setting_title_widget,
+#eth_setting_title_widget,
+#face_authentication_title_widget,
+#batch_import_title_widget,
+#batch_recognition_title_widget,
+#factory_wifi_title_widget,
+#factory_ble_title_widget,
+#factory_net_title_widget,
+#factory_rtc_title_widget,
+#factory_ir_title_widget,
+#factory_light_title_widget,
+#factory_light_sensor_title_widget,
+#factory_lcd_title_widget,
+#factory_speaker_title_widget,
+#factory_camera_title_widget,
+#factory_touch_title_widget,
+#factory_relay_title_widget,
+#factory_rs485_title_widget,
+#factory_wiegand_title_widget,
+#factory_alarm_title_widget,
+#factory_usb_title_widget,
+#camera_calibration_title_widget,
+#password_login_title_widget,
+#modify_password_title_widget,
+#wif_setting_title_listView,
+#index_listview,
+#face_authentication_listView,
+#factory_main_title_widget,
+#factory_lcd_title_listView,
+#factory_touch_title_listView,
+#factory_camera_title_listView,
+#factory_wifi_title_listView,
+#factory_ble_title_listView,
+#factory_rtc_title_listView,
+#factory_net_title_listView,
+#factory_range_sensor_title_listView,
+#factory_light_sensor_title_listView,
+#factory_light_title_listView,
+#factory_ir_title_listView,
+#factory_speaker_title_listView,
+#algorithm_title_listView,
+#debug_title_listView,
+#ui_base_widget_menu_widget,
+#camera_calibration_title_listView,
+#system_setting_title_widget,
+#zone_setting_title_widget,
+#storage_title_widget,
+#checkin_title_widget,
+#attendance_search_widget_2 {
+    background-color:#010c1d;
+    min-height:120px;
+	max-height:120px;
+    border:none;
+    margin:0;
+}
+/*网络设置页的输入框*/
+#ui_eth_setting .QLineEdit{
+    font-size:30px;
+    color:#ccc;
+    font-family: "SourceHanSansCN-Normal";
+}
+
+/* ui_softkeyboard */
+#lab_pinying_ {
+	background-color: #4f5769;
+	min-width: 650px;
+	max-width: 650px;
+	min-height: 56px;
+	max-height: 56px;
+	border-radius: 10px;
+	margin-left: 60px;
+}
+
+#storage_label_total_text1,
+#storage_label_total_number {
+  font-family: "SourceHanSansCN-Normal";
+  font-size:24px;
+}
+
+#storage_label_used_number{
+  font-family: "SourceHanSansCN-Normal";
+  font-size:60px;
+  font-weight:bold;
+  border-image: url(:/icon/setting/aboat/storage_text.png);
+  color:#f9940e;
+}
+#storage_label_free_number{
+  font-family: "SourceHanSansCN-Normal";
+  font-size:60px;
+  font-weight:bold;
+  border-image: url(:/icon/setting/aboat/storage_text.png);
+  color:#00ffff;
+}
+#import_tip_label{
+    font-size:30px;
+    color:#FFF;
+}
+
+#attendance_search_title_label,
+#attendance_title_label
+{
+    background-color:#010c1d;
+    font-size:42px;
+}

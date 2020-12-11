@@ -1,0 +1,43 @@
+#!/bin/sh
+
+MISC=/dev/mmcblk0p4
+DEVICE=/dev/mmcblk0p1
+CACHE=/dev/mmcblk0p5
+FACE=/dev/mmcblk0p6
+
+check_factory_flag()
+{
+    chkdev=$1
+
+    chk_pattern="0000200 ff55 2054 0001 0000 0000 0000 0000 0000"
+
+    readstr=$(hexdump -n 16 -s 512 $chkdev | head -1)
+    readstr=$(echo $readstr)
+    echo "readstr=$readstr"
+
+    if [ "x$chk_pattern" == "x$readstr" ]; then
+        return 1
+    else
+        return 0
+    fi
+}
+
+case "$1" in
+  start)
+    check_factory_flag $MISC
+    if [ $? -eq 1 ]; then
+	  echo "factory reset"
+	  echo "clean device $DEVICE ..."
+	  mke2fs -t ext4 -F $DEVICE
+	  echo "clean device $CACHE ..."
+	  mkfs.vfat $CACHE
+	  echo "clean device $FACE ..."
+	  mke2fs -t ext4 -F $FACE
+	  dd bs=1 if=/dev/zero of=$MISC seek=512 count=16
+    fi
+    ;;
+  stop)
+    ;;
+  *)
+    ;;
+esac

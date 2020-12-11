@@ -1,0 +1,71 @@
+
+menu "Display Panels legacy"
+	depends on DRM && DRM_PANEL && DRM_LOMBO_LEGACY
+
+config DRM_PANEL_LEGACY_SPC_S92048
+	tristate "support for spc s9048 panels legacy"
+	depends on OF
+	depends on BACKLIGHT_CLASS_DEVICE
+	select VIDEOMODE_HELPERS
+	help
+	  DRM panel driver for dumb panels that need at most a regulator and
+	  a GPIO to be powered up. Optionally a backlight can be attached so
+	  that it can be automatically turned off when the panel goes into a
+	  low power state.
+
+config DRM_PANEL_LEGACY_NOVATEK_NT35510
+	tristate "support for novatek nt35510 panels legacy"
+	depends on OF
+	depends on BACKLIGHT_CLASS_DEVICE
+	select VIDEOMODE_HELPERS
+	help
+	  DRM panel driver for dumb panels that need at most a regulator and
+	  a GPIO to be powered up. Optionally a backlight can be attached so
+	  that it can be automatically turned off when the panel goes into a
+	  low power state.
+
+config DRM_PANEL_LEGACY_TIANMA_TM070JDHG30
+	tristate "support for tianma tm070jdhg30-00 panels legacy"
+	depends on OF
+	depends on BACKLIGHT_CLASS_DEVICE
+	select VIDEOMODE_HELPERS
+	help
+	  DRM panel driver for dumb panels that need at most a regulator and
+	  a GPIO to be powered up. Optionally a backlight can be attached so
+	  that it can be automatically turned off when the panel goes into a
+	  low power state.
+
+config DRM_PANEL_LEGACY_WKS_WKS70002
+	tristate "support for wks wks70002 panels legacy"
+	depends on OF
+	depends on BACKLIGHT_CLASS_DEVICE
+	select VIDEOMODE_HELPERS
+	help
+	  DRM panel driver for dumb panels that need at most a regulator and
+	  a GPIO to be powered up. Optionally a backlight can be attached so
+	  that it can be automatically turned off when the panel goes into a
+	  low power state.
+
+config DRM_PANEL_LEGACY_SLM5P5_HX8399C
+        tristate "support for SLM5.5 HX8399C panels legacy"
+        depends on OF
+        depends on BACKLIGHT_CLASS_DEVICE
+        select VIDEOMODE_HELPERS
+        help
+          DRM panel driver for dumb panels that need at most a regulator and
+          a GPIO to be powered up. Optionally a backlight can be attached so
+          that it can be automatically turned off when the panel goes into a
+          low power state.
+
+config DRM_PANEL_LEGACY_LT8912B
+        tristate "support for LT8912B panels legacy"
+        depends on OF
+        depends on BACKLIGHT_CLASS_DEVICE
+        select VIDEOMODE_HELPERS
+        help
+          DRM panel driver for dumb panels that need at most a regulator and
+          a GPIO to be powered up. Optionally a backlight can be attached so
+          that it can be automatically turned off when the panel goes into a
+          low power state.
+
+endmenu

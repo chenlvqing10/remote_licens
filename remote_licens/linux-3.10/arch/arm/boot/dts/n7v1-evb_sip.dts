@@ -1,0 +1,1254 @@
+/*
+ * lombo-n7v1.dts - device tree configurations for N7V1 platform
+ *
+ * Copyright (C) 2016-2018, LomboTech Co.Ltd.
+ * Author: lomboswer <lomboswer@lombotech.com>
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program; if not, write to the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ */
+
+/dts-v1/;
+#include "skeleton.dtsi"
+#include "n7v1.h"
+#include "n7v1-clocks.dtsi"
+#include "n7v1-pinctrl.dtsi"
+#include "n7v1-camera.dtsi"
+
+/ {
+	model = "N7";
+	compatible = "lombotech,n7";
+	interrupt-parent = <&intc>;
+
+	aliases {
+		console = &uart1;
+		serial0 = &uart0;
+		serial1 = &uart1;
+		serial2 = &uart2;
+		serial3 = &uart3;
+		spi0 = &spi0;
+		spi1 = &spi1;
+		spi2 = &spi2;
+		i2c0 = &i2c_0;
+		i2c1 = &i2c_1;
+		i2c2 = &i2c_2;
+		i2c3 = &i2c_3;
+		viss0 = &viss_0;
+		viss_is0 = &viss_is_0;
+		video0 = &vic;
+		video1 = &mipi_csi;
+		video3 = &viss_0;
+		usbphy0 = &usbphy1;
+		boot_sdc0 = &sdc0;
+		boot_sdc1 = &sdc2;
+	};
+
+	/*
+	 * if bootloader can detect dram total size automatically, the config
+	 * here is useless, otherwise the config here is usefull
+	 */
+	memory {
+		reg =  <0x40000000 0x10000000>;
+	};
+
+	/*
+	 * TODO: config the ion reserved area here, DELETE the
+	 *    LOMBO_ION_CARVOUT_BASE/SIZE macros
+	 *
+	 * reserved-memory {
+	 *	reg =  <0x40000000 0x10000000>;
+	 * };
+	 */
+
+	cpus {
+		cpu@0 {
+			device_type = "cpu";
+			compatible = "arm,armv7";
+			clocks = <&cpu_clk>, <&cpu_pll>;
+			/*
+			 * cpu available frequencies, based on KHz
+			 */
+			cpufreq_table = <312000
+				408000
+				504000
+				600000
+				720000
+				816000
+				912000>;
+			clock-latency = <300000>; /* From legacy driver */
+		};
+
+		cpu@1 {
+			device_type = "cpu";
+			compatible = "arm,armv7";
+		};
+	};
+
+	cpufreq_limit_table: cpufreq_limit_table {
+		compatible = "lombo,cpufreq_limit_table";
+		max_freq = <912000>;
+		min_freq = <312000>;
+	};
+
+	thermal0: thermal0@04013090 {
+		compatible = "lombotech,lombo-thermal0";
+		reg = <0x04013090 0x10>;
+		sensor-id = <0>;
+
+		num-trips = <5>;
+
+		trip0-temp = <75000>;
+		trip0-type = "active";
+		trip0-cdev-num = <1>;
+		trip0-cdev-name0 = "thermal-cpufreq-0";
+
+		trip1-temp = <85000>;
+		trip1-type = "active";
+		trip1-cdev-num = <1>;
+		trip1-cdev-name0 = "thermal-cpufreq-0";
+
+		trip2-temp = <95000>;
+		trip2-type = "active";
+		trip2-cdev-num = <1>;
+		trip2-cdev-name0 = "thermal-cpufreq-0";
+
+		trip3-temp = <105000>;
+		trip3-type = "active";
+		trip3-cdev-num = <1>;
+		trip3-cdev-name0 = "thermal-cpufreq-0";
+
+		trip4-temp = <120000>;
+		trip4-type = "critical";
+		trip4-cdev-num = <0>;
+	};
+
+	thermal1: thermal1@040130a0 {
+		compatible = "lombotech,lombo-thermal1";
+		reg = <0x040130a0 0x10>;
+		sensor-id = <1>;
+
+		num-trips = <2>;
+
+		trip0-temp = <60000>;
+		trip0-type = "active";
+		trip0-cdev-num = <1>;
+		trip0-cdev-name0 = "thermal-ddrfreq";
+
+		trip1-temp = <95000>;
+		trip1-type = "critical";
+		trip1-cdev-num = <0>;
+	};
+
+	thermal2: thermal2@040130b0 {
+		compatible = "lombotech,lombo-thermal2";
+		reg = <0x040130b0 0x10>;
+		sensor-id = <2>;
+
+		num-trips = <3>;
+
+		trip0-temp = <90000>;
+		trip0-type = "active";
+		trip0-cdev-num = <1>;
+		trip0-cdev-name0 = "thermal-nufreq";
+
+		trip1-temp = <105000>;
+		trip1-type = "active";
+		trip1-cdev-num = <1>;
+		trip1-cdev-name0 = "thermal-nufreq";
+
+		trip2-temp = <120000>;
+		trip2-type = "critical";
+		trip2-cdev-num = <0>;
+	};
+
+	cpufreq-cooling {
+		compatible = "lombotech,cpufreq-cooling";
+
+		/* <0>: cpufreq_table max value */
+		trip0-upper = <1>;
+		trip0-lower = <1>;
+
+		trip1-upper = <2>;
+		trip1-lower = <2>;
+
+		trip2-upper = <3>;
+		trip2-lower = <3>;
+
+		trip3-upper = <5>;
+		trip3-lower = <4>;
+	};
+
+	dramfreq {
+		compatible = "lombo,n7-dramfreq";
+		clocks = <&sdram_clk>, <&sdram_pll>;
+	};
+
+	intc: intc@0x01051000 {
+		compatible = "arm,cortex-a7-gic";
+		reg = <0x01051000 0x1000
+		       0x01052000 0x1010>;
+		interrupt-controller;
+		#interrupt-cells = <3>;
+	};
+
+	dmac: dmac@01201000 {
+		compatible = "lombo,n7-dma";
+		reg = <0x1201000 0x1000>;
+		#dma-cells = <2>;
+		dma-channels = <8>;
+		interrupts = <GIC_SPI INT_DMA IRQ_TYPE_LEVEL_HIGH>;
+		clocks = <&mem_axi_gate 0>, <&ahb0_gate 0>, <&ahb0_reset 0>;
+		clock-names = "axi_dma_gate", "ahb_dma_gate", "ahb_dma_reset";
+		status = "okay";
+	};
+
+	timer: timer {
+		compatible = "arm,armv7-timer";
+		clock-frequency = <24000000>;
+		interrupts = <GIC_PPI PPI_IRQ(29) 0xf08>,
+			<GIC_PPI PPI_IRQ(30) 0xf08>,
+			<GIC_PPI PPI_IRQ(27) 0xf08>,
+			<GIC_PPI PPI_IRQ(26) 0xf08>;
+	};
+
+	uart0: uart@04003000 {
+		compatible = "lombo,n7v1-uart";
+		device_type = "uart0";
+		reg = <0x04003000 0x800>;
+		interrupts = <GIC_SPI INT_UART0 IRQ_TYPE_LEVEL_HIGH>;
+		clocks = <&apb0_gate 4>, <&apb0_reset 4>, <&uart0_clk>, <&osc24m>, <&perh0_pll_div8>;
+		uart_port = <0>;
+		uart_type = <2>;
+		pinctrl-names = "default";
+		pinctrl-0 = <&pinctrl_uart0_0>;
+		status = "disabled";
+	};
+
+	uart1: uart@04003800 {
+		compatible = "lombo,n7v1-uart";
+		device_type = "uart1";
+		reg = <0x04003800 0x800>;
+		interrupts = <GIC_SPI INT_UART1 IRQ_TYPE_LEVEL_HIGH>;
+		clocks = <&apb0_gate 5>, <&apb0_reset 5>, <&uart1_clk>, <&osc24m>, <&perh0_pll_div8>;
+		uart_port = <1>;
+		uart_type = <4>;
+		pinctrl-names = "default";
+		pinctrl-0 = <&pinctrl_uart1_0>;
+		status = "okay";
+	};
+
+	uart2: uart@04004000 {
+		compatible = "lombo,n7v1-uart";
+		device_type = "uart2";
+		reg = <0x04004000 0x800>;
+		interrupts = <GIC_SPI INT_UART2 IRQ_TYPE_LEVEL_HIGH>;
+		clocks = <&apb0_gate 6>, <&apb0_reset 6>, <&uart2_clk>, <&osc24m>, <&perh0_pll_div8>;
+		uart_port = <2>;
+		uart_type = <2>;
+		status = "disabled";
+	};
+
+	uart3: uart@04004800 {
+		compatible = "lombo,n7v1-uart";
+		device_type = "uart3";
+		reg = <0x04004800 0x800>;
+		interrupts = <GIC_SPI INT_UART3 IRQ_TYPE_LEVEL_HIGH>;
+		clocks = <&apb0_gate 7>, <&apb0_reset 7>, <&uart3_clk>, <&osc24m>, <&perh0_pll_div8>;
+		uart_port = <3>;
+		uart_type = <2>;
+		status = "disabled";
+	};
+
+	spi0: spi@0122A000 {
+		compatible = "lombo,n7-spi";
+		device_type = "spi0";
+		reg = <0x0122A000 0x1000>;
+		interrupts = <GIC_SPI INT_SPI0 IRQ_TYPE_LEVEL_HIGH>;
+		clocks = <&ahb0_gate 7>, <&ahb0_reset 7>, <&spi0_clk>, <&osc24m>, <&perh0_pll_div2>;
+		max-baud-rate = <100000000>;
+		init-baud-rate = <12000000>;
+		pinctrl-names = "default", "high-level1", "high-level2";
+		pinctrl-0 = <&pinctrl_spi0_0>,
+			<&pinctrl_spi0_1>,
+			<&pinctrl_spi0_2>,
+			<&pinctrl_spi0_3>;
+		pinctrl-1 = <&pinctrl_spi0_0_1>,
+			<&pinctrl_spi0_1_1>,
+			<&pinctrl_spi0_2_1>,
+			<&pinctrl_spi0_3_1>;
+		pinctrl-2 = <&pinctrl_spi0_0_2>,
+			<&pinctrl_spi0_1_2>,
+			<&pinctrl_spi0_2_2>,
+			<&pinctrl_spi0_3_2>;
+		dmas = <&dmac DMA_SPI0_RX_SRP DMA_CHAN_PRIO_7>,
+			<&dmac DMA_SPI0_TX_DSP DMA_CHAN_PRIO_7>;
+		dma-names = "spi0-rx", "spi0-tx";
+		spi0_cs_number = <2>;
+		/*
+		 * cs_bitmap:
+		 * enable cs0: cs_bitmap = 0x1;
+		 * enable cs1: cs_bitmap = 0x2;
+		 * enable cs0 & cs1: cs_bitmap = 0x1 | 0x2;
+		 */
+		spi0_cs_bitmap = <0x3>;
+		spi0_max_lines = <4>;
+		status = "disabled";
+		#address-cells = <1>;
+		#size-cells = <0>;
+
+		spnd: spnd@0 {
+			compatible = "lombo,spnd";
+			spi-max-frequency = <100000000>;
+			spi-bus-width = <4>;
+			reg = <0x0>;
+			status = "okay";
+			#address-cells = <1>;
+			#size-cells = <1>;
+
+			controller-data {
+				/*
+				 * frame_format:
+				 * 1: standard mode
+				 * 2: dual mode
+				 * 4: quad mode
+				 * 8: octal mode
+				 */
+				frame_format = <1>;
+				/*
+				 * work_mode:
+				 * 0: normal spi, only data xfer
+				 * 1: extended spi, cmd+addr+(waitcycle)+data
+				 */
+				work_mode = <1>;
+			};
+		};
+
+		nor0: nor@0 {
+			compatible = "lombo,nor";
+			spi-max-frequency = <12000000>;
+			reg = <0x0>;
+			status = "disabled";
+			#address-cells = <1>;
+			#size-cells = <1>;
+
+			controller-data {
+				/*
+				 * frame_format:
+				 * 1: standard mode
+				 * 2: dual mode
+				 * 4: quad mode
+				 * 8: octal mode
+				 */
+				frame_format = <1>;
+				/*
+				 * work_mode:
+				 * 0: normal spi, only data xfer
+				 * 1: extended spi, cmd+addr+(waitcycle)+data
+				 */
+				work_mode = <1>;
+			};
+
+			partition@0 {
+				label = "u-boot";
+				reg = <0x00000000 0x00040000>;
+				read-only;
+			};
+
+			partition@1 {
+				label = "u-boot-env";
+				reg = <0x00040000 0x001C0000>;
+			};
+
+			partition@2 {
+				label = "kernel";
+				reg = <0x00200000 0x00200000>;
+			};
+
+			partition@3 {
+				label = "root";
+				reg = <0x00400000 0x00C00000>;
+			};
+		};
+	};
+
+	spi1: spi@0122B000 {
+		compatible = "lombo,n7-spi";
+		device_type = "spi1";
+		reg = <0x0122B000 0x1000>;
+		interrupts = <GIC_SPI INT_SPI1 IRQ_TYPE_LEVEL_HIGH>;
+		clocks = <&ahb0_gate 7>, <&ahb0_reset 7>, <&spi1_clk>;
+		clock-frequency = <12000000>;
+		/* pinctrl-names = "default"; */
+		/* pinctrl-0 = <&pinctrl_spi1>; */
+		dmas = <&dmac DMA_SPI1_RX_SRP DMA_CHAN_PRIO_7>,
+			<&dmac DMA_SPI1_TX_DSP DMA_CHAN_PRIO_7>;
+		dma-names = "spi1-rx", "spi1-tx";
+		spi1_cs_number = <1>;
+		spi1_cs_bitmap = <0x1>;
+		spi1_max_lines = <2>;
+		status = "disabled";
+	};
+
+	spi2: spi@0122C000 {
+		compatible = "lombo,n7-spi";
+		device_type = "spi2";
+		reg = <0x0122C000 0x1000>;
+		interrupts = <GIC_SPI INT_SPI2 IRQ_TYPE_LEVEL_HIGH>;
+		clocks = <&ahb0_gate 8>, <&ahb0_reset 8>, <&spi2_clk>;
+		clock-frequency = <12000000>;
+		/* pinctrl-names = "default"; */
+		/* pinctrl-0 = <&pinctrl_spi2>; */
+		dmas = <&dmac DMA_SPI2_RX_SRP DMA_CHAN_PRIO_7>,
+			<&dmac DMA_SPI2_TX_DSP DMA_CHAN_PRIO_7>;
+		dma-names = "spi2-rx", "spi2-tx";
+		spi2_cs_number = <2>;
+		spi2_cs_bitmap = <0x3>;
+		spi2_max_lines = <2>;
+		status = "disabled";
+	};
+
+	watchdog: watchdog@04009800 {
+		compatible = "lombo,n7-wdt";
+		reg = <0x04009800 0x800>;
+		status = "okay";
+	};
+
+	rtc: rtc@0400B000 {
+		compatible = "lombo,n7-rtc";
+		reg = <0x0400B000 0x1000>;
+		interrupts = <GIC_SPI INT_RTC IRQ_TYPE_LEVEL_HIGH>;
+		status = "okay";
+	};
+
+	usb: usb@1226000 {
+		compatible = "lombo,n7-usb";
+		reg = <0x01226000 0x400>;
+		interrupts = <GIC_SPI INT_USB20 IRQ_TYPE_LEVEL_HIGH>;
+		clocks = <&ahb1_gate 6>, <&ahb1_reset 6>;
+		clock-names = "usb_gate", "usb_reset";
+		lombo,usbphy = <&usbphy1>;
+		/* dr_mode value: host or peripheral */
+		dr_mode = "host";
+		/* maximum-speed = "full-speed"; */
+		status = "okay";
+	};
+
+	usbphy1: usbphy@1226400 {
+		compatible = "lombo,n7-usbphy";
+		reg = <0x01226400 0x400>;
+		reset_offset = <0x2de48e0>;
+		/* peripheral need define force_vbus */
+		/* force_vbus; */
+		/* phy_vbus only need for host */
+		phy_vbus = <&gpe 9 1>;
+		status = "okay";
+	};
+
+	sdc0: sdc@0x01220000 {
+		compatible = "lombo,n7-sdc";
+		reg = <0x01220000 0x204>;
+		interrupts = <GIC_SPI INT_SDC0 IRQ_TYPE_LEVEL_HIGH>;
+		clocks = <&ahb0_gate 4>, <&ahb0_reset 4>, <&sdc0_clk>,
+			 <&osc24m>, <&perh0_pll_vco>;
+
+		/* sdc module clock parents should be sdc_clk_p[X] */
+		clock-names = "sdc_ahb_gate", "sdc_ahb_reset", "sdc_module_clk",
+				"sdc_clk_p0", "sdc_clk_p1";
+
+		pinctrl-names = "default", "uhs_pinctrl";
+		pinctrl-0 = <&pinctrl_sdc0_clk>, <&pinctrl_sdc0_cmd_data_x4>;
+                pinctrl-1 = <&pinctrl_sdc0_clk_uhs>, <&pinctrl_sdc0_cmd_data_x4_uhs>;
+
+		bus-width = <4>;
+		max-frequency = <150000000>;
+
+		/* 0: support 3.3v; 1: support 1.8v; 2: support both */
+		volt-supp = <2>;
+		volt-sidx = <0>;
+		cap_uhs;
+		/* use_pio; */
+
+		/* non-removable; */
+		/* cap-sdio-irq; */
+
+		/* cd-gpios = <&gpe 3 IRQ_TYPE_LEVEL_HIGH>;
+		cd-inverted; */
+		broken-cd;
+
+		status = "okay";
+	};
+
+	sdc1: sdc@0x01221000 {
+		compatible = "lombo,n7-sdc";
+		reg = <0x01221000 0x204>;
+		interrupts = <GIC_SPI INT_SDC1 IRQ_TYPE_LEVEL_HIGH>;
+		clocks = <&ahb0_gate 5>, <&ahb0_reset 5>, <&sdc1_clk>,
+			 <&osc24m>, <&perh0_pll_vco>;
+
+		/* sdc module clock parents should be sdc_clk_p[X] */
+		clock-names = "sdc_ahb_gate", "sdc_ahb_reset", "sdc_module_clk",
+				"sdc_clk_p0", "sdc_clk_p1";
+
+		pinctrl-names = "default", "uhs_pinctrl";
+		pinctrl-0 = <&pinctrl_sdc1_clk>, <&pinctrl_sdc1_cmd_data_x4>;
+		pinctrl-1 = <&pinctrl_sdc1_clk_uhs>, <&pinctrl_sdc1_cmd_data_x4_uhs>;
+
+		bus-width = <4>;
+		max-frequency = <150000000>;
+
+		/* 0: support 3.3v; 1: support 1.8v; 2: support both */
+		volt-supp = <2>;
+		volt-sidx = <1>;
+		/* cap_uhs; */
+		/* use_pio; */
+
+		/* non-removable; */
+
+		sdio_mode;
+		cap-sdio-irq;
+		no_lp;
+
+		/* cd-gpios = <&gpf 1 0>;
+		cd-inverted; */
+		/* broken-cd; */
+
+		status = "okay";
+	};
+
+	sdc2: sdc@0x01222000 {
+		compatible = "lombo,n7-sdc";
+		reg = <0x01222000 0x204>;
+		interrupts = <GIC_SPI INT_SDC2 IRQ_TYPE_LEVEL_HIGH>;
+		clocks = <&ahb0_gate 6>, <&ahb0_reset 6>, <&sdc2_clk>,
+			 <&osc24m>, <&perh0_pll_vco>;
+
+		/* sdc module clock parents should be sdc_clk_p[X] */
+		clock-names = "sdc_ahb_gate", "sdc_ahb_reset", "sdc_module_clk",
+				"sdc_clk_p0", "sdc_clk_p1";
+
+		pinctrl-names = "default", "uhs_pinctrl";
+		pinctrl-0 = <&pinctrl_sdc2_clk>, <&pinctrl_sdc2_cmd_data_x4>,
+			    <&pinctrl_sdc2_data_h4>;
+		pinctrl-1 = <&pinctrl_sdc2_clk_uhs>, <&pinctrl_sdc2_cmd_data_x4_uhs>,
+			    <&pinctrl_sdc2_data_h4_uhs>;
+
+		bus-width = <8>;
+		max-frequency = <150000000>;
+
+		/* 0: support 3.3v; 1: support 1.8v; 2: support both */
+		volt-supp = <1>;
+		cap_hs200;
+
+		/* use_pio; */
+
+		non-removable;
+
+		/* sdio_mode; */
+		/* cap-sdio-irq; */
+		/* no_lp; */
+
+		/* cd-gpios = <&gpf 1 0>;
+		cd-inverted; */
+		/* broken-cd; */
+
+		status = "okay";
+	};
+
+	/* lombo drm master driver */
+	disp {
+		compatible = "lombo,lombo-display";
+		components = <&dpu>, <&se0>, <&se1>, <&dc0>,
+			<&doss>, <&tcon0>, <&dsi>, <&tve>;
+		status = "okay";
+
+		/* uboot config */
+		fbmem_size = <7680 1080>;
+		fb_bg_color = <0xFF3398FD>;
+	};
+
+	dpu: dpu@1500000 {
+		compatible = "lombo,lombo-n7v1-dpu";
+		clocks = <&ahb1_gate 1>, <&ahb1_reset 1>, <&mem_axi_gate 5>,
+			<&dpu_sclk2>, <&osc24m>;
+		clock-names = "ahb_gate", "ahb_reset", "mem_axi_gate",
+			      "ext_sclk2", "ext_psclk2";
+		reg = <0x01500000 0x00020000>;
+		status = "okay";
+
+		adpll0: adpll0 {
+			clk_rate = <600000000>;
+			tune = <0x139F0000 0x57379120>;
+		};
+		sclk0: sclk0 {
+			ext_sclk = <2>;
+			adpll = <&adpll0>;
+		};
+	};
+
+	dc0: dc@1520000 {
+		compatible = "lombo,lombo-n7v1-dc-0";
+		sclk = <0>;
+		clk_rate = <150000000>;
+		reg = <0x01520000 0x00020000>;
+		top = <&dpu>;
+		hw_id = <0>;
+		status = "okay";
+	};
+
+	se0: se@1560000 {
+		compatible = "lombo,lombo-n7v1-se-0";
+		sclk = <0>;
+		clk_rate = <200000000>;
+		reg = <0x01560000 0x00010000>;
+		interrupts = <GIC_SPI INT_SE0 IRQ_TYPE_LEVEL_HIGH>;
+		top = <&dpu>;
+		hw_id = <0>;
+		status = "okay";
+	};
+
+	se1: se@1570000 {
+		compatible = "lombo,lombo-n7v1-se-1";
+		sclk = <0>;
+		clk_rate = <200000000>;
+		reg = <0x01570000 0x00010000>;
+		interrupts = <GIC_SPI INT_SE1 IRQ_TYPE_LEVEL_HIGH>;
+		top = <&dpu>;
+		hw_id = <1>;
+		status = "okay";
+	};
+
+	dit: dit@1590000 {
+		compatible = "lombo,lombo-n7v1-dit";
+		top = <&dpu>;
+		sclk = <0>;
+		clk_rate = <150000000>;
+		/* dit, 64KB */
+		reg = <0x01590000 0x00010000>;
+		interrupts = <GIC_SPI INT_DIT IRQ_TYPE_LEVEL_HIGH>;
+		status = "okay";
+	};
+
+	rot: rot@1580000 {
+		compatible = "lombo,lombo-n7v1-rot";
+		top = <&dpu>;
+		sclk = <0>;
+		clk_rate = <150000000>;
+		/* rot, 64KB */
+		reg = <0x01580000 0x00010000>;
+		interrupts = <GIC_SPI INT_ROT IRQ_TYPE_LEVEL_HIGH>;
+		status = "okay";
+	};
+
+	doss: doss@1600000 {
+		compatible = "lombo,lombo-n7v1-doss";
+		clocks = <&ahb1_gate 2>, <&ahb1_reset 2>,
+			<&doss_osc24m>, <&doss_sclk0>, <&disp_pll>;
+		clock-names = "ahb_gate", "ahb_reset",
+			"hfeosc", "sclk0", "psclk0";
+		reg = <0x01600000 0x00002000>;
+		status = "okay";
+	};
+
+	tcon0: tcon@1602000 {
+		compatible = "lombo,lombo-n7v1-tcon-0";
+		reg = <0x01602000 0x00002000>;
+		interrupts = <GIC_SPI INT_TCON IRQ_TYPE_LEVEL_HIGH>;
+		top = <&doss>;
+		hw_id = <0>;
+		dc_id = <0>;
+		panel_rgb = <&panel_s92048>;
+		panel_lvds = <&panel_wks7002>;
+		status = "okay";
+	};
+
+	dsi: mipi_dsi@1606000 {
+		compatible = "lombo,lombo-n7v1-mipi-dsi";
+		reg = <0x01606000 0x00002000>;
+		top = <&doss>;
+		panel_dsi = <&panel_hx8399c>;
+		hw_id = <0>;
+		status = "okay";
+	};
+
+	tve: tve@1620000 {
+		compatible = "lombo,lombo-n7v1-tve";
+		reg = <0x01620000 0x00002000>;
+		top = <&doss>;
+		tve_id = <0>;
+		status = "okay";
+	};
+
+	panel_s92048: panel_s92048 {
+		compatible = "spc,s92048";
+		pinctrl-names = "default";
+		pinctrl-0 = <&pinctrl_prgb>;
+		backlight = <&gpio_backlight>;
+		reset_gpio = <&gpe 7 0>;
+		is_preferred_mode;
+		status = "disabled";
+	};
+
+	panel_wks7002: panel_wks7002 {
+		compatible = "ek79003a,wks70002";
+		pinctrl-names = "default";
+		pinctrl-0 = <&pinctrl_lvds>;
+		reset_gpio = <&gpe 8 0>;
+		is_preferred_mode;
+		status = "okay";
+	};
+
+	panel_wks43178: panel_wks43178 {
+		compatible = "wks,wks43178";
+		pinctrl-names = "default";
+		pinctrl-0 = <&pinctrl_cpu>;
+		backlight = <&gpio_backlight>;
+		is_preferred_mode;
+		status = "disabled";
+	};
+
+	panel_tm070jdhg30: panel_tm070jdhg30 {
+		compatible = "tianma,tm070jdhg30";
+		pinctrl-names = "default";
+		pinctrl-0 = <&pinctrl_lvds>;
+		backlight = <&gpio_backlight>;
+		reset_gpio = <&gpe 7 0>;
+		is_preferred_mode;
+		status = "disabled";
+	};
+
+	panel_hx8399c: panel_hx8399c {
+		compatible = "slm5p5,hx8399c";
+		reset_gpio = <&gpe 7 0>;
+		backlight = <&gpio_backlight>;
+		ub_reset_gpio = "C0_0";
+		ub_bl_gpio = "E8_1";
+		is_preferred_mode;
+		status = "disabled";
+	};
+
+	panel_g02: panel_g02 {
+		compatible = "n070ice,g02";
+		enable_gpio = <&gpe 7 0>;
+		backlight = <&gpio_backlight>;
+		is_preferred_mode;
+		status = "disabled";
+	};
+
+	gpio_backlight: gpio_backlight {
+		compatible = "gpio-backlight";
+		bl_gpio = <&gpe 8 1>;
+		status = "disabled";
+	};
+
+	pwm: pwm {
+		compatible = "lombo,n7-pwm";
+		reg = <0x0400d000 0x300>;
+
+		/*
+		 * if you need use sysfs node to control pwmN,
+		 * config "pinctrl-0 = <&pinctrl_pwmN>;"
+		 */
+		pinctrl-names = "default";
+		/* pinctrl-0 = <&pinctrl_pwm3>; */
+		#pwm-cells = <3>;
+		/*
+		 * 3 paras for pwm:
+		 * hwpwm: 0 ~ (pwm_chip's pwm cnt - 1)
+		 * period: in nanoseconds
+		 * polarity: 0 - PWM_POLARITY_NORMAL,
+		 * 1 - PWM_POLARITY_INVERSED
+		 */
+
+		interrupts = <GIC_SPI INT_PWM IRQ_TYPE_LEVEL_HIGH>;
+		interrupt-controller;
+		#interrupt-cells = <1>;
+	};
+
+	/* pwm test driver, remove it in release version */
+	pwm_test: pwm_test {
+		compatible = "lombo,n7-pwm-test";
+		/* config pwm0~3 temporarily */
+		pinctrl-names = "default";
+		pinctrl-0 = <&pinctrl_pwm0>, /* <&pinctrl_pwm1>, <&pinctrl_pwm2>, */ <&pinctrl_pwm3>;
+		/* hwpwm: 3, period: 50000ns, polarity: inversed */
+		pwms = <&pwm 3 50000 1>;
+		interrupt-parent = <&pwm>;
+		/* hw irq number(must be same as hwpwm above) */
+		interrupts = <3>;
+	};
+
+	memctrl: memctrl {
+		compatible = "lombo,memctrl";
+		reg = <0x0121B000 0x1044>;
+
+		clocks = <&sdram_bandw_clk>, <&mem_axi_clk>;
+		clock-names = "sdram_bandwidth_clk", "mem_axi_clk";
+
+		interrupts = <GIC_SPI INT_SDRAM IRQ_TYPE_LEVEL_HIGH>;
+		interrupt-controller;
+		#interrupt-cells = <1>;
+	};
+
+
+	i2s: i2s@04010000 {
+		compatible = "lombo, n7-i2s";
+		reg = <0x04010000 0x800>;
+		interrupts = <GIC_SPI INT_I2S IRQ_TYPE_LEVEL_HIGH>;
+		clocks = <&apb1_gate 0>, <&apb1_reset 0>, <&i2s0_clk>;
+		clock-names = "i2s_apb_gate", "i2s_apb_reset", "i2s_module_clk";
+		pinctrl-names = "default";
+		dmas = <&dmac DMA_I2S_TX_DRP DMA_CHAN_PRIO_0>,
+		<&dmac DMA_I2S_RX_SRP DMA_CHAN_PRIO_0>;
+		dma-names = "tx", "rx";
+		status = "okay";
+	};
+
+	ac: ac@04010800 {
+		compatible = "lombo, n7-ac";
+		reg = <0x04010800 0x800>;
+		status = "okay";
+	};
+
+	axnu: axnu@01700000 {
+		compatible = "lombo,n7-axnu";
+		reg = <0x01700000 100000>;
+		interrupts = <GIC_SPI INT_AX_ENU IRQ_TYPE_LEVEL_HIGH>;
+		clocks = <&ahb1_gate 5>, <&ahb1_reset 5>, <&mem_axi_gate 7>, <&ax_clk>;
+		clock-names = "ax_ahb_gate", "ax_ahb_reset", "ax_axi_gate", "ax_module_clk";
+		status = "okay";
+	};
+
+	axvu: axvu@01700000 {
+		compatible = "lombo,n7-axvu";
+		reg = <0x01700000 100000>;
+		interrupts = <GIC_SPI INT_AX_CVU IRQ_TYPE_LEVEL_HIGH>;
+		clocks = <&ahb1_gate 5>, <&ahb1_reset 5>, <&mem_axi_gate 7>, <&ax_clk>;
+		clock-names = "ax_ahb_gate", "ax_ahb_reset", "ax_axi_gate", "ax_module_clk";
+		status = "okay";
+	};
+
+	vc_driver: vc_driver@01300000 {
+		compatible = "lombo,n7-vc";
+		reg = <0x01300000 100000>;
+		interrupts = <GIC_SPI INT_VC IRQ_TYPE_LEVEL_HIGH>;
+		clocks = <&ahb1_gate 4>, <&ahb1_reset 4>, <&mem_axi_gate 1>, <&vc_enc_clk>;
+		clock-names = "vc_ahb_gate", "vc_ahb_reset", "vc_axi_gate", "vc_module_clk";
+		status = "okay";
+	};
+
+	vdc_driver: vdc_driver@01380000 {
+		compatible = "lombo,n7-vdc";
+		reg = <0x01380000 100000>;
+		interrupts = <GIC_SPI INT_VDC IRQ_TYPE_LEVEL_HIGH>;
+		clocks = <&ahb1_gate 3>, <&ahb1_reset 3>, <&mem_axi_gate 2>, <&vc_dec_clk>;
+		clock-names = "vdc_ahb_gate", "vdc_ahb_reset", "vdc_axi_gate", "vdc_module_clk";
+		status = "okay";
+	};
+
+	i2c_0: i2c@0x04000000 {
+		compatible = "lombo,n7-i2c";
+		reg = <0x04000000 0xF4>;
+		interrupts = <GIC_SPI INT_I2C0 IRQ_TYPE_LEVEL_HIGH>;
+		clocks = <&apb0_gate 0>, <&apb0_reset 0>, <&i2c0_clk>,
+			<&osc24m>, <&perh0_pll_div8>;
+		clock-names = "i2c_apb_gate", "i2c_apb_reset", "i2c_module_clk",
+				"i2c_clk_parent0", "i2c_clk_parent1";
+
+		pinctrl-names = "default";
+		pinctrl-0 = <&pinctrl_i2c0>;
+
+		max_bus_freq=<400000>;
+		fs_spk_len=<4>;
+		hs_spk_len=<2>;
+
+		status = "disabled";
+
+		#address-cells = <1>;
+		#size-cells = <0>;
+
+		by24c@0x50 {
+			reg = <0x50>;
+			compatible = "by24c16a";
+
+			pagesize = <16>;
+
+			status = "okay";
+		};
+	};
+
+	i2c_1: i2c@0x04000800 {
+		compatible = "lombo,n7-i2c";
+		reg = <0x04000800 0xF4>;
+		interrupts = <GIC_SPI INT_I2C1 IRQ_TYPE_LEVEL_HIGH>;
+		clocks = <&apb0_gate 1>, <&apb0_reset 1>, <&i2c1_clk>,
+			<&osc24m>, <&perh0_pll_div8>;
+		clock-names = "i2c_apb_gate", "i2c_apb_reset", "i2c_module_clk",
+				"i2c_clk_parent0", "i2c_clk_parent1";
+
+		pinctrl-names = "default";
+		pinctrl-0 = <&pinctrl_i2c1>;
+
+		max_bus_freq=<400000>;
+		fs_spk_len=<4>;
+		hs_spk_len=<2>;
+
+		status = "okay";
+
+		#address-cells = <1>;
+		#size-cells = <0>;
+	};
+
+	i2c_2: i2c@0x04001000 {
+		compatible = "lombo,n7-i2c";
+		reg = <0x04001000 0xF4>;
+		interrupts = <GIC_SPI INT_I2C2 IRQ_TYPE_LEVEL_HIGH>;
+		clocks = <&apb0_gate 2>, <&apb0_reset 2>, <&i2c2_clk>,
+			<&osc24m>, <&perh0_pll_div8>;
+		clock-names = "i2c_apb_gate", "i2c_apb_reset", "i2c_module_clk",
+				"i2c_clk_parent0", "i2c_clk_parent1";
+
+		pinctrl-names = "default";
+		pinctrl-0 = <&pinctrl_i2c2>;
+
+		max_bus_freq=<400000>;
+		fs_spk_len=<4>;
+		hs_spk_len=<2>;
+
+		status = "okay";
+
+		#address-cells = <1>;
+		#size-cells = <0>;
+
+	};
+
+	i2c_3: i2c@0x04001800 {
+		compatible = "lombo,n7-i2c";
+		reg = <0x04001800 0xF4>;
+		interrupts = <GIC_SPI INT_I2C3 IRQ_TYPE_LEVEL_HIGH>;
+		clocks = <&apb0_gate 3>, <&apb0_reset 3>, <&i2c3_clk>,
+			<&osc24m>, <&perh0_pll_div8>;
+		clock-names = "i2c_apb_gate", "i2c_apb_reset", "i2c_module_clk",
+				"i2c_clk_parent0", "i2c_clk_parent1";
+
+		pinctrl-names = "default";
+		pinctrl-0 = <&pinctrl_i2c3>;
+
+		max_bus_freq=<400000>;
+		fs_spk_len=<4>;
+		hs_spk_len=<2>;
+
+		status = "okay";
+
+		#address-cells = <1>;
+		#size-cells = <0>;
+
+		focaltech@38 {
+			compatible = "focaltech,fts";
+			reg = <0x38>;
+			interrupt-parent = <&gpe>;
+			interrupts = <12 IRQ_TYPE_LEVEL_LOW>;
+
+			focaltech,name = "fts";
+			focaltech,family-id = <0x54>;
+			focaltech,reset-gpio = <&gpb 23 0>;
+			focaltech,irq-gpio =<&gpe 12 0>;
+
+			focaltech,display-coords = <0 0 1024 600>;
+			focaltech,panel-coords = <0 0 1080 2000>;
+			focaltech,button-map= <70 150 907>;
+			focaltech,no-force-update;
+			focaltech,i2c-pull-up;
+			focaltech,group-id = <1>;
+			focaltech,hard-reset-delay-ms = <20>;
+			focaltech,soft-reset-delay-ms = <150>;
+			focaltech,num-max-touches = <10>;
+			focaltech,fw-name = "FT_Upgrade_App.i";
+			focaltech,fw-delay-aa-ms = <50>;
+			focaltech,fw-delay-55-ms = <30>;
+			focaltech,fw-upgrade-id1 = <0x79>;
+			focaltech,fw-upgrade-id2 = <0x03>;
+			focaltech,fw-delay-readid-ms = <10>;
+			focaltech,fw-delay-era-flsh-ms = <2000>;
+		};
+	};
+
+	viss@01400000 {
+		compatible = "lombo,viss", "simple-bus";
+		reg = <0x01400000 0x00000104>;
+
+		clocks = <&ahb1_reset 0>, <&ahb1_gate 0>,
+			 <&mem_axi_gate 3>, <&viss_sclk0>,
+			 <&viss_sclk2>;
+		clock-names = "viss_reset", "viss_gate",
+				"viss_axi_gate", "viss_sclk0",
+				"viss_sclk1";
+
+		#address-cells = <1>;
+		#size-cells = <1>;
+		status = "okay";
+		ranges;
+
+		pinctrl-names = "default";
+		pinctrl-0 = <&pinctrl_vic>, <&pinctrl_mcsi>;
+
+		vic: vic@01410000 {
+			compatible = "lombo,n7-viss-vic";
+			reg = <0x01410000 0x00000620>;
+			interrupts = <GIC_SPI INT_VIC IRQ_TYPE_LEVEL_HIGH>;
+			clock-frequency = <148500000>;
+			status = "okay";
+		};
+
+		mipi_csi: mipi-csi@01414000 {
+			compatible = "lombo,n7-viss-mcsi";
+			reg = <0x01414000 0x00001068>;
+			interrupts = <GIC_SPI INT_MIPI_CSI IRQ_TYPE_LEVEL_HIGH>;
+			clock-frequency = <148500000>;
+			status = "okay";
+		};
+
+		viss_0: viss@0x01440000 {
+			compatible = "lombo,n7-viss";
+			reg = <0x01440000 0x3000>;
+			interrupts = <GIC_SPI INT_ISP_FE0 IRQ_TYPE_LEVEL_HIGH>;
+			clock-frequency = <200000000>;
+			status = "okay";
+		};
+		viss_is_0: viss-is@0x01440000 {
+			compatible = "lombo,viss-is";
+			interrupts = <GIC_SPI INT_ISP0 IRQ_TYPE_LEVEL_HIGH>;
+			//interrupts = <GIC_SPI INT_ISP_MI0 IRQ_TYPE_LEVEL_HIGH>;
+			reg = <0x01440000 0x3000>;
+			status = "okay";
+		};
+	};
+
+	key: key@04013000 {
+		compatible = "lombo,n7-adc-keypad";
+		reg = <0x04013000 0x800>;
+		interrupts = <GIC_SPI INT_GPADC IRQ_TYPE_LEVEL_HIGH>;
+		clocks = <&apb1_gate 2>, <&apb1_reset 2>, <&gpadc_clk>;
+		clock-names = "apb_gpadc_gate", "apb_gpadc_reset", "gpadc_clk";
+		/* gpadc select: 0 or 1 */
+		controller_num = <0>;
+		status = "disabled";
+	};
+
+	ir: ir@04014800 {
+		compatible = "lombo,n7-ir";
+		reg = <0x04014800 0x84>;
+		interrupts = <GIC_SPI INT_IR_RX IRQ_TYPE_LEVEL_HIGH>;
+		clocks = <&apb1_gate 1>, <&apb1_reset 1>;
+		clock-names = "apb_ir_gate", "apb_ir_reset";
+		pinctrl-names = "default";
+		pinctrl-0 = <&pinctrl_ir>;
+		status = "okay";
+	};
+
+	ion {
+		compatible = "lombo,lombo-ion";
+		/*types is list here:
+			ION_HEAP_TYPE_SYSTEM = 0,
+			ION_HEAP_TYPE_SYSTEM_CONTIG = 1,
+			ION_HEAP_TYPE_CARVEOUT = 2,
+			ION_HEAP_TYPE_CHUNK = 3,
+			ION_HEAP_TYPE_DMA = 4
+		*/
+		system{
+			type = <0>;
+			name = "system";
+		};
+		system_contig{
+			type = <1>;
+			name = "system_contig";
+		};
+		cma{
+			type = <4>;
+			name = "cma";
+		};
+		carvout{
+			type = <2>;
+			name = "carvout";
+		};
+	};
+
+	leds {
+		compatible = "gpio-leds";
+		led@1 {
+			label = "led0";
+			gpios = <&gpe 14 1>;
+			default-state = "off";
+		};
+	};
+
+	wireless_pm {
+		compatible = "lombo,wireless-pm";
+		wifi_enable = <&gpe 9 1>;
+		status = "okay";
+	};
+	gmac: gmac@01242000 {
+		compatible = "lombo,n7v1-gmac";
+		reg = <0x01242000 0x2020>;
+		interrupts = <GIC_SPI INT_GMAC IRQ_TYPE_LEVEL_HIGH>;
+		clocks = <&ahb1_gate 7>, <&ahb1_reset 7>,
+			 <&mem_axi_gate 8>,
+			 <&perh2_pll>, <&gmac_core_clk>,
+			 <&gmac_sclk0>, <&gmac_sclk1>;
+		clock-names = "gmac_ahb_gate", "gmac_ahb_reset",
+			      "gmac_mem_axi_gate",
+			      "gmac_parent_clk", "gmac_core_clk",
+			      "gmac_sclk_0", "gmac_sclk_1";
+		pinctrl-names = "default";
+		pinctrl-0 = <&pinctrl_gmac_mdio_1>,
+			    <&pinctrl_gmac_rgmii_tx_clk>,
+			    <&pinctrl_gmac_rgmii_tx_en>,
+			    <&pinctrl_gmac_rgmii_tx_data>,
+			    <&pinctrl_gmac_rgmii_rx_clk>,
+			    <&pinctrl_gmac_rgmii_rx_dv>,
+			    <&pinctrl_gmac_rgmii_rx_data>;
+		phy-mode = "rgmii";
+		phy_rst_pin = <&gpc 2 0>;
+		tx_delay = <0 63 15>;
+		rx_delay = <0 40 6>;
+		status = "disabled";
+	};
+
+	camera {
+		compatible = "lombo,cccore", "simple-bus";
+
+		status = "okay";
+
+		dvp_reset_pin = <&gpc 15 0>;
+		dvp_pwdn_pin = <&gpc 14 0>;
+		mcsi_reset_pin = <&gpc 13 0>;
+		mcsi_pwdn_pin = <&gpc 12 0>;
+
+		/* if set, use the first mipi-csi/dvp sensor without detect */
+		/* skip_detect; */
+
+		/******************************************************
+		 * mipi-csi sensors
+		 *****************************************************/
+		imx307_mipi: imx307_mipi@1a {
+			status = "okay";
+			i2c_bus = <2>;
+			lombo,vdd_1_8;
+			isp_path=<1>;
+		};
+
+		ov2718_mipi: ov2718_mipi@36 {
+			status = "okay";
+			i2c_bus = <2>;
+			lombo,vdd_1_8;
+			isp_path=<1>;
+		};
+
+		ov10640_mipi: ov10640_mipi@37 {
+			status = "okay";
+			i2c_bus = <2>;
+			lombo,vdd_1_8;
+			isp_path=<1>;
+		};
+
+		f37_mipi: f37_mipi@40 {
+			status = "disabled";
+			i2c_bus = <2>;
+			lombo,vdd_1_8;
+			isp_path=<1>;
+		};
+
+		gc2053_mipi: gc2053_mipi@37 {
+			status = "disabled";
+			i2c_bus = <2>;
+			lombo,vdd_1_8;
+			isp_path=<1>;
+		};
+
+		ov5640_mipi: ov5640_mipi@3c {
+			status = "disabled";
+			i2c_bus = <2>;
+			/* lombo,vdd_1_8; */
+			isp_path=<0>;
+		};
+
+		ov8858_mipi: ov8858_mipi@36 {
+			status = "disabled";
+			i2c_bus = <2>;
+			lombo,vdd_1_8;
+			isp_path=<1>;
+		};
+
+		ov2735_mipi: ov2735_mipi@3c {
+			status = "disabled";
+			i2c_bus = <2>;
+			lombo,vdd_1_8;
+			isp_path=<1>;
+		};
+
+		os02k10_mipi: os02k10_mipi@36 {
+			status = "disabled";
+			i2c_bus = <2>;
+			lombo,vdd_1_8;
+			isp_path=<0>;
+		};
+
+		/******************************************************
+		 * dvp sensors
+		 *****************************************************/
+		ov5640_dvp: ov5640_dvp@3c {
+			status = "okay";
+			i2c_bus = <1>;
+			lombo,vdd_1_8;
+			isp_path=<0>;
+		};
+
+		tp3810_dvp: tp3810_dvp@3c {
+			status = "disabled";
+			i2c_bus = <1>;
+			/* lombo,vdd_1_8; */
+			isp_path=<0>;
+		};
+
+		ov2718_dvp: ov2718_dvp@36 {
+			status = "disabled";
+			i2c_bus = <1>;
+			/* lombo,vdd_1_8; */
+			isp_path=<1>;
+		};
+
+		ov2710_dvp: ov2710_dvp@36 {
+			status = "disabled";
+			i2c_bus = <1>;
+			/* lombo,vdd_1_8; */
+			isp_path=<1>;
+		};
+
+		pr2000k_ahd: pr2000k_ahd@5c {
+			status = "disabled";
+			i2c_bus = <1>;
+			/* lombo,vdd_1_8; */
+			isp_path=<0>;
+		};
+	};
+
+	pinctrl: pinctrl@04015000 {
+		/*
+		 * pins mapping which will not change is configured in
+		 * n7v1-pinctrl.dtsi, but the driver level of pins is various
+		 * with different board designed, so we overide the driver
+		 * level here.
+		 */
+
+		/* all the same with n7v1-pinctrl.dtsi */
+	};
+};

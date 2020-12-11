@@ -1,0 +1,26 @@
+#!/bin/sh
+
+export LD_PRELOAD=/usr/lib/libdebugger.so
+# For UI Auto tp test
+#export QWS_MOUSE_PROTO="IntelliMouse:/dev/input/mice"
+# QT env
+source /etc/profile
+
+case "$1" in
+  start)
+    logcat -v time -r2048 -n 5 -f "/data/log/`date +%Y%m%d-%H-%M-%S`.log" &
+    aio -qws > /dev/null &
+    # For UI Auto tp test
+    # The second number means which serial port you will use,but coun't be 0
+    # uart_virtualtp 1 115200 &
+    ;;
+  stop)
+    pkill -9 aio
+    pgrep wpa_supplicant | xargs kill -9
+    pgrep viss_isp | xargs kill -9
+    sleep 1
+    #pgrep aio | xargs kill -9
+    ;;
+  *)
+    ;;
+esac

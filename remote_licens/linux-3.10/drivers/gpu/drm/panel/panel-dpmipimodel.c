@@ -1,0 +1,329 @@
+/*
+ * Copyright (C) 2016-2018, LomboTech Co.Ltd.
+ * Authors:
+ *	lomboswer <lomboswer@lombotech.com>
+ *
+ * This program is free software; you can redistribute  it and/or modify it
+ * under  the terms of  the GNU General  Public License as published by the
+ * Free Software Foundation;  either version 2 of the  License, or (at your
+ * option) any later version.
+ */
+
+#include <drm/drmP.h>
+#include <drm/drm_panel.h>
+#include "panel-simple.h"
+#include "lombo_panel_config.h"
+
+/* timing for tcon host */
+#define WIDTH	(800)
+#define HEIGHT	(1280)
+#define HBP	(50)
+#define HFP	(24)
+#define HSW	(26)
+#define HACT	(WIDTH)
+#define VBP_F1	(8)
+#define VFP_F1	(83)
+#define VSW_F1	(4)
+#define VACT_F1	(HEIGHT)
+#define VT_F1	(VBP_F1 + VFP_F1 + VSW_F1 + VACT_F1)
+#define VBP_F2	(0)
+#define VFP_F2	(0)
+#define VSW_F2	(0)
+#define VACT_F2	(0)
+#define VT_F2	(VBP_F2 + VFP_F2 + VSW_F2 + VACT_F2)
+#define DCLK	(74250000)
+
+#define DCS_MDELAY_FLAG (0)
+
+static u8 dpmipi_init_code[] = {
+	2, 0xE0, 0x00,
+
+	2, 0xE1, 0x93,
+	2, 0xE2, 0x65,
+	2, 0xE3, 0xF8,
+	2, 0x80, 0x03,
+
+	2, 0xE0, 0x01,
+
+	2, 0x00, 0x00,
+	2, 0x01, 0xA9,
+
+	2, 0x03, 0x00,
+	2, 0x04, 0xA8,
+	2, 0x0E, 0x00,
+
+	2, 0x17, 0x00,
+	2, 0x18, 0xB1,
+	2, 0x19, 0x01,
+	2, 0x1A, 0x00,
+	2, 0x1B, 0xB1,
+	2, 0x1C, 0x01,
+
+	2, 0x1F, 0x3E,
+	2, 0x20, 0x2D,
+	2, 0x21, 0x2D,
+	2, 0x22, 0x7E,
+
+	2, 0x37, 0x19,
+
+	2, 0x38, 0x05,
+	2, 0x39, 0x00,
+	2, 0x3A, 0x01,
+	2, 0x3C, 0x78,
+	2, 0x3D, 0xFF,
+	2, 0x3E, 0xFF,
+	2, 0x3F, 0xFF,
+
+	2, 0x40, 0x06,
+	2, 0x41, 0xA0,
+
+	2, 0x43, 0x08,
+	2, 0x44, 0x09,
+	2, 0x45, 0x28,
+
+	2, 0x55, 0x0F,
+
+	2, 0x57, 0x89,
+	2, 0x58, 0x0A,
+	2, 0x59, 0x0A,
+	2, 0x5A, 0x28,
+	2, 0x5B, 0x19,
+
+	2, 0x5D, 0x7C,
+	2, 0x5E, 0x66,
+	2, 0x5F, 0x56,
+	2, 0x60, 0x49,
+	2, 0x61, 0x44,
+	2, 0x62, 0x34,
+	2, 0x63, 0x37,
+	2, 0x64, 0x1F,
+	2, 0x65, 0x36,
+	2, 0x66, 0x33,
+	2, 0x67, 0x32,
+	2, 0x68, 0x4F,
+	2, 0x69, 0x3D,
+	2, 0x6A, 0x43,
+	2, 0x6B, 0x35,
+	2, 0x6C, 0x30,
+	2, 0x6D, 0x24,
+	2, 0x6E, 0x13,
+	2, 0x6F, 0x00,
+	2, 0x70, 0x7C,
+	2, 0x71, 0x66,
+	2, 0x72, 0x56,
+	2, 0x73, 0x49,
+	2, 0x74, 0x44,
+
+	2, 0x75, 0x34,
+	2, 0x76, 0x37,
+	2, 0x77, 0x1F,
+	2, 0x78, 0x36,
+	2, 0x79, 0x33,
+	2, 0x7A, 0x32,
+	2, 0x7B, 0x4F,
+	2, 0x7C, 0x3D,
+	2, 0x7D, 0x43,
+	2, 0x7E, 0x35,
+	2, 0x7F, 0x30,
+	2, 0x80, 0x24,
+	2, 0x81, 0x13,
+	2, 0x82, 0x00,
+
+	2, 0xE0, 0x02,
+
+	2, 0x00, 0x45,
+	2, 0x01, 0x45,
+	2, 0x02, 0x44,
+	2, 0x03, 0x44,
+	2, 0x04, 0x47,
+	2, 0x05, 0x47,
+	2, 0x06, 0x46,
+	2, 0x07, 0x46,
+	2, 0x08, 0x40,
+	2, 0x09, 0x1F,
+	2, 0x0A, 0x1F,
+	2, 0x0B, 0x1F,
+	2, 0x0C, 0x1F,
+	2, 0x0D, 0x1F,
+	2, 0x0E, 0x1F,
+	2, 0x0F, 0x41,
+	2, 0x10, 0x1F,
+	2, 0x11, 0x1F,
+	2, 0x12, 0x1F,
+	2, 0x13, 0x1F,
+	2, 0x14, 0x1F,
+	2, 0x15, 0x1F,
+
+	2, 0x16, 0x45,
+	2, 0x17, 0x45,
+	2, 0x18, 0x44,
+	2, 0x19, 0x44,
+	2, 0x1A, 0x47,
+	2, 0x1B, 0x47,
+	2, 0x1C, 0x46,
+	2, 0x1D, 0x46,
+	2, 0x1E, 0x40,
+	2, 0x1F, 0x1F,
+	2, 0x20, 0x1F,
+	2, 0x21, 0x1F,
+	2, 0x22, 0x1F,
+	2, 0x23, 0x1F,
+	2, 0x24, 0x1F,
+	2, 0x25, 0x41,
+	2, 0x26, 0x1F,
+	2, 0x27, 0x1F,
+	2, 0x28, 0x1F,
+	2, 0x29, 0x1F,
+	2, 0x2A, 0x1F,
+	2, 0x2B, 0x1F,
+
+	2, 0x58, 0x40,
+
+	2, 0x5B, 0x10,
+	2, 0x5C, 0x06,
+	2, 0x5D, 0x20,
+	2, 0x5E, 0x01,
+	2, 0x5F, 0x02,
+
+	2, 0x63, 0x62,
+	2, 0x64, 0x62,
+
+	2, 0x67, 0x32,
+	2, 0x68, 0x08,
+	2, 0x69, 0x62,
+	2, 0x6A, 0x66,
+	2, 0x6B, 0x08,
+	2, 0x6C, 0x00,
+	2, 0x6D, 0x04,
+	2, 0x6E, 0x04,
+	2, 0x6F, 0x88,
+
+	2, 0xE0, 0x03,
+	2, 0x98, 0x3F,
+
+	2, 0xE0, 0x04,
+	2, 0x09, 0x10,
+	2, 0x2B, 0x2B,
+	2, 0x2D, 0x03,
+	2, 0x2E, 0x44,
+
+	2, 0xE0, 0x00,
+	2, 0xE6, 0x02,
+	2, 0xE7, 0x06,
+
+	1, 0x11,
+
+	DCS_MDELAY_FLAG, 120,
+
+	1, 0x29,
+
+	DCS_MDELAY_FLAG, 5,
+};
+
+static ssize_t dpmipi_mipi_dsi_dcs_write_array(
+	struct panel_simple_host *host)
+{
+	u32 i = 0;
+	u32 len = (sizeof(dpmipi_init_code) /
+			sizeof((dpmipi_init_code)[0]));
+	u8 *ini_code = &dpmipi_init_code[0];
+
+	if (!ini_code)
+		return 0;
+
+	DRM_DEBUG_KMS("panel_simple_host: %p\n", host->dsi);
+	while (i < len) {
+		if (ini_code[i] == DCS_MDELAY_FLAG) {
+			mdelay(ini_code[i + 1]);
+			i += 2;
+		} else {
+			mipi_dsi_dcs_write_buffer(host->dsi,
+				(const void *)&ini_code[i + 1], ini_code[i]);
+			i += ini_code[i] + 1;
+		}
+	}
+
+	return i;
+}
+
+static struct lombo_vo_dev_config dpmipi_vo = {
+	.dev_if = VO_DEV_MIPI_DSI_VIDEO,
+	.dsi_if = {
+		.index = 0,
+		.is_dual = false,
+		.is_bta = false,
+		.lane_num = 4,
+		.tx_fmt = DSI_RGB888,
+		.tx_mode = DSI_VIDEO_MODE,
+		.tx_mode_cfg.video_mode.trans_mode = DSI_NON_BURST_PULSE,
+		.is_bitrate_fixed = false,
+		.bit_clk = 999000000,
+	},
+
+	.timing.is_interlace = false,
+	.timing.field1.vt = VT_F1,
+	.timing.field1.vact = VACT_F1,
+	.timing.field1.vfp = VFP_F1,
+	.timing.field1.vsw = VSW_F1,
+	.timing.field2.vt = VT_F2,
+	.timing.field2.vact = VACT_F2,
+	.timing.field2.vfp = VFP_F2,
+	.timing.field2.vsw = VSW_F2,
+	.timing.hline.ht = HSW + HBP + HACT + HFP,
+	.timing.hline.hact = HACT,
+	.timing.hline.hfp = HFP,
+	.timing.hline.hsw = HSW,
+	.timing.width = WIDTH,
+	.timing.height = HEIGHT,
+	.timing.dclk_freq = DCLK,
+	.format = TCON_FMT_RGB888,
+};
+
+/* mipi dsi 480x854 LCD test */
+static struct drm_display_mode dpmipi_mode = {
+	/* dclk_freq */
+	.clock = DCLK / 1000,
+	/* width */
+	.hdisplay = WIDTH,
+	/* hsync_start = hdisplay + hfp */
+	.hsync_start = WIDTH + HFP,
+	/* hsync_end = hdisplay + hfp + hsw */
+	.hsync_end = WIDTH + HFP + HSW,
+	/* htotal = hdisplay + hfp + hsw + hbp */
+	.htotal = WIDTH + HFP + HSW + HBP,
+	/* height */
+	.vdisplay = HEIGHT,
+	/* vsync_start = vdisplay + vfp */
+	.vsync_start = HEIGHT + VFP_F1,
+	/* vsync_end = vdisplay + vfp + vsw */
+	.vsync_end = HEIGHT + VFP_F1 + VSW_F1,
+	/* vtotal = vdisplay + vfp + vsw + vbp */
+	.vtotal = HEIGHT + VFP_F1 + VSW_F1 + VBP_F1,
+	.vrefresh = 60,
+
+	.private_size = sizeof(dpmipi_vo),
+	.private = (int *)&dpmipi_vo,
+};
+
+static struct panel_delay dpmipi_delay = {
+	.prepare = 120,
+	.unprepare = 30,
+	.enable = 0,
+	.disable = 50,
+	.power_on = 0,
+	.reset = 50,
+};
+
+const struct panel_simple_desc dpmipi_desc = {
+	.modes = &dpmipi_mode,
+	.num_modes = 1,
+	.bpc = 6,
+	.init_panel = PANEL_SIMPLE_DSI,
+	.delay = &dpmipi_delay,
+	.size = {
+		.width = 69,
+		.height = 123,
+	},
+	.ops.transfer = dpmipi_mipi_dsi_dcs_write_array,
+};
+

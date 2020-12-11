@@ -1,0 +1,6 @@
+*.stash
+*.pro.user
+Makefile
+qt_ui/qt_generate
+astyle
+condstyle.sh

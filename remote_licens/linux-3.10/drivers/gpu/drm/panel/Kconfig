@@ -1,0 +1,332 @@
+config DRM_PANEL
+	bool
+	depends on DRM && OF
+	help
+	  Panel registration and lookup framework.
+
+menu "Display Panels"
+	depends on DRM && DRM_PANEL
+
+config DRM_PANEL_SIMPLE
+	tristate "support for lombo simple panel"
+	depends on OF
+	depends on BACKLIGHT_CLASS_DEVICE
+	help
+	  DRM panel driver for dumb panels that need at most a regulator and
+	  a GPIO to be powered up. Optionally a backlight can be attached so
+	  that it can be automatically turned off when the panel goes into a
+	  low power state.
+
+config DRM_PANEL_SPC_S92048
+	tristate "support for spc s9048 panels legacy"
+	depends on DRM_PANEL_SIMPLE
+	help
+	  DRM panel driver for dumb panels that need at most a regulator and
+	  a GPIO to be powered up. Optionally a backlight can be attached so
+	  that it can be automatically turned off when the panel goes into a
+	  low power state.
+
+config DRM_PANEL_FJ018WV04
+	tristate "support for fj018wv04 panels legacy"
+	depends on DRM_PANEL_SIMPLE
+	help
+	  DRM panel driver for dumb panels that need at most a regulator and
+	  a GPIO to be powered up. Optionally a backlight can be attached so
+	  that it can be automatically turned off when the panel goes into a
+	  low power state.
+
+config DRM_PANEL_WKS43178
+	tristate "support for wks43178 panel"
+	depends on DRM_PANEL_SIMPLE
+	help
+	  DRM panel driver for dumb panels that need at most a regulator and
+	  a GPIO to be powered up. Optionally a backlight can be attached so
+	  that it can be automatically turned off when the panel goes into a
+	  low power state.
+
+config DRM_PANEL_TIANMA_TM070JDHG30
+	tristate "support for tianma tm070jdhg30 panel"
+	depends on DRM_PANEL_SIMPLE
+	help
+	  DRM panel driver for dumb panels that need at most a regulator and
+	  a GPIO to be powered up. Optionally a backlight can be attached so
+	  that it can be automatically turned off when the panel goes into a
+	  low power state.
+
+config DRM_PANEL_WKS_WKS70002
+	tristate "support for wks wks70002 panel"
+	depends on DRM_PANEL_SIMPLE
+	help
+	  DRM panel driver for dumb panels that need at most a regulator and
+	  a GPIO to be powered up. Optionally a backlight can be attached so
+	  that it can be automatically turned off when the panel goes into a
+	  low power state.
+
+config DRM_PANEL_DUAL_LINK_B101UAN021
+	tristate "support for dual link b010uan021 panel"
+	depends on DRM_PANEL_SIMPLE
+	help
+	  DRM panel driver for dumb panels that need at most a regulator and
+	  a GPIO to be powered up. Optionally a backlight can be attached so
+	  that it can be automatically turned off when the panel goes into a
+	  low power state.
+
+config DRM_PANEL_SLM5P5_HX8399C
+        tristate "support for SLM5.5 HX8399C panels"
+        depends on DRM_PANEL_SIMPLE
+	select VIDEOMODE_HELPERS
+        help
+          DRM panel driver for dumb panels that need at most a regulator and
+          a GPIO to be powered up. Optionally a backlight can be attached so
+          that it can be automatically turned off when the panel goes into a
+          low power state.
+
+config DRM_PANEL_LT8912B
+        tristate "support for LT8912B panels"
+        depends on DRM_PANEL_SIMPLE
+	select VIDEOMODE_HELPERS
+        help
+          DRM panel driver for dumb panels that need at most a regulator and
+          a GPIO to be powered up. Optionally a backlight can be attached so
+          that it can be automatically turned off when the panel goes into a
+          low power state.
+
+config DRM_PANEL_N070ICE_G02
+	tristate "support for n070ice-g02 panels"
+	depends on BACKLIGHT_CLASS_DEVICE
+	select VIDEOMODE_HELPERS
+	help
+	  DRM panel driver for dumb panels that need at most a regulator and
+	  a GPIO to be powered up. Optionally a backlight can be attached so
+	  that it can be automatically turned off when the panel goes into a
+	  low power state.
+
+config DRM_PANEL_AJBJD9364
+	tristate "support for ajbjd9364 panels"
+	depends on BACKLIGHT_CLASS_DEVICE
+	select VIDEOMODE_HELPERS
+	help
+	  DRM panel driver for dumb panels that need at most a regulator and
+	  a GPIO to be powered up. Optionally a backlight can be attached so
+	  that it can be automatically turned off when the panel goes into a
+	  low power state.
+
+config DRM_PANEL_SC500FB3101ST
+	tristate "support for sc500fb3101st panels"
+	depends on BACKLIGHT_CLASS_DEVICE
+	select VIDEOMODE_HELPERS
+	help
+	  DRM panel driver for dumb panels that need at most a regulator and
+	  a GPIO to be powered up. Optionally a backlight can be attached so
+	  that it can be automatically turned off when the panel goes into a
+	  low power state.
+
+config DRM_PANEL_JD9366
+	tristate "support for jd9366 panels"
+	depends on BACKLIGHT_CLASS_DEVICE
+	select VIDEOMODE_HELPERS
+	help
+	  DRM panel driver for dumb panels that need at most a regulator and
+	  a GPIO to be powered up. Optionally a backlight can be attached so
+	  that it can be automatically turned off when the panel goes into a
+	  low power state.
+
+config DRM_PANEL_AYF080R1140B01
+	tristate "support for ayf080r1140b01 panels"
+	depends on BACKLIGHT_CLASS_DEVICE
+	select VIDEOMODE_HELPERS
+	help
+	  DRM panel driver for dumb panels that need at most a regulator and
+	  a GPIO to be powered up. Optionally a backlight can be attached so
+	  that it can be automatically turned off when the panel goes into a
+	  low power state.
+
+config DRM_PANEL_M080Q31
+	tristate "support for m080q31 panels"
+	depends on BACKLIGHT_CLASS_DEVICE
+	select VIDEOMODE_HELPERS
+	help
+	  DRM panel driver for dumb panels that need at most a regulator and
+	  a GPIO to be powered up. Optionally a backlight can be attached so
+	  that it can be automatically turned off when the panel goes into a
+	  low power state.
+
+config DRM_PANEL_L048_0701B24C32
+	tristate "support for l048-0701b24c32 panels"
+	depends on BACKLIGHT_CLASS_DEVICE
+	select VIDEOMODE_HELPERS
+	help
+	  DRM panel driver for dumb panels that need at most a regulator and
+	  a GPIO to be powered up. Optionally a backlight can be attached so
+	  that it can be automatically turned off when the panel goes into a
+	  low power state.
+
+config DRM_PANEL_D070BO31PM20L
+	tristate "support for d070bo31pm20l panels"
+	depends on BACKLIGHT_CLASS_DEVICE
+	select VIDEOMODE_HELPERS
+	help
+	  DRM panel driver for dumb panels that need at most a regulator and
+	  a GPIO to be powered up. Optionally a backlight can be attached so
+	  that it can be automatically turned off when the panel goes into a
+	  low power state.
+
+config DRM_LCD_PYX080I
+	tristate "support for PYX080I21301 panels"
+	depends on BACKLIGHT_CLASS_DEVICE
+	select VIDEOMODE_HELPERS
+	help
+	  DRM panel driver for dumb panels that need at most a regulator and
+	  a GPIO to be powered up. Optionally a backlight can be attached so
+	  that it can be automatically turned off when the panel goes into a
+	  low power state.
+
+config DRM_LCD_NWE080BHT31
+	tristate "support for NWE080BHT31 panels"
+	depends on BACKLIGHT_CLASS_DEVICE
+	select VIDEOMODE_HELPERS
+	help
+	  DRM panel driver for dumb panels that need at most a regulator and
+	  a GPIO to be powered up. Optionally a backlight can be attached so
+	  that it can be automatically turned off when the panel goes into a
+	  low power state.
+config DRM_PANEL_HX8394F
+	tristate "support for hx8394f panels"
+	select VIDEOMODE_HELPERS
+	help
+	  DRM panel driver for dumb panels that need at most a regulator and
+	  a GPIO to be powered up. Optionally a backlight can be attached so
+	  that it can be automatically turned off when the panel goes into a
+	  low power state.
+
+config DRM_PANEL_M133X54
+	tristate "support for m133x54 panels"
+	depends on BACKLIGHT_CLASS_DEVICE
+	select VIDEOMODE_HELPERS
+	help
+	  DRM panel driver for dumb panels that need at most a regulator and
+	  a GPIO to be powered up. Optionally a backlight can be attached so
+	  that it can be automatically turned off when the panel goes into a
+	  low power state.
+
+config DRM_PANEL_XJS50FWI4015
+	tristate "support for xjs50fwi4015 panels"
+	depends on BACKLIGHT_CLASS_DEVICE
+	select VIDEOMODE_HELPERS
+	help
+	  DRM panel driver for dumb panels that need at most a regulator and
+	  a GPIO to be powered up. Optionally a backlight can be attached so
+	  that it can be automatically turned off when the panel goes into a
+	  low power state.
+
+config DRM_PANEL_HK080I04A
+	tristate "support for hk080i04a panels"
+	depends on BACKLIGHT_CLASS_DEVICE
+	select VIDEOMODE_HELPERS
+	help
+	  DRM panel driver for dumb panels that need at most a regulator and
+	  a GPIO to be powered up. Optionally a backlight can be attached so
+	  that it can be automatically turned off when the panel goes into a
+	  low power state.
+
+config DRM_PANEL_T070B056S1
+	tristate "support for t070b056s1 panels"
+	depends on BACKLIGHT_CLASS_DEVICE
+	select VIDEOMODE_HELPERS
+	help
+	  DRM panel driver for dumb panels that need at most a regulator and
+	  a GPIO to be powered up. Optionally a backlight can be attached so
+	  that it can be automatically turned off when the panel goes into a
+	  low power state.
+
+config DRM_PANEL_TC358775XBG
+	tristate "support for tc358775xbg panels"
+	depends on BACKLIGHT_CLASS_DEVICE
+	select VIDEOMODE_HELPERS
+	help
+	  DRM panel driver for dumb panels that need at most a regulator and
+	  a GPIO to be powered up. Optionally a backlight can be attached so
+	  that it can be automatically turned off when the panel goes into a
+	  low power state.
+
+config DRM_PANEL_OTM1289A
+	tristate "support for otm1289a panels"
+	depends on BACKLIGHT_CLASS_DEVICE
+	select VIDEOMODE_HELPERS
+	help
+	  DRM panel driver for dumb panels that need at most a regulator and
+	  a GPIO to be powered up. Optionally a backlight can be attached so
+	  that it can be automatically turned off when the panel goes into a
+	  low power state.
+
+config DRM_PANEL_XR080IK0T
+	tristate "support for xr080ik0t panels"
+	depends on BACKLIGHT_CLASS_DEVICE
+	select VIDEOMODE_HELPERS
+	help
+	  DRM panel driver for dumb panels that need at most a regulator and
+	  a GPIO to be powered up. Optionally a backlight can be attached so
+	  that it can be automatically turned off when the panel goes into a
+	  low power state.
+
+config DRM_PANEL_ICN6202
+	tristate "support for chipone_boe_icn6202 panels"
+	depends on BACKLIGHT_CLASS_DEVICE
+	select VIDEOMODE_HELPERS
+	help
+	  DRM panel driver for dumb panels that need at most a regulator and
+	  a GPIO to be powered up. Optionally a backlight can be attached so
+	  that it can be automatically turned off when the panel goes into a
+	  low power state.
+
+config DRM_PANEL_ICN6211
+        tristate "support for chipone_boe_icn6211 panels"
+        depends on BACKLIGHT_CLASS_DEVICE
+        select VIDEOMODE_HELPERS
+        help
+          DRM panel driver for dumb panels that need at most a regulator and
+          a GPIO to be powered up. Optionally a backlight can be attached so
+          that it can be automatically turned off when the panel goes into a
+          low power state.
+
+config DRM_PANEL_CJD9365
+	tristate "support for cjd9365 panels"
+	depends on BACKLIGHT_CLASS_DEVICE
+	select VIDEOMODE_HELPERS
+	help
+	  DRM panel driver for dumb panels that need at most a regulator and
+	  a GPIO to be powered up. Optionally a backlight can be attached so
+	  that it can be automatically turned off when the panel goes into a
+	  low power state.
+
+config DRM_PANEL_AM500V40
+	tristate "support for am500v40 panels"
+	depends on BACKLIGHT_CLASS_DEVICE
+	select VIDEOMODE_HELPERS
+	help
+	  DRM panel driver for dumb panels that need at most a regulator and
+	  a GPIO to be powered up. Optionally a backlight can be attached so
+	  that it can be automatically turned off when the panel goes into a
+	  low power state.
+
+config DRM_PANEL_SC500H40
+	tristate "support for SC500H40 panels"
+	depends on BACKLIGHT_CLASS_DEVICE
+	select VIDEOMODE_HELPERS
+	help
+	  DRM panel driver for dumb panels that need at most a regulator and
+	  a GPIO to be powered up. Optionally a backlight can be attached so
+	  that it can be automatically turned off when the panel goes into a
+	  low power state.
+
+config DRM_PANEL_DPMIPIMODEL
+	tristate "support for dpmipimodel panels"
+	depends on BACKLIGHT_CLASS_DEVICE
+	select VIDEOMODE_HELPERS
+	help
+	  DRM panel driver for dumb panels that need at most a regulator and
+	  a GPIO to be powered up. Optionally a backlight can be attached so
+	  that it can be automatically turned off when the panel goes into a
+	  low power state.
+
+endmenu

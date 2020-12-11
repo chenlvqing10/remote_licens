@@ -1,0 +1,1 @@
+#define DRIVERVERSION	"v5.8.8_34643.20190808_beta"

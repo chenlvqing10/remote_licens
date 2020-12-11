@@ -1,0 +1,125 @@
+if ARCH_LOMBO
+
+menu "LomboTech Board Support"
+
+config ARCH_LOMBO_N7
+	bool "E81 CPU architecture"
+	select CPU_V7
+	select MULTI_IRQ_HANDLER
+	select GENERIC_IRQ_CHIP
+	select SPARSE_IRQ
+	select ARM_GIC
+	select HAVE_SMP
+
+if ARCH_LOMBO_N7
+
+config ARCH_LOMBO_N7V0
+	bool "The First Soc with E81 CPU"
+	select HAVE_CLK
+	select COMMON_CLK
+	select CLKSRC_MMIO
+	select GENERIC_CLOCKEVENTS
+	select ARCH_REQUIRE_GPIOLIB
+	select PINCTRL
+	select PINCTRL_N7
+	select OF
+
+if ARCH_LOMBO_N7V0
+choice
+	prompt "Board select for ARCH_LOMBO_N7V0 Soc"
+	default ARCH_LOMBO_N7V0_EVB
+
+config ARCH_LOMBO_N7V0_EVB
+	bool "EVB board for ARCH_LOMBO_N7V0 Soc"
+	help
+	  This is the evb board for
+	  ARCH_LOMBO_N7V0 Soc,
+	  which used as the development
+	  board when the
+	  IC is ok.
+
+config ARCH_LOMBO_N7V0_FPGA
+	bool "FPGA board for ARCH_LOMBO_N7V0 Soc"
+	help
+	  This is the fpga board for ARCH_LOMBO_N7V0 Soc
+
+config ARCH_LOMBO_N7V0_DEMO_BOARD
+	bool "Demo board for ARCH_LOMBO_N7V0 Soc"
+	help
+	  This is the demo board for ARCH_LOMBO_N7V0 Soc
+endchoice
+endif	# ARCH_LOMBO_N7V0
+
+config ARCH_LOMBO_N7V1
+	bool "The Second Soc with E81 CPU"
+	select HAVE_CLK
+	select COMMON_CLK
+	select CLKSRC_MMIO
+	select GENERIC_CLOCKEVENTS
+	select ARCH_REQUIRE_GPIOLIB
+	select PINCTRL
+	select PINCTRL_N7
+	select OF
+
+if ARCH_LOMBO_N7V1
+choice
+	prompt "Board select for ARCH_LOMBO_N7V1 Soc"
+	default ARCH_LOMBO_N7V1_EVB
+
+config ARCH_LOMBO_N7V1_EVB
+	bool "EVB board for ARCH_LOMBO_N7V1 Soc"
+	help
+	  This is the evb board for
+	  ARCH_LOMBO_N7V1 Soc,
+	  which used as the development
+	  board when the
+	  IC is ok.
+
+config ARCH_LOMBO_N7V1_EVB_SIP
+	bool "EVB_SIP board for ARCH_LOMBO_N7V1 Soc"
+	help
+	  This is the evb_sip board for
+	  ARCH_LOMBO_N7V1 Soc,
+	  which used as the development
+	  board when the
+	  IC is ok.
+
+config ARCH_LOMBO_N7V1_FPGA
+	bool "FPGA board for ARCH_LOMBO_N7V1 Soc"
+	help
+	  This is the fpga board for ARCH_LOMBO_N7V1 Soc
+endchoice
+endif	# ARCH_LOMBO_N7V1
+
+endif	# ARCH_LOMBO_N7
+
+endmenu	# LomboTech SoCs Support
+
+#
+# configurations for power management
+#
+comment "Power management"
+
+config LOMBO_PM_DEBUG
+        bool "LOMBO PM Suspend debug"
+	default n
+        depends on PM
+        select DEBUG_LL
+        help
+	  This is for debug during suspend and resume.
+	  Say Y here if you want to debug during PM Suspend and Resume flow,
+	  where the console maybe closed.
+	  If uart was closed before, we should realize pm_debug_init to re-init
+	  uart port.
+
+config LOMBO_PM_CHECK
+        bool "LOMBO PM Suspend Memory CRC"
+        depends on PM && CRC32
+        help
+          Enable the PM code's memory area checksum over sleep. This option
+          will generate CRCs of all blocks of memory, and store them before
+          going to sleep. The blocks are then checked on resume for any
+          errors. Note: this can take several seconds depending on memory
+          size and CPU speed.
+
+endif	# ARCH_LOMBO

@@ -1,0 +1,28 @@
+#!/bin/sh
+
+[ -x /usr/bin/wpa_supplicant ] || exit 0
+[ -f /data/wifi/wpa_supplicant.conf  ] || exit 0
+
+case "$1" in
+	start)
+		printf "Starting wpa_supplicant: \n"
+		ifconfig wlan0 up
+		start-stop-daemon -S -b -x /usr/bin/wpa_supplicant -- -Dnl80211 -iwlan0 -c/data/wifi/wpa_supplicant.conf
+		[ $? = 0 ] && echo "OK" || echo "FAIL"
+		;;
+	stop)
+		printf "Stopping wpa_supplicant: \n"
+		ifconfig wlan0 down
+		start-stop-daemon -K -q -x /usr/bin/wpa_supplicant
+		[ $? = 0 ] && echo "OK" || echo "FAIL"
+		;;
+	restart|reload)
+		$0 stop
+		$0 start
+		;;
+	*)
+		echo "Usage: $0 {start|stop|restart}"
+		exit 1
+esac
+
+exit 0

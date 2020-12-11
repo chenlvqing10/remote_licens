@@ -1,0 +1,155 @@
+#
+# greetings.ini
+# This file is meant for TTS Greetings configuration
+[default_config]
+# 0: chinese 1: english
+default_language=0
+# mutile_greeting=enable
+# default greeting num should be 1
+default_num=1
+defaule_pos=1
+default_id=1
+# max_greeting_cnt=64
+
+
+[greeting_0]
+id=0
+ch_name=greeting_0_ch
+ch_content=晚上好
+eng_name=greeting_0_eng
+eng_content=good evening
+
+[greeting_1]
+id=1
+ch_name=greeting_1_ch
+ch_content=打卡成功
+eng_name=greeting_1_eng
+eng_content=Punch successful
+
+[greeting_2]
+id=2
+ch_name=greeting_2_ch
+ch_content=欢迎光临
+eng_name=greeting_2_eng
+eng_content=welcome
+
+[greeting_3]
+id=3
+ch_name=greeting_3_ch
+ch_content=陌生人
+eng_name=greeting_3_eng
+eng_content=unknown visitor
+
+[greeting_4]
+id=4
+ch_name=greeting_4_ch
+ch_content=假体
+eng_name=greeting_4_eng
+eng_content=artifact
+
+[greeting_5]
+id=5
+ch_name=greeting_5_ch
+ch_content=体温正常
+eng_name=greeting_5_eng
+eng_content=normal temperature
+
+[greeting_6]
+id=6
+ch_name=greeting_6_ch
+ch_content=体温异常
+eng_name=greeting_6_eng
+eng_content=abnormal temperature
+
+[greeting_7]
+id=7
+ch_name=greeting_7_ch
+ch_content=请通行
+eng_name=greeting_7_eng
+eng_content=please pass
+
+[greeting_8]
+id=8
+ch_name=greeting_8_ch
+ch_content=请注册通行
+eng_name=greeting_8_eng
+eng_content=please register to pass
+
+[greeting_9]
+id=9
+ch_name=greeting_9_ch
+ch_content=请联系管理员
+eng_name=greeting_9_eng
+eng_content=please contact the administrator
+
+[greeting_10]
+id=10
+ch_name=greeting_10_ch
+ch_content=请佩戴口罩
+eng_name=greeting_10_eng
+eng_content=please wear a mask
+
+[greeting_11]
+id=11
+ch_name=greeting_11_ch
+ch_content=欢迎再次光临
+eng_name=greeting_11_eng
+eng_content=look forward to your next visit
+
+[greeting_12]
+id=12
+ch_name=greeting_12_ch
+ch_content=早上好
+eng_name=greeting_12_eng
+eng_content=good morning
+
+[greeting_13]
+id=13
+ch_name=greeting_13_ch
+ch_content=上午好
+eng_name=greeting_12_eng
+eng_content=good morning
+
+[greeting_14]
+id=14
+ch_name=greeting_14_ch
+ch_content=中午好
+eng_name=greeting_14_eng
+eng_content=good afternoon
+
+[greeting_15]
+id=15
+ch_name=greeting_15_ch
+ch_content=下午好
+eng_name=greeting_14_eng
+eng_content=good afternoon
+
+[greeting_16]
+id=16
+ch_name=greeting_16_ch
+ch_content=上班打卡成功
+eng_name=greeting_16_eng
+eng_content=Punch in successful
+
+[greeting_17]
+id=17
+ch_name=greeting_17_ch
+ch_content=辛苦了
+eng_name=greeting_17_eng
+eng_content=thanks for your hard work
+
+[greeting_18]
+id=18
+ch_name=greeting_18_ch
+ch_content=下班打卡成功
+eng_name=greeting_18_eng
+eng_content=Punch out successful
+
+[greeting_19]
+id=19
+ch_name=greeting_19_ch
+ch_content=重复打卡
+eng_name=greeting_19_eng
+eng_content=Punch repeatedly
+
+# end of file

@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html>
+<head>
+ 	<meta charset="utf-8">
+        <title></title>
+        
+        <meta http-equiv="pragma" content="no-cache">
+        <meta http-equiv="cache-control" content="no-cache">
+        
+        <link rel="stylesheet" text="text/css" href="ui.css">
+        <script type="text/javascript" src="jquery.min.js"></script>
+        <script type="text/javascript" src="jquery.ui.min.js"></script>
+
+
+</head>
+<body>
+	<script type="text/javascript" src="jschardet.js"></script>
+	<script type="text/javascript" src="papaparse.js"></script>
+	<script type="text/javascript" src="gbk.js"></script>
+	<script type="text/javascript" src="xlsx.full.min.js"></script>
+	
+	<script type="text/javascript" src="easyui-lang-zh_CN.js"></script>
+
+	<script type="text/javascript">
+
+		function formatter(date){
+			var year = date.getFullYear();
+			var month = date.getMonth() + 1;
+			var day = date.getDate();
+			var hour = date.getHours();
+			var min = date.getMinutes();
+			var sec = date.getSeconds();
+			
+			console.log(date);
+			
+			month = month<10?('0'+month):month;
+			day = day<10?('0'+day):day;
+			hour = hour<10?('0'+hour):hour;
+			min = min<10?'0'+min:min;
+			sec = sec<10?'0'+sec:sec;
+			
+			return year+'/'+month+'/'+day+' '+hour+':'+min+':'+sec;
+		}
+
+		function parser(s){
+			
+			console.log(s);
+			var reg = /[/ :]/;
+			var ss=(s.split(reg));
+			console.log(ss);
+			var y = parseInt(ss[0],10);
+			var m = parseInt(ss[1],10);
+			var d = parseInt(ss[2],10);
+			var hr = parseInt(ss[3],10);
+			var min = parseInt(ss[4],10);
+			var sec = parseInt(ss[5],10);
+			
+			console.log(y);console.log(m);console.log(d);
+			console.log(hr);console.log(min);console.log(sec);
+			if(!isNaN(y) && !isNaN(m) && !isNaN(d) && !isNaN(hr) && !isNaN(min) && !isNaN(sec)){
+				return new Date(y,m-1,d,hr,min,sec);
+			} else {
+				return new Date();
+			}
+		}
+
+		function pageFilter(data){
+			if(typeof data.length=='number' && typeof data.splice=='function'){
+				data = {
+					total: data.length,
+					rows: data
+				}
+			}
+			var dg = $(this);
+			var opts = dg.datagrid('options');
+			var pager = dg.datagrid('getPager');
+			pager.pagination({
+				onSelectPage: function(pageNumber, pageSize){
+					opts.pageNumber = pageNumber;
+					opts.pageSize = pageSize;
+					pager.pagination('refresh', {
+						pageNumber: pageNumber,
+						pageSize: pageSize
+					});
+					dg.datagrid('loadData', data);
+				}
+			});
+			if(!data.originalRows){
+				if(data.rows){
+					data.originalRows = data.rows;
+				}else if(data.data && data.data.rows){
+					data.originalRows = data.data.rows;
+				}else{
+					data.originalRows = [];
+				}
+			}
+			var start = (opts.pageNumber-1)*parseInt(opts.pageSize);
+			var end = start + parseInt(opts.pageSize);
+			data.rows = data.originalRows.slice(start, end);
+			return data;
+		}
+
+
+		function downFile(filename, filedata){
+			var bindata = new Blob([filedata], {type:"application/octet-stream"}); 
+			var url = window.URL.createObjectURL(bindata);
+			var anchor = document.createElement("a");
+			anchor.href = url;
+			anchor.download = filename;
+			anchor.click();
+			window.URL.revokeObjectURL(bindata);
+		}
+		
+		function downFileCsv(filename, filedata){
+			
+			console.log("csvlength:"+filedata.length)
+			console.log(filedata);
+			
+			filedata = "\ufeff" + filedata;
+			var bindata = new Blob([filedata], {type:"text/csv,charset=utf-8"}); 
+			
+			console.log("blobcsvlength:"+bindata.length);
+			console.log("blobcsvlength:"+bindata.size);
+			console.log(bindata);
+			
+			var url = window.URL.createObjectURL(bindata);
+			var anchor = document.createElement("a");
+			anchor.href = url;
+			anchor.download = filename;
+			anchor.click();
+			window.URL.revokeObjectURL(bindata);
+		}
+	
+		function convertBase64ToBlob(urldata){
+			var bdata = window.atob(urldata);
+			var arrbuf = new ArrayBuffer(bdata.length);
+			var pu8 = new Uint8Array(arrbuf);
+			for(var i=0; i<bdata.length; i++){
+				pu8[i] = bdata.charCodeAt(i);
+			}
+			
+			return arrbuf;
+		}
+		
+		function downPic(pic_name, encoded_pic){
+			
+			var dedata = convertBase64ToBlob(encoded_pic);
+			downFile(pic_name, dedata);
+		}
+
+		function export_rec(){
+			var arrxls = new Array();
+			
+			var start_punch_time = $('#start_punch_time').datetimebox('getValue');
+			var end_punch_time = $('#end_punch_time').datetimebox('getValue');
+			var employee_number = $('#employee_number').textbox('getValue');
+			var name = $('#name').textbox('getValue');
+			var punch_pass = $("input[name='punch_pass']:checked").val();
+			var role = $("input[name='role']:checked").val();
+			var access_right = $("input[name='access_right']:checked").val();
+
+			$.ajax({
+				type:'POST',
+				url:'/action/exportrec',
+				dataType:'json',
+				contentType:"application/x-www-form-urlencoded",
+				async:false,
+				data:{
+					start_punch_time: start_punch_time,
+					end_punch_time: end_punch_time,
+					employee_number: employee_number,
+					name: name,
+					punch_pass: punch_pass,
+					role: role,
+					access_right: access_right
+				},
+				success:function(data){
+					alert("导出成功");
+					console.log(data);
+					
+					for(var i=0; i<data.length; i++){
+						arrxls.push({'人员编号':data[i].employee_number, '姓名':data[i].name, '性别':data[i].gender, '身份证号码':data[i].id_card_number, '部门名称':data[i].department_name, '匹配分数':data[i].match_score, '打卡地址':data[i].address, '打卡时间':data[i].punch_time, '打卡现场图片名':data[i].punch_live_large_pic_name});
+					}
+					
+					var book = XLSX.utils.book_new();
+					var sheet = XLSX.utils.json_to_sheet(arrxls);
+					XLSX.utils.book_append_sheet(book, sheet, "");
+					XLSX.writeFile(book, "export_record.xls", {bookSST:true});
+
+					for(var i=0; i<data.length; i++){
+						console.log("["+i+"]"+data[i].pic_name);
+						console.log("["+i+"]"+data[i].base64_pic_len);
+						downPic(data[i].pic_name, data[i].base64_pic);
+					}
+				},
+				error:function(xhr,status,error){
+					alert("导出失败");
+				}
+			});
+			
+			
+		}
+
+		function search_rec(){
+			var start_punch_time = $('#start_punch_time').datetimebox('getValue');
+			var end_punch_time = $('#end_punch_time').datetimebox('getValue');
+			var employee_number = $('#employee_number').textbox('getValue');
+			var name = $('#name').textbox('getValue');
+			var punch_pass = $("input[name='punch_pass']:checked").val();
+			var role = $("input[name='role']:checked").val();
+			var access_right = $("input[name='access_right']:checked").val();
+			
+			$.ajax({
+				type:'POST',
+				url:'/action/searchrec',
+				dataType:'json',
+				contentType:"application/x-www-form-urlencoded",
+				async:false,
+				data:{
+					start_punch_time: start_punch_time,
+					end_punch_time: end_punch_time,
+					employee_number: employee_number,
+					name: name,
+					punch_pass: punch_pass,
+					role: role,
+					access_right: access_right
+				},
+				success:function(data){
+					$('#dg').datagrid({
+						data: data,
+						loadFilter: pageFilter 
+					});
+				},
+				error:function(xhr,status,error){
+					alert("查询失败");
+				}
+			
+			
+			});
+		}
+		
+		
+	</script>
+	
+	<div class="easyui-layout" style="height:643px;">
+		<div data-options="region:'north'" style="height:20%;width:100%">
+			<div style="padding-top:10px; padding-left:10px;">
+				<label>开始时间:</label> <input id="start_punch_time" class="easyui-datetimebox" value="" style="width:40%;height:30px;" editable="false" data-options="required:false, formatter:formatter, parser:parser">
+				<label>结束时间:</label> <input id="end_punch_time" class="easyui-datetimebox" value="" style="width:40%;height:30px;" editable="false" data-options="required:false, formatter:formatter, parser:parser">
+			</div>
+			<div style="padding-top:10px; padding-left:10px;">
+				<label>雇员ID:</label> <input id="employee_number" class="easyui-textbox" value="" style="width:15%;height:30px;" data-options="required:false">
+				<label style="padding-left:10px">姓名:</label> <input id="name" class="easyui-textbox" value="" style="width:15%;height:30px;" data-options="required:false">
+				<label style="padding-left:30px">通过标志:</label>
+				<input type="radio" id="nopass" name="punch_pass" checked="true" value="" onchange=""><label>空</label> 
+				<input type="radio" id="pass" name="punch_pass" value="1" onchange=""><label>1-通过</label>  
+				<input type="radio" id="failpass" name="punch_pass"  value="0" onchange=""><label>0-未通过</label>
+
+			</div>
+			<div style="padding-top:10px; padding-left:10px;">
+				<label >角色:</label>
+				<input type="radio" id="nolist" name="role" checked="true" value=""><label>空</label>
+				<input type="radio" id="whitelist" name="role" value="0"><label>0-白名单</label> 
+				<input type="radio" id="blacklist" name="role" value="1"><label>1-黑名单</label>  
+				<input type="radio" id="commonlist" name="role" value="2"><label>2-普通</label>
+				
+				<label style="padding-left:30px">访问权限:</label>
+				<input type="radio" id="noright" name="access_right" checked="true" value="" onchange=""><label>空</label> 
+				<input type="radio" id="permanent" name="access_right" value="0" onchange=""><label>0-永久</label>  
+				<input type="radio" id="temporary" name="access_right"  value="1" onchange=""><label>1-临时</label>
+
+				<div style="display:inline-block; width:60px; padding-left:80px;">
+					 <button id="btnsrch" style="width:60px; height:30px;" onclick="search_rec()">查询</button> 
+				</div>
+				<div style="display:inline-block; width:60px; padding-left:20px;">
+					 <button id="btnexp" style="width:60px; height:30px;" onclick="export_rec()">导出</button> 
+				</div>
+			</div>
+		</div>
+		<div data-options="region:'center'" style="height:80%;width:100%">
+			<table id="dg" class="easyui-datagrid" data-options="rownumbers:true, singleSelect:true, pagination:true, pageSize:10, fit:true, pageList:[10,20,50,100]">
+				<thead>
+					<tr>
+						<th field="id" width="10%">记录ID</th>
+						<th field="employee_number" width="10%">雇员ID</th>
+						<th field="match_score" width="10%">匹配分数</th>
+						<th field="punch_time" width="20%">打卡时间</th>
+						<th field="punch_live_large_pic_name" width="40%">打卡现场大图片名</th>
+						<th field="punch_pass" width="10%">通过标志</th>
+					</tr>
+				</thead>
+				<tbody>
+				</tbody>
+			</table>
+			
+		</div>
+	</div>
+</body>
+</html>

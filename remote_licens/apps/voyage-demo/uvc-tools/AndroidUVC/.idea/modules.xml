@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/AndroidUVC.iml" filepath="$PROJECT_DIR$/AndroidUVC.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/cameraview/cameraview.iml" filepath="$PROJECT_DIR$/cameraview/cameraview.iml" />
+      <module fileurl="file://$PROJECT_DIR$/faceid/faceid.iml" filepath="$PROJECT_DIR$/faceid/faceid.iml" />
+      <module fileurl="file://$PROJECT_DIR$/uvccamerasdk/uvccamerasdk.iml" filepath="$PROJECT_DIR$/uvccamerasdk/uvccamerasdk.iml" />
+    </modules>
+  </component>
+</project>

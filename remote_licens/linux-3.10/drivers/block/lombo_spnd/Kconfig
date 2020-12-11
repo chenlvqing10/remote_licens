@@ -1,0 +1,9 @@
+
+config LOMBO_SPND
+	tristate "Lombo SPI Nand Device Driver"
+	depends on ARCH_LOMBO
+	help
+	  Device driver for Lombo SPI Nand Device Driver.
+
+	  To compile this driver as a module, choose M here: the
+	  module will be called lombo_spnd.

@@ -1,0 +1,10 @@
+#!/bin/sh
+
+dd if=/dev/zero of=vfat.img bs=1M count=20
+mkdir /mnt/usb
+mkfs.vfat vfat.img
+losetup /dev/loop0 vfat.img
+insmod /lib/modules/$(uname -r)/gadgetfs.ko
+insmod /lib/modules/$(uname -r)/libcomposite.ko
+mount /dev/loop0 /mnt/usb
+insmod /lib/modules/$(uname -r)/g_mass_storage.ko file=/dev/loop0 stall=0 removable=1

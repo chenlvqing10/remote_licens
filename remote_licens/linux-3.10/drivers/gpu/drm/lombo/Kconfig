@@ -1,0 +1,131 @@
+
+menuconfig DRM_LOMBO
+	tristate "Lombo SoC DRM/KMS Driver"
+	depends on DRM && ARCH_LOMBO && OF
+	select LOMBO_DRM_KMS_HELPER_WRAPPER
+	select LOMBO_DRM_KMS_CMA_HELPER_WRAPPER
+	help
+	  Choose this option if you have an LOMBO SoC with
+	  DPU/DOSS. If M is selected the module will be called
+	  lombo-drm.
+	  haha.
+
+if DRM_LOMBO
+
+config LOMBO_DRM_KMS_HELPER_WRAPPER
+	tristate "LOMBO DRM KMS HELPER wrapper"
+	default y
+	select DRM_KMS_HELPER
+	help
+	  Choose this option if you neen select DRM_KMS_HELPER.
+	  This option can let you config DRM_KMS_HELPER as Y if
+	  LOMBO DRM modules are configed as M.
+	  hahah
+
+config LOMBO_DRM_KMS_CMA_HELPER_WRAPPER
+	bool "LOMBO DRM KMS CMA HELPER wrapper"
+	select DRM_KMS_CMA_HELPER
+	help
+	  Choose this option if you neen select DRM_KMS_CMA_HELPER.
+	  This option can let you config DRM_KMS_HELPER as Y if
+	  LOMBO DRM modules are configed as M.
+	  haha.
+
+config DRM_LOMBO_DPU_TOP
+	tristate "Support for LOMBO DPU TOP"
+	help
+	  Choose this option if you have an LOMBO SoC with DPU.
+	  If M is selected the module will be called lombo-dpu.
+	  haha
+	  haha
+
+config DRM_LOMBO_DC
+	tristate "Support for LOMBO DPU DC"
+	depends on DRM_LOMBO_DPU_TOP
+	help
+	  Choose this option if you have an LOMBO Soc with DPU,
+	  which has a Display Controller to do some alpha blending
+	  and feed graphics to TCON. If M is selected the module
+	  will be called lombo-dc.
+
+config DRM_LOMBO_OVE
+	tristate "Support for LOMBO DPU OVE"
+	depends on DRM_LOMBO_DPU_TOP
+	help
+	  Choose this option if you have an LOMBO Soc with DPU,
+	  which has a OVE to do some non-alpha blending
+	  and feed graphics to extenal processor.
+	  If M is selected the module will be called lombo-ove.
+
+config DRM_LOMBO_SE
+	tristate "Support for LOMBO DPU SE"
+	depends on DRM_LOMBO_DPU_TOP
+	help
+	  Choose this option if you have an LOMBO Soc with DPU,
+	  which has a Display Controller to do some alpha blending
+	  and feed graphics to dc or writeback to memory.
+	  If M is selected the module will be called lombo-se.
+
+config DRM_LOMBO_WB
+	tristate "Support for LOMBO DPU WB"
+	depends on DRM_LOMBO_DPU_TOP
+	help
+	  Choose this option if you have an LOMBO Soc with DPU,
+	  which has a WB module.
+	  IF M is selected the module will be called lombo-wb.
+	  haha
+
+config DRM_LOMBO_DIT
+	tristate "Support for LOMBO DIT"
+	depends on DRM_LOMBO_DPU_TOP
+	help
+	  Choose this option if you have an LOMBO SoC with DPU,
+	  which has a DIT module. IF M is selected the module
+	  will be called lombo-dit.
+	  haha
+
+config DRM_LOMBO_ROT
+	tristate "Support for LOMBO ROT"
+	depends on DRM_LOMBO_DPU_TOP
+	help
+	  Choose this option if you have an LOMBO SoC with DPU,
+	  which has a ROT module. IF M is selected the module
+	  will be called lombo-dit.
+	  haha
+
+config DRM_LOMBO_DOSS_TOP
+	tristate "Support for LOMBO DOSS TOP"
+        help
+	  Choose this option if you have an LOMBO SoC with DOSS.
+	  If M is selected the module will be called lombo-doss.
+	  haha
+	  haha
+
+config DRM_LOMBO_TCON
+	tristate "Support for LOMBO DOSS TCON"
+	depends on DRM_LOMBO_DOSS_TOP
+	select DRM_PANEL
+	help
+	  Choose this option if you have an LOMBO SoC with DOSS,
+	  which has a Timing Controller. If M is selected the
+	  module will be called lombo-tcon.
+	  haha
+
+config DRM_LOMBO_MIPI_DSI
+	tristate "Support for LOMBO DOSS MIPI DSI"
+	depends on DRM_LOMBO_DOSS_TOP
+	help
+	  Choose this option if you have an LOMBO SoC with DOSS,
+	  which has a MIPI DSI module. IF M is selected the
+	  module will be called lombo-dsi.
+	  haha
+
+config DRM_LOMBO_TVE
+	tristate "Support for LOMBO DOSS TVE"
+	depends on DRM_LOMBO_DOSS_TOP
+	help
+	  Choose this option if you have an LOMBO SoC with DOSS,
+	  which has a TVE module. IF M is selected the
+	  module will be called lombo-tve.
+	  haha
+endif

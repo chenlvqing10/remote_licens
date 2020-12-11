@@ -1,0 +1,22 @@
+
+OUTPUT_ARCH(arm)
+ENTRY(dramfreq_target_entry)
+
+SECTIONS
+{
+	.text DRAMFREQ_START :
+	{
+		*entry.o
+		*(.text)
+		*(.rodata)
+	}
+	.data :
+	{
+		*(.data)
+	}
+	.bss :
+	{
+		*(.bss)
+	}
+}
+

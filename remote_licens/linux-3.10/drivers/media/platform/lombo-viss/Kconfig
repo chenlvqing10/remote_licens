@@ -1,0 +1,46 @@
+menuconfig VIDEO_LOMBO_VISS
+	bool "Lombo Video Input Sub-System"
+	depends on ARCH_LOMBO && VIDEO_DEV && VIDEO_V4L2 && VIDEO_V4L2_SUBDEV_API
+	select VIDEOBUF2_DMA_CONTIG
+	default n
+	help
+	    lombo viss driver
+	    To compile this driver as build-in, choose y here
+	    To compile this driver as a module, choose M here: the
+	    module will be called lombo-viss-vic.
+
+if VIDEO_LOMBO_VISS
+
+config VIDEO_LOMBO_VIC
+	tristate "Lombo DVP interface driver"
+	default n
+	help
+	  This is a V4L2 driver for lombo dvp interface
+
+	  To compile this driver as build-in, choose y here
+	  To compile this driver as a module, choose M here: the
+	  module will be called lombo-viss-vic.
+
+config VIDEO_LOMBO_MIPI_CSI
+	tristate "Lombo MIPI-CSI interface driver"
+	default n
+	help
+	  This is a V4L2 driver for lombo mipi-csi interface
+
+	  To compile this driver as built-in, choose y here
+	  To compile this driver as a module, choose M here: the
+	  module will be called lombo-viss-mipi-csi.
+
+config VIDEO_LOMBO_ISP
+	tristate "Lombo ISP driver"
+	default n
+	help
+	  This is a V4L2 driver for lombo ISP
+
+	  To compile this driver as build-in, choose y here
+	  To compile this driver as a module, choose M here: the
+	  module will be called lombo-viss-is.
+
+source drivers/media/platform/lombo-viss/cccore/Kconfig
+
+endif # VIDEO_LOMBO_VISS

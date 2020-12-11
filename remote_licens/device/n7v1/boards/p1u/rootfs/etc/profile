@@ -1,0 +1,28 @@
+export PATH=/bin:/sbin:/usr/bin:/usr/sbin
+
+if [ "$PS1" ]; then
+	if [ "`id -u`" -eq 0 ]; then
+		export PS1='# '
+	else
+		export PS1='$ '
+	fi
+fi
+
+export PAGER='/bin/more '
+export EDITOR='/bin/vi'
+export LD_PRELOAD='/usr/lib/libdebugger.so'
+
+# QT env
+export QTDIR=/usr/lib/qt4
+export LD_LIBRARY_PATH=$QTDIR/lib:$LD_LIBRARY_PATH
+export QT_QWS_FONTDIR=$QTDIR/lib/fonts
+#export QWS_DISPLAY=Transformed:Rot270
+export QT_PLUGIN_PATH=$QTDIR/plugins
+
+# Source configuration files from /etc/profile.d
+for i in /etc/profile.d/*.sh ; do
+	if [ -r "$i" ]; then
+		. $i
+	fi
+	unset i
+done

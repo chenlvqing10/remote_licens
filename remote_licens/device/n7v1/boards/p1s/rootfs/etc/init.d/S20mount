@@ -1,0 +1,106 @@
+#!/bin/sh
+
+OPTS="defaults,noatime,errors=remount-ro"
+DEVICE=/dev/mmcblk0p1
+CACHE=/dev/mmcblk0p5
+
+check_clean_dev()
+{
+    chkdev=$1
+
+    chk_pattern="0000000 cccc cccc cccc cccc cccc cccc cccc cccc"
+
+    readstr=$(hexdump -n 512 $chkdev | head -1)
+    readstr=$(echo $readstr)
+
+    if [ "x$chk_pattern" == "x$readstr" ]; then
+        return 0
+    else
+        return 1
+    fi
+}
+
+check_clean_vfat_dev()
+{
+    chkdev=$1
+
+    chk_pattern="0000000 58eb 6d90"
+
+    readstr=$(hexdump -n 8 $chkdev | head -1)
+    readstr=$(echo $readstr)
+
+    if [ "x$chk_pattern" == "x$readstr" ]; then
+        return 0
+    else
+        return 1
+    fi
+}
+
+case "$1" in
+  start)
+    tmp_str=$(cat /proc/cmdline)
+    tmp_str=${tmp_str#*root=}
+    tmp_str=${tmp_str%% *}
+
+    if [ "x${tmp_str%%k*}" == "x/dev/mmcbl" ]; then
+        DEVICE=${tmp_str%%p*}p1
+    fi
+
+    check_clean_dev $DEVICE
+    if [ $? -eq 0 ]; then
+        echo "clean device $DEVICE ..."
+        mke2fs -t ext4 -F $DEVICE
+        mount -t ext4 -o $OPTS $DEVICE /data
+    else
+        echo "Checking $DEVICE ..."
+        mount -t ext4 -o $OPTS $DEVICE /data && umount /data
+        e2fsck -y $DEVICE > /dev/null
+        echo "Mounting /data ..."
+        mount -t ext4 -o $OPTS $DEVICE /data
+        if [ $? -ne 0 ] ; then
+            mke2fs -t ext4 -F $DEVICE
+            mount -t ext4 -o $OPTS $DEVICE /data
+        fi
+    fi
+
+    if [ ! -d "/cache" ]; then
+        mkdir /cache
+    fi
+
+    check_clean_vfat_dev $CACHE
+    if [ $? -eq 0 ]; then
+        echo "clean device $CACHE ..."
+	mkfs.vfat $CACHE
+        mount -t vfat -o $OPTS $CACHE /cache
+    else
+        echo "Checking $CACHE ..."
+        mount -t vfat -o $OPTS $CACHE /cache && umount /cache
+        fsck.vfat -y $DEVICE > /dev/null
+        echo "Mounting /cache ..."
+        mount -t vfat -o $OPTS $CACHE /cache
+        if [ $? -ne 0 ] ; then
+	    mkfs.vfat $CACHE
+            mount -t vfat -o $OPTS $CACHE /cache
+        fi
+    fi
+
+    if [ ! -d "/data/tmp" ]; then
+        mkdir /data/tmp
+    fi
+
+    if [ ! -d "/data/log" ]; then
+        mkdir /data/log
+    fi
+
+    echo 5 > /proc/sys/vm/dirty_ratio
+    echo 2 > /proc/sys/vm/dirty_background_ratio
+    echo 100 > /proc/sys/vm/dirty_expire_centisecs
+    echo 100 > /proc/sys/vm/dirty_writeback_centisecs
+    ;;
+  stop)
+    echo "Remount /data as read only"
+    mount -o remount,ro /data
+    ;;
+  *)
+    ;;
+esac

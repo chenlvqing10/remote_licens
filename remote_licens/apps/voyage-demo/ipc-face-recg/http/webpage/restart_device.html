@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+ 	<meta charset="utf-8">
+        <title></title>
+        
+        <meta http-equiv="pragma" content="no-cache">
+        <meta http-equiv="cache-control" content="no-cache">
+        
+        <link rel="stylesheet" text="text/css" href="ui.css">
+        <script type="text/javascript" src="jquery.min.js"></script>
+        <script type="text/javascript" src="jquery.ui.min.js"></script>
+
+
+</head>
+<body>
+	<script type="text/javascript">
+		function restartdevice(){
+			
+			var isok = confirm("是否重启设备?");
+			if(isok == true){
+				console.log("确认重启设置");
+				
+				$.ajax({
+					type:'POST',
+					url:'/action/restartdevice',
+					dataType:'text',
+					async:false,
+					data:{
+						flag:'1'
+					},
+					success:function(data){
+						alert("重启成功");
+					},
+					error:function(xhr,status,error){
+						alert("重启失败");
+					}
+				});
+			
+			}else{
+				console.log("取消重启设置");
+			}
+			
+			
+		}
+	</script>
+	
+	<div style="height:643px;">
+		<div style="padding-top:50px; padding-left:40px;">
+			<label style="padding-left:10px; font-size:24px; color:red;">请点击重启按钮重启设备!</label>
+		</div>
+		<div style="padding-top:120px;padding-left:300px;">
+			<button id="btn1" style="width:100px;height:30px;" onclick="restartdevice()">重启</button>
+		</div>
+	</div>
+</body>
+</html>

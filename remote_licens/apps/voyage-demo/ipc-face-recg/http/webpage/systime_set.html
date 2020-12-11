@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+ 	<meta charset="utf-8">
+        <title></title>
+        
+        <meta http-equiv="pragma" content="no-cache">
+        <meta http-equiv="cache-control" content="no-cache">
+        
+        <link rel="stylesheet" text="text/css" href="ui.css">
+        <script type="text/javascript" src="jquery.min.js"></script>
+        <script type="text/javascript" src="jquery.ui.min.js"></script>
+
+
+</head>
+<body>
+	<script type="text/javascript" src="easyui-lang-zh_CN.js"></script>
+	
+	<script type="text/javascript">
+	
+		function formatter(date){
+			var year = date.getFullYear();
+			var month = date.getMonth() + 1;
+			var day = date.getDate();
+			var hour = date.getHours();
+			var min = date.getMinutes();
+			var sec = date.getSeconds();
+			
+			month = month<10?('0'+month):month;
+			day = day<10?('0'+day):day;
+			hour = hour<10?('0'+hour):hour;
+			min = min<10?'0'+min:min;
+			sec = sec<10?'0'+sec:sec;
+			
+			return year+'/'+month+'/'+day+' '+hour+':'+min+':'+sec;
+		}
+
+		function parser(s){
+		
+			var reg = /[/ :]/;
+			var ss=(s.split(reg));
+
+			var y = parseInt(ss[0],10);
+			var m = parseInt(ss[1],10);
+			var d = parseInt(ss[2],10);
+			var hr = parseInt(ss[3],10);
+			var min = parseInt(ss[4],10);
+			var sec = parseInt(ss[5],10);
+			
+			if(!isNaN(y) && !isNaN(m) && !isNaN(d) && !isNaN(hr) && !isNaN(min) && !isNaN(sec)){
+				return new Date(y,m-1,d,hr,min,sec);
+			} else {
+				return new Date();
+			}
+		}
+	
+		function save_systime(){
+			var systime = $('#systime').datetimebox('getValue');
+
+			$.ajax({
+				type:'POST',
+				url:'/action/systimesetting',
+				dataType:'text',
+				data:{
+					systime: systime
+				},
+				success:function(data){
+					alert("设置成功");
+				},
+				error:function(xhr,status,error){
+					alert("设置失败");
+				}
+			
+			
+			});
+		}
+		
+		
+	</script>
+	
+	<div style="height:643px;">
+		<div style="padding-top:30px; padding-left:30px;">
+			<label>设置时间:</label> <input id="systime" class="easyui-datetimebox" value="" style="width:40%;height:30px;" editable="false" data-options="required:false, formatter:formatter, parser:parser">
+		</div>
+
+		<div style="padding-top:50px; padding-left:30px;">
+			<button id="btnsave" style="width:80px;height:30px;" onclick="save_systime()">保存设置</button>
+		</div>
+	</div>		
+			
+		
+</body>
+</html>

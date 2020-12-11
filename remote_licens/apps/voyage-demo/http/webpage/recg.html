@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+ 	<meta charset="utf-8">
+        <title></title>
+        
+        <meta http-equiv="pragma" content="no-cache">
+        <meta http-equiv="cache-control" content="no-cache">
+        
+        <link rel="stylesheet" text="text/css" href="ui.css">
+        <script type="text/javascript" src="jquery.min.js"></script>
+        <script type="text/javascript" src="jquery.ui.min.js"></script>
+
+
+</head>
+<body>
+	<script type="text/javascript">
+
+		$.ajax({
+				type:'POST',
+				url:'/action/recgcfg',
+				dataType:'json',
+				data:{
+					ops:'0'
+				},
+				success:function(data) {
+					console.log(data);
+					$('#threshold').textbox('setValue', data.threshold);
+					data.livingcheck == '1'?$('#living').prop("checked",true):$('#living').prop("checked",false);
+				},
+				error:function(xhr,status,error){
+					alert("获取识别参数失败");
+				}
+		});
+
+		function save(){
+			//var shortlength = $('#shortlength').textbox('getValue');
+			//var longlength = $('#longlength').textbox('getValue');
+			var threshold = $('#threshold').textbox('getValue');
+			
+			var b = $('#living').is(':checked');
+			var livingcheck = (b==true)?'1':'0';
+			
+			$.ajax({
+				type:'POST',
+				url:'/action/recgcfg',
+				dataType:'text',
+				data:{
+					ops:'1',
+					//shortlength: shortlength,
+					//longlength: longlength,
+					threshold: threshold,
+					livingcheck: livingcheck
+				},
+				success:function(data){
+					alert("保存成功");
+				},
+				error:function(xhr,status,error){
+					alert("保存失败");
+				}
+			
+			
+			});
+		}
+	</script>
+	
+	<div style="height:643px;">
+		
+		<div style="padding-top:120px; padding-left:300px;">
+		<label style="padding-left:20px">识别阈值:</label> <input id="threshold" class="easyui-textbox" value="" style="width:28%;height:30px;" data-options="required:false,validType:'length[1,8]'">
+		</div>
+		<div style="padding-top:20px; padding-left:300px;">
+		<label style="padding-left:20px">活体检测:</label> <input id="living" type="checkbox" value="">
+		</div>
+		<div style="padding-top:30px;padding-left:390px;">
+			<button id="btn1" style="width:20%;height:30px;" onclick="save()">保存</button>
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+ 	<meta charset="utf-8">
+        <title>人脸识别一体机</title>
+        
+        <meta http-equiv="pragma" content="no-cache">
+        <meta http-equiv="cache-control" content="no-cache">
+        
+        <link rel="stylesheet" text="text/css" href="ui.css">
+        <script type="text/javascript" src="jquery.min.js"></script>
+        <script type="text/javascript" src="jquery.ui.min.js"></script>
+	
+	<script type="text/javascript" src="cookie.js"></script>
+	
+	<script>
+		
+		$(function(){
+			var ck = getCookie("uname");
+			//alert("跳转至main.html时候,cookie值:"+ck);
+			if(ck == null){
+				console.log("ck==null");
+				parent.location.href = "login.html";
+			}else{
+				console.log("ck!=null");
+			}
+			
+		
+		});
+		
+		
+		
+		var tree_data = [
+		{
+			id:1,text:'识别设置',state:'open', attributes:{url:'recg_cfg.html'}
+			
+		},
+		{
+			id:2,text:'人员管理',state:'open',
+			children:[
+			{
+				id:21, text:'添加人员', state:'open', attributes:{url:'add_member.html'}
+			},
+			{
+				id:22, text:'批量导入', state:'open', attributes:{url:'import_mems.html'}
+			},
+			{
+				id:23, text:'查找人员', state:'open', attributes:{url:'search_member.html'}
+			},
+			{
+				id:24, text:'更新人员', state:'open', attributes:{url:'update_member.html'}
+			},
+			{
+				id:25, text:'批量删除', state:'open', attributes:{url:'batch_delete_member.html'}
+			},
+			{
+				id:26, text:'注册图片检测', state:'open', attributes:{url:'regist_photo_quality_score.html'}
+			}
+			]
+		},
+		{
+			id:3,text:'记录管理',state:'open',
+			children:[
+			{
+				id:31, text:'查找(导出)记录', state:'open', attributes:{url:'search_rec.html'}
+			}
+			]
+		},
+		{
+			id:4,text:'网络设置',state:'open',
+			children:[
+			{
+				id:41, text:'有线网络设置', state:'open', attributes:{url:'lan_cfg.html'}
+			},
+			{
+				id:42, text:'无线网络设置', state:'open', attributes:{url:'wifi_cfg.html'}
+			}
+			]
+		},
+		{
+			id:5,text:'系统设置',state:'open',
+			children:[
+			{
+				id:51, text:'音量设置', state:'open', attributes:{url:'volume_set.html'}
+			},
+			{
+				id:52, text:'屏幕设置', state:'open', attributes:{url:'bright_set.html'}
+			},
+			{
+				id:53, text:'补光设置', state:'open', attributes:{url:'lightcomp_set.html'}
+			},
+			{
+				id:51, text:'固件升级', state:'open', attributes:{url:'fw_upgrade.html'}
+			},
+			{
+				id:52, text:'恢复出厂设置', state:'open', attributes:{url:'factorydefault.html'}
+			},
+			{
+				id:53, text:'管理员密码', state:'open', attributes:{url:'admin_passwd.html'}
+			},
+			{
+				id:53, text:'系统时间设置', state:'open', attributes:{url:'systime_set.html'}
+			},
+			{
+				id:53, text:'获取系统信息', state:'open', attributes:{url:'sys_info.html'}
+			},
+			{
+				id:54, text:'重启设备', state:'open', attributes:{url:'restart_device.html'}
+			}
+			]
+		}
+		];
+		
+		window.onload = function(){
+			$('#tree').tree({
+				lines:true,
+				async:false,
+				dataType:'json',
+				data:tree_data,
+				onClick:function(node){
+					
+					if(!getCookie("uname")){
+						console.log("[#tree]ck==null");
+						parent.location.href = "login.html";
+						return -1;
+					}
+					
+					if($('#tree').tree('isLeaf', node.target)){
+						$('#main_panel').panel('refresh', node.attributes.url);
+					}
+				}
+			})
+		
+		
+		}
+	</script>
+	
+</head>
+<body>   
+		<div id="layout" class="easyui-layout" style="width:900px;height:680px;">
+			<div data-options="region:'north'" style="height:5%">
+			</div>
+			<div data-options="region:'west'" style="width:15%">
+				<ul id="tree" class="easyui-tree">
+				</ul>
+			</div>
+			<div data-options="region:'center'" style="width:85%">
+				<div id="main_panel" class="easyui-panel" href="">
+				</div>
+			</div>
+		</div>
+	
+
+</body>
+</html>

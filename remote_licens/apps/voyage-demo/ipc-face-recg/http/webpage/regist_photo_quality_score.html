@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+<head>
+ 	<meta charset="utf-8">
+        <title></title>
+        
+        <meta http-equiv="pragma" content="no-cache">
+        <meta http-equiv="cache-control" content="no-cache">
+        
+        <link rel="stylesheet" text="text/css" href="ui.css">
+        <script type="text/javascript" src="jquery.min.js"></script>
+        <script type="text/javascript" src="jquery.ui.min.js"></script>
+
+
+</head>
+<body>
+	<script type="text/javascript" src="easyui-lang-zh_CN.js"></script>
+	
+	<script type="text/javascript">
+		
+		function formatter(date){
+			var year = date.getFullYear();
+			var month = date.getMonth() + 1;
+			var day = date.getDate();
+			var hour = date.getHours();
+			var min = date.getMinutes();
+			var sec = date.getSeconds();
+			
+			console.log(date);
+			
+			month = month<10?('0'+month):month;
+			day = day<10?('0'+day):day;
+			hour = hour<10?('0'+hour):hour;
+			min = min<10?'0'+min:min;
+			sec = sec<10?'0'+sec:sec;
+			
+			return year+'/'+month+'/'+day+' '+hour+':'+min+':'+sec;
+		}
+
+		function parser(s){
+			
+			console.log(s);
+			var reg = /[/ :]/;
+			var ss=(s.split(reg));
+			console.log(ss);
+			var y = parseInt(ss[0],10);
+			var m = parseInt(ss[1],10);
+			var d = parseInt(ss[2],10);
+			var hr = parseInt(ss[3],10);
+			var min = parseInt(ss[4],10);
+			var sec = parseInt(ss[5],10);
+			
+			console.log(y);console.log(m);console.log(d);
+			console.log(hr);console.log(min);console.log(sec);
+			if(!isNaN(y) && !isNaN(m) && !isNaN(d) && !isNaN(hr) && !isNaN(min) && !isNaN(sec)){
+				return new Date(y,m-1,d,hr,min,sec);
+			} else {
+				return new Date();
+			}
+		}
+		
+		function selectpic(){
+			$('#btnfile').click();
+		}
+		
+		var arrimg = new Array();
+		var canvas = document.getElementById('prepic');
+		
+		arrimg = [];
+		
+		function selectpicok(){
+			var obj = document.getElementById('btnfile');
+			var file = obj.files[0];
+			var name = file.name;
+			var size = file.size;
+			console.log("name="+name);
+			console.log("size="+size);
+			
+			$('#picpath').textbox('setText', name);
+			
+			var reader = new FileReader();
+			reader.readAsDataURL(file);
+			
+			reader.onload = function(){
+					arrimg[0] = new Image();
+					arrimg[0].src = this.result;
+					arrimg[0].onload = function() {
+						var canvas = document.getElementById('prepic');
+						var ctx = canvas.getContext('2d');
+						
+						console.log("arrimg[0]:" + arrimg[0]);
+						ctx.clearRect(0, 0, 350, 350)
+						ctx.drawImage(arrimg[0], 0, 0, 350, 350);
+				}
+			}
+			
+		}
+		
+		function add_mem(){
+			var files = document.getElementById('btnfile').files;
+			var file = files[0];
+			var file2 = files[1];
+			var img;
+			img = arrimg[0];
+			console.log("img = " + img);
+			console.log("arrimg = " + arrimg[0]);
+			
+			if(files.length<1) {
+				alert("No input pic parameter!");
+				return -1;
+			}
+
+			var fmdata = new FormData();
+			fmdata.append("file", file);
+
+			console.log(fmdata);
+
+			$.ajax({
+				type:'POST',
+				url: '/action/addmember',
+				data: fmdata,
+				cache: false,
+				processData: false,
+				contentType: false,
+				async: false,
+				success: function(data){
+					alert("检测图片成功");
+					console.log("recv data: " + data);
+				},
+				error:function(error){
+					console.log(error);
+					console.log(error.status);
+					console.log(error.responseText);
+					alert("检测图片失败:"+error.responseText);
+				}
+			});
+						
+		}
+		
+		function picvalidate(){
+			$.ajax({
+				type:'POST',
+				url:'/picvalidate',
+				dataType:'text',
+				data:{
+
+				},
+				success:function(data){
+					alert("保存成功");
+				},
+				error:function(xhr,status,error){
+					alert("保存失败");
+				}
+
+			});
+		}
+		
+	</script>
+	
+
+	<div id="dlg-picload" class="easyui-dialog" title="添加人员" style="width:500px;height:200px;" data-options="resizable:false,model:true,closed:true,buttons:'#dlg-picload-buttons'">
+		<div id="dlg-picload-buttons">
+		<button id="dlg-picload-ok" onclick="add()">确认</button>
+		<button id="dlg-picload-cancel" onclick="javascript:$('#dlg-picload').dialog('close')">取消</button>
+		</div>
+	</div>
+
+	<div style="height:643px;">
+		<div style="padding-top:30px; padding-left:30px;">
+			<label>图片路径:</label> <input id="picpath" class="easyui-textbox" value="" style="width:70%;height:30px;" readonly="true" data-options="required:false">
+			<div style="display:inline-block; width:80px; padding-left:10px;">
+				 <button id="btnpic" style="width:30px; height:20px;" onclick="selectpic()">...</button> 
+			</div>
+			<input type="file" id="btnfile" style="display:none" onchange="selectpicok()" accept="image/*">
+		</div>
+		<div style="padding-top:20px;">
+			<div style="float:left;">
+				<div style="padding-top:0px; padding-left:30px;">
+					<label style="padding-right:20px">图片质量检测得分:</label> <input id="photo_score" class="easyui-textbox" value="" style="width:40%;height:30px;" readonly="true" data-options="required:false">
+				</div>
+				
+				<div style="padding-top:280px; padding-left:30px;">
+					<button id="btnadd" style="width:40%;height:30px;" onclick="add_mem()">检测</button>
+				</div>
+			</div>
+			<div style="float:left; padding-left:80px;">
+				<canvas id="prepic" width="350" height="350" style="background:#f7f7f7"></canvas>
+			</div>
+			<div style="clear:both">
+			</div>
+		</div>
+		
+	</div>
+</body>
+</html>

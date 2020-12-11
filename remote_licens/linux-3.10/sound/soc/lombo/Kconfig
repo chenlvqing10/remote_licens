@@ -1,0 +1,42 @@
+config SND_SOC_LOMBO
+	tristate "ASoC support for LOMBO"
+	select SND_SOC_GENERIC_DMAENGINE_PCM
+	help
+	  Say Y or M if you want to add support for codecs attached to
+	  the LOMBO SoCs' Audio interfaces. You will also need to
+	  select the audio interfaces to support below.
+
+config SND_SOC_N7V0_I2S
+	tristate "I2S support for LOMBO N7V0"
+	depends on SND_SOC_LOMBO && ARCH_LOMBO_N7V0
+	help
+	  Say Y or M if you want to add support i2s on N7V0 platform. The i2s
+	  interface only support inside n7_codec. please select it below.
+
+config SND_SOC_N7V1_I2S0
+	tristate "I2S0 support for LOMBO N7V1"
+	depends on SND_SOC_LOMBO && ARCH_LOMBO_N7V1
+	help
+	  Say Y or M if you want to add support i2s on N7V1 platform. The i2s0
+	  interface only support inside n7_codec. please select it below.
+
+config SND_SOC_N7V1_I2S1
+	tristate "I2S1 support for LOMBO N7V1"
+	depends on SND_SOC_LOMBO && ARCH_LOMBO_N7V1
+	help
+	  Say Y or M if you want to add support i2s on N7V1 platform. The i2s1
+	  interface only support outside codecs. please select it below.
+
+config SND_SOC_LOMBO_N7CODEC
+	tristate "ASoC support for LOMBO N7CODEC"
+	depends on SND_SOC_LOMBO && ARCH_LOMBO_N7
+	help
+	  Say Y or M if you want to add support for SoC audio on LOMBO boards
+	  using N7V0 or N7V1 platform inside codec.
+
+config SND_SOC_LOMBO_N9
+	tristate "ASoC support for LOMBO N9"
+	depends on SND_SOC_LOMBO && ARCH_LOMBO_N9
+	help
+	  Say Y or M if you want to add support for SoC audio on LOMBO boards
+	  using N9 platform inside codec.

@@ -1,0 +1,37 @@
+config USB_LOMBO
+	tristate "Lombo USB Controller"
+	depends on (USB_EHCI_HCD || USB_GADGET) && HAS_DMA
+	help
+	  Say Y here if your system has a dual role high speed USB
+	  controller based on Lombo Soc.
+
+	  When compiled dynamically, the module will be called ee-hdc.ko.
+
+if USB_LOMBO
+
+config USB_LOMBO_UDC
+	bool "Lombo device controller"
+	depends on USB_GADGET
+	help
+	  Say Y here to enable device controller functionality of the
+	  Lombo usb device driver, gadget support is depend on the device
+	  driver.
+	  UDC driver must use with nx phy driver.
+
+config USB_LOMBO_HOST
+	bool "Lombo host controller"
+	depends on USB_EHCI_HCD
+	select USB_EHCI_ROOT_HUB_TT
+	help
+	  Say Y here to enable host controller functionality of the
+	  Lombo usb host driver, host controller is compatible with
+	  ehci.
+	  Lombo host driver must use with nx phy driver.
+
+config USB_LOMBO_DEBUG
+	bool "Lombo driver debug"
+	help
+	  Say Y here to enable debugging output of the Lombo driver,
+	  when debug driver please select it.
+
+endif

@@ -1,0 +1,284 @@
+
+config LOMBO_AR0230_DVP
+	tristate "AR0230 DVP sensor support"
+	depends on I2C && VIDEO_V4L2
+	depends on MEDIA_CAMERA_SUPPORT
+	---help---
+	  This is a Video4Linux2 sensor-level driver for the
+	  AR0230 camera.
+
+	  To compile this driver as a module, choose M here: the
+	  module will be called ar0230_dvp.
+
+config LOMBO_OV2718_DVP
+	tristate "OmniVision OV2718 DVP sensor support"
+	depends on I2C && VIDEO_V4L2
+	depends on MEDIA_CAMERA_SUPPORT
+	---help---
+	  This is a Video4Linux2 sensor-level driver for the OmniVision
+	  OV271X camera.
+
+	  To compile this driver as a module, choose M here: the
+	  module will be called ov2718_dvp.
+
+config LOMBO_OV2710_DVP
+	tristate "OmniVision OV2710 DVP sensor support"
+	depends on I2C && VIDEO_V4L2
+	depends on MEDIA_CAMERA_SUPPORT
+	---help---
+	  This is a Video4Linux2 sensor-level driver for the OmniVision
+	  OV271X camera.
+
+	  To compile this driver as a module, choose M here: the
+	  module will be called ov2710_dvp.
+
+config LOMBO_OV5640_DVP
+	tristate "OmniVision OV5640 DVP sensor support"
+	depends on I2C && VIDEO_V4L2
+	depends on MEDIA_CAMERA_SUPPORT
+	---help---
+	  This is a Video4Linux2 sensor-level driver for the OmniVision
+	  OV5640 camera.
+
+	  To compile this driver as a module, choose M here: the
+	  module will be called ov5640_dvp.
+
+config LOMBO_GC2145_DVP
+	tristate "GC2145 DVP sensor support"
+	depends on I2C && VIDEO_V4L2
+	depends on MEDIA_CAMERA_SUPPORT
+	---help---
+	  This is a Video4Linux2 sensor-level driver for the GC2145
+	  MIPI camera.
+
+	  To compile this driver as a module, choose M here: the
+	  module will be called gc2145_dvp.
+
+config LOMBO_GC2145_MIPI
+	tristate "GC2145 MIPI sensor support"
+	depends on I2C && VIDEO_V4L2
+	depends on MEDIA_CAMERA_SUPPORT
+	---help---
+	  This is a Video4Linux2 sensor-level driver for the GC2145
+	  MIPI camera.
+
+	  To compile this driver as a module, choose M here: the
+	  module will be called gc2145_mipi.
+
+config LOMBO_GC2053_MIPI
+	tristate "GC2053 MIPI sensor support"
+	depends on I2C && VIDEO_V4L2
+	depends on MEDIA_CAMERA_SUPPORT
+	---help---
+	  This is a Video4Linux2 sensor-level driver for the GC2053
+	  MIPI camera.
+
+	  To compile this driver as a module, choose M here: the
+	  module will be called gc2053_mipi.
+
+config LOMBO_OV2718_MIPI
+	tristate "OmniVision OV2718 MIPI sensor support"
+	depends on I2C && VIDEO_V4L2
+	depends on MEDIA_CAMERA_SUPPORT
+	---help---
+	  This is a Video4Linux2 sensor-level driver for the OmniVision
+	  OV2718 MIPI camera.
+
+	  To compile this driver as a module, choose M here: the
+	  module will be called ov2718_mipi.
+
+config LOMBO_IMX307_MIPI
+	tristate "Sony IMX307 MIPI sensor support"
+	depends on I2C && VIDEO_V4L2
+	depends on MEDIA_CAMERA_SUPPORT
+	---help---
+	  This is a Video4Linux2 sensor-level driver for the Sony
+	  IMX307 MIPI camera.
+
+	  To compile this driver as a module, choose M here: the
+	  module will be called imx307_mipi.
+
+config LOMBO_IMX327_MIPI
+	tristate "Sony IMX327 MIPI sensor support"
+	depends on I2C && VIDEO_V4L2
+	depends on MEDIA_CAMERA_SUPPORT
+	---help---
+	  This is a Video4Linux2 sensor-level driver for the Sony
+	  IMX307 MIPI camera.
+
+	  To compile this driver as a module, choose M here: the
+	  module will be called imx327_mipi.
+
+config LOMBO_OV8858_MIPI
+	tristate "OmniVision OV8858 MIPI sensor support"
+	depends on I2C && VIDEO_V4L2
+	depends on MEDIA_CAMERA_SUPPORT
+	---help---
+	  This is a Video4Linux2 sensor-level driver for the OmniVision
+	  OV8858 MIPI camera.
+
+	  To compile this driver as a module, choose M here: the
+	  module will be called ov8858_mipi.
+
+config LOMBO_OV9281_MIPI
+	tristate "OV9281 MIPI sensor support"
+	depends on I2C && VIDEO_V4L2
+	depends on MEDIA_CAMERA_SUPPORT
+	---help---
+	  This is a Video4Linux2 sensor-level driver for the OV9281
+	  MIPI camera.
+
+	  To compile this driver as a module, choose M here: the
+	  module will be called ov9281_mipi.
+
+config LOMBO_OV5640_MIPI
+	tristate "OmniVision OV5640 MIPI sensor support"
+	depends on I2C && VIDEO_V4L2
+	depends on MEDIA_CAMERA_SUPPORT
+	---help---
+	  This is a Video4Linux2 sensor-level driver for the OmniVision
+	  OV5640 MIPI camera.
+
+	  To compile this driver as a module, choose M here: the
+	  module will be called ov5640_mipi.
+
+config LOMBO_SC2363P_MIPI
+	tristate "XC6130-SC2363P MIPI sensor support"
+	depends on I2C && VIDEO_V4L2
+	depends on MEDIA_CAMERA_SUPPORT
+	---help---
+	  This is a Video4Linux2 sensor-level driver for the XC6130-SC2363P
+	  MIPI camera.
+
+	  To compile this driver as a module, choose M here: the
+	  module will be called sc2363p_mipi.
+
+config LOMBO_OV2735_MIPI
+	tristate "OmniVision OV2735 MIPI sensor support"
+	depends on I2C && VIDEO_V4L2
+	depends on MEDIA_CAMERA_SUPPORT
+	---help---
+	  This is a Video4Linux2 sensor-level driver for the OmniVision
+	  OV2735 MIPI camera.
+
+	  To compile this driver as a module, choose M here: the
+	  module will be called ov2735_mipi.
+
+config LOMBO_OS02K10_MIPI
+	tristate "OmniVision OS02K10 MIPI sensor support"
+	depends on I2C && VIDEO_V4L2
+	depends on MEDIA_CAMERA_SUPPORT
+	---help---
+	  This is a Video4Linux2 sensor-level driver for the OmniVision
+	  OS02K10 MIPI camera.
+
+	  To compile this driver as a module, choose M here: the
+	  module will be called os02k10_mipi.
+
+config LOMBO_OV4689_MIPI
+	tristate "OmniVision OV4689 MIPI sensor support"
+	depends on I2C && VIDEO_V4L2
+	depends on MEDIA_CAMERA_SUPPORT
+	---help---
+	  This is a Video4Linux2 sensor-level driver for the OmniVision
+	  OV4689 MIPI camera.
+
+	  To compile this driver as a module, choose M here: the
+	  module will be called ov4689_mipi.
+
+config LOMBO_OV10640_MIPI
+	tristate "OmniVision OV10640 MIPI sensor support"
+	depends on I2C && VIDEO_V4L2
+	depends on MEDIA_CAMERA_SUPPORT
+	---help---
+	  This is a Video4Linux2 sensor-level driver for the OmniVision
+	  OV10640 MIPI camera.
+
+	  To compile this driver as a module, choose M here: the
+	  module will be called ov10640_mipi.
+
+config LOMBO_PR2000K
+	tristate "PixelPlus PR2000K AHD chip"
+	depends on I2C && VIDEO_V4L2
+	depends on MEDIA_CAMERA_SUPPORT
+	---help---
+	  Support for the PixelPlus PR2000K AHD chip.
+
+	  To compile this driver as a module, choose M here: the
+	  module will be called pr2000k.
+
+config LOMBO_TP3810
+	tristate "PixelPlus TP3810 chip"
+	depends on I2C && VIDEO_V4L2
+	depends on MEDIA_CAMERA_SUPPORT
+	---help---
+	  Support for the PixelPlus TP3810 chip.
+
+	  To compile this driver as a module, choose M here: the
+	  module will be called tp3810.
+
+config LOMBO_OV2685_MIPI
+	tristate "OmniVision OV2685 MIPI sensor support"
+	depends on I2C && VIDEO_V4L2
+	depends on MEDIA_CAMERA_SUPPORT
+	---help---
+	  This is a Video4Linux2 sensor-level driver for the OmniVision
+	  OV2685 MIPI camera.
+
+	  To compile this driver as a module, choose M here: the
+	  module will be called ov2685_mipi.
+
+config LOMBO_SP2305_DVP
+	tristate "SuperPix SP2305 DVP sensor support"
+	depends on I2C && VIDEO_V4L2
+	depends on MEDIA_CAMERA_SUPPORT
+	---help---
+	  This is a Video4Linux2 sensor-level driver for the SuperPix
+	  SP2305 DVP camera.
+
+	  To compile this driver as a module, choose M here: the
+	  module will be called sp2305_dvp.
+
+config LOMBO_OV2735_XC7021_DVP
+	tristate "OmniVision OV2735_XC7021 DVP sensor support"
+	depends on I2C && VIDEO_V4L2
+	depends on MEDIA_CAMERA_SUPPORT
+	---help---
+	  This is a Video4Linux2 sensor-level driver for the OmniVision
+	  OV2735_XC7021 DVP camera.
+
+	  To compile this driver as a module, choose M here: the
+	  module will be called ov2735_xc7021_dvp.
+
+config LOMBO_TW2866_DVP
+	tristate "TW2866 DVP sensor support"
+	depends on I2C && VIDEO_V4L2
+	depends on MEDIA_CAMERA_SUPPORT
+	---help---
+	  This is a Video4Linux2 sensor-level driver for the
+	  tw2866 DVP camera.
+
+	  To compile this driver as a module, choose M here: the
+	  module will be called tw2866_dvp.
+
+config LOMBO_GC0328_DVP
+	tristate "GC0328 DVP sensor support"
+	depends on I2C && VIDEO_V4L2
+	depends on MEDIA_CAMERA_SUPPORT
+	---help---
+	  This is a Video4Linux2 sensor-level driver for the GC0328
+	  DVP camera.
+
+	  To compile this driver as a module, choose M here: the
+	  module will be called gc0328_dvp.
+
+config LOMBO_GC1054_MIPI
+	tristate "GC1054 MIPI sensor support"
+	depends on I2C && VIDEO_V4L2
+	depends on MEDIA_CAMERA_SUPPORT
+	---help---
+	  This is a Video4Linux2 sensor-level driver for the GC1054
+	  MIPI camera.
+
+	  To compile this driver as a module, choose M here: the
+	  module will be called gc1054_mipi.

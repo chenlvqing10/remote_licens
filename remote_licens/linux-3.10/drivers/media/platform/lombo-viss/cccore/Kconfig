@@ -1,0 +1,14 @@
+menuconfig VIDEO_LOMBO_CCCORE
+	tristate "Lombo Camera Control Core"
+	depends on I2C && VIDEO_V4L2
+	depends on MEDIA_CAMERA_SUPPORT
+	---help---
+	  Support for the Lombo Camera Control.
+
+	  To compile this driver as build-in, choose y here
+	  To compile this driver as a module, choose M here: the
+	  module will be called lombo-cccore.
+
+if VIDEO_LOMBO_CCCORE
+	source drivers/media/platform/lombo-viss/cccore/sensors/Kconfig
+endif # VIDEO_LOMBO_CCCORE

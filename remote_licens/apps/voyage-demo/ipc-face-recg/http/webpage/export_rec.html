@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+<head>
+ 	<meta charset="utf-8">
+        <title></title>
+        
+        <meta http-equiv="pragma" content="no-cache">
+        <meta http-equiv="cache-control" content="no-cache">
+        
+        <link rel="stylesheet" text="text/css" href="ui.css">
+        <script type="text/javascript" src="jquery.min.js"></script>
+        <script type="text/javascript" src="jquery.ui.min.js"></script>
+
+
+</head>
+<body>
+	<script type="text/javascript" src="jschardet.js"></script>
+	<script type="text/javascript" src="papaparse.js"></script>
+	<script type="text/javascript" src="gbk.js"></script>
+	<script type="text/javascript" src="xlsx.full.min.js"></script>
+	
+	<script type="text/javascript" src="easyui-lang-zh_CN.js"></script>
+	
+	<script type="text/javascript">
+	
+		function formatter(date){
+			var year = date.getFullYear();
+			var month = date.getMonth() + 1;
+			var day = date.getDate();
+			var hour = date.getHours();
+			var min = date.getMinutes();
+			var sec = date.getSeconds();
+			
+			month = month<10?('0'+month):month;
+			day = day<10?('0'+day):day;
+			hour = hour<10?('0'+hour):hour;
+			min = min<10?'0'+min:min;
+			sec = sec<10?'0'+sec:sec;
+			
+			return year+'/'+month+'/'+day+' '+hour+':'+min+':'+sec;
+		}
+
+		function parser(s){
+		
+			var reg = /[/ :]/;
+			var ss=(s.split(reg));
+
+			var y = parseInt(ss[0],10);
+			var m = parseInt(ss[1],10);
+			var d = parseInt(ss[2],10);
+			var hr = parseInt(ss[3],10);
+			var min = parseInt(ss[4],10);
+			var sec = parseInt(ss[5],10);
+			
+			if(!isNaN(y) && !isNaN(m) && !isNaN(d) && !isNaN(hr) && !isNaN(min) && !isNaN(sec)){
+				return new Date(y,m-1,d,hr,min,sec);
+			} else {
+				return new Date();
+			}
+		}
+		
+		function downFile(filename, filedata){
+			var bindata = new Blob([filedata], {type:"application/octet-stream"}); 
+			var url = window.URL.createObjectURL(bindata);
+			var anchor = document.createElement("a");
+			anchor.href = url;
+			anchor.download = filename;
+			anchor.click();
+			window.URL.revokeObjectURL(bindata);
+		}
+		
+		function downFileCsv(filename, filedata){
+			
+			console.log("csvlength:"+filedata.length)
+			console.log(filedata);
+			
+			filedata = "\ufeff" + filedata;
+			var bindata = new Blob([filedata], {type:"text/csv,charset=utf-8"}); 
+			
+			console.log("blobcsvlength:"+bindata.length);
+			console.log("blobcsvlength:"+bindata.size);
+			console.log(bindata);
+			
+			var url = window.URL.createObjectURL(bindata);
+			var anchor = document.createElement("a");
+			anchor.href = url;
+			anchor.download = filename;
+			anchor.click();
+			window.URL.revokeObjectURL(bindata);
+		}
+	
+		function convertBase64ToBlob(urldata){
+			var bdata = window.atob(urldata);
+			var arrbuf = new ArrayBuffer(bdata.length);
+			var pu8 = new Uint8Array(arrbuf);
+			for(var i=0; i<bdata.length; i++){
+				pu8[i] = bdata.charCodeAt(i);
+			}
+			
+			return arrbuf;
+		}
+		
+		function downPic(picname, encoded_pic){
+			
+			var dedata = convertBase64ToBlob(encoded_pic);
+			downFile(picname, dedata);
+		}
+		
+		
+		function export_rec(){
+			var arrxls = new Array();
+			
+			var starttime = $('#starttime').datetimebox('getValue');
+			var endtime = $('#endtime').datetimebox('getValue');
+			var username = $('#username').textbox('getValue');
+			var b = $('#cboxrej').prop('checked');
+			var passflg = (b==true)?'1':'0';
+			
+			$.ajax({
+				type:'POST',
+				url:'/action/exportrec',
+				dataType:'json',
+				contentType:"application/x-www-form-urlencoded",
+				async:false,
+				data:{
+					username: username,
+					starttime: starttime,
+					endtime: endtime,
+					passflg: passflg
+				},
+				success:function(data){
+					alert("导出成功");
+					console.log(data);
+					
+					for(var i=0; i<data.length; i++){
+						arrxls.push({'人员编号':data[i].employee_number, '姓名':data[i].name, '性别':data[i].gender, '身份证号码':data[i].id_card_number, '部门名称':data[i].department_name, '匹配分数':data[i].match_score, '打卡地址':data[i].address, '打卡时间':data[i].punch_time, '打卡现场图片名':data[i].punch_live_large_pic_name});
+					}
+					
+					var book = XLSX.utils.book_new();
+					var sheet = XLSX.utils.json_to_sheet(arrxls);
+					XLSX.utils.book_append_sheet(book, sheet, "");
+					XLSX.writeFile(book, "facerecg.xls", {bookSST:true});
+
+					for(var i=0; i<data.length; i++){
+						console.log("["+i+"]"+data[i].picname);
+						console.log("["+i+"]"+data[i].base64_pic_len);
+						downPic(data[i].picname, data[i].base64_pic);
+					}
+				},
+				error:function(xhr,status,error){
+					alert("导出失败");
+				}
+			});
+		}
+		
+	</script>
+	
+	<div style="height:643px;">
+		<div style="padding-top:20px; padding-left:50px;">
+		<label>开始时间:</label> <input id="starttime" class="easyui-datetimebox" value="" style="width:80%;height:30px;" editable="false" data-options="required:false, formatter:formatter, parser:parser">
+		</div>
+		<div style="padding-top:20px; padding-left:50px;">
+		<label>结束时间:</label> <input id="endtime" class="easyui-datetimebox" value="" style="width:80%;height:30px;" editable="false" data-options="required:false, formatter:formatter, parser:parser">
+		</div>
+		<div style="padding-top:20px; padding-left:50px;">
+		<label>姓名:</label> <input id="username" class="easyui-textbox" value="" style="width:80%;height:30px;" data-options="required:false">
+		</div>
+		<div style="padding-top:10px; padding-left:50px;">
+			<label>拒绝记录:</label><input id="cboxrej" type="checkbox" checked="true"> 
+		</div>
+		<div style="padding-top:50px; padding-left:600px;">
+			<button id="btnexp" style="width:80px;height:30px;" onclick="export_rec()">导出</button>
+		</div>
+		
+	</div>
+</body>
+</html>

@@ -1,0 +1,737 @@
+/*
+ * lombo-n7v1-pinctrl.dts - pinctrl device tree configurations for N7V1 platform
+ *
+ * Copyright (C) 2016-2018, LomboTech Co.Ltd.
+ * Author: lomboswer <lomboswer@lombotech.com>
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program; if not, write to the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ */
+
+/ {
+
+pinctrl: pinctrl@04015000 {
+	compatible = "lombo,n7-pinctrl";
+	reg = <0x04015000 0x1000>;
+	clocks = <&apb1_gate 3>, <&apb1_reset 3>;
+	clock-names = "apb_gpio_gate", "apb_gpio_reset";
+
+	/*
+	 * Pin banks
+	 */
+
+	gpa: gpa {
+		gpio-controller;
+		#gpio-cells = <2>;
+	};
+
+	gpb: gpb {
+		gpio-controller;
+		#gpio-cells = <2>;
+		interrupt-controller;
+		#interrupt-cells = <2>;
+		interrupts = <GIC_SPI INT_GPIO0 IRQ_TYPE_LEVEL_HIGH>;
+		clk-src = <CLK_HFEOSC>;
+		clk-src-div = <CLK_DIV_1>;
+	};
+
+	gpc: gpc {
+		gpio-controller;
+		#gpio-cells = <2>;
+	};
+
+	gpd: gpd {
+		gpio-controller;
+		#gpio-cells = <2>;
+	};
+
+	gpe: gpe {
+		gpio-controller;
+		#gpio-cells = <2>;
+		interrupt-controller;
+		#interrupt-cells = <2>;
+		interrupts = <GIC_SPI INT_GPIO1 IRQ_TYPE_LEVEL_HIGH>;
+		clk-src = <CLK_HFEOSC>;
+		clk-src-div = <CLK_DIV_1>;
+	};
+
+	gpf: gpf {
+		gpio-controller;
+		#gpio-cells = <2>;
+		interrupt-controller;
+		#interrupt-cells = <2>;
+		interrupts = <GIC_SPI INT_GPIO2 IRQ_TYPE_LEVEL_HIGH>;
+		clk-src = <CLK_HFEOSC>;
+		clk-src-div = <CLK_DIV_1>;
+	};
+
+	gpg: gpg {
+		gpio-controller;
+		#gpio-cells = <2>;
+		interrupt-controller;
+		#interrupt-cells = <2>;
+		interrupts = <GIC_SPI INT_GPIO2 IRQ_TYPE_LEVEL_HIGH>;
+		clk-src = <CLK_HFEOSC>;
+		clk-src-div = <CLK_DIV_1>;
+	};
+
+	gpj: gpj {
+		gpio-controller;
+		#gpio-cells = <2>;
+	};
+
+	/*
+	 * Pin groups
+	 */
+
+	pinctrl_uart0_0: uart0-grp0 {
+		lombo,pins = "gpe-5", "gpe-6";
+		lombo,pin-function = <7>;
+		lombo,pin-pud = <DISABLE_PULL_UP_DOWN>;
+		lombo,pin-drv = <DRV_LEVEL2>;
+		lombo,pin-pud-reg = <PULL_100K>;
+	};
+
+	pinctrl_uart0_1: uart0-grp1 {
+		lombo,pins = "gpa-4", "gpa-5";
+		lombo,pin-function = <3>;
+		lombo,pin-pud = <DISABLE_PULL_UP_DOWN>;
+		lombo,pin-drv = <DRV_LEVEL2>;
+		lombo,pin-pud-reg = <PULL_100K>;
+	};
+
+	pinctrl_uart0_2: uart0-grp2 {
+		lombo,pins = "gpd-4", "gpd-5";
+		lombo,pin-function = <4>;
+		lombo,pin-pud = <DISABLE_PULL_UP_DOWN>;
+		lombo,pin-drv = <DRV_LEVEL2>;
+		lombo,pin-pud-reg = <PULL_100K>;
+	};
+
+	pinctrl_uart1_0: uart1-grp0 {
+		lombo,pins = "gpe-4", "gpe-7";
+		lombo,pin-function = <5>;
+		lombo,pin-pud = <DISABLE_PULL_UP_DOWN>;
+		lombo,pin-drv = <DRV_LEVEL2>;
+		lombo,pin-pud-reg = <PULL_100K>;
+	};
+
+	pinctrl_uart1_1: uart1-grp1 {
+		lombo,pins = "gpe-4", "gpe-7", "gpe-5", "gpe-6";
+		lombo,pin-function = <5>;
+		lombo,pin-pud = <DISABLE_PULL_UP_DOWN>;
+		lombo,pin-drv = <DRV_LEVEL2>;
+		lombo,pin-pud-reg = <PULL_100K>;
+	};
+
+
+	pinctrl_uart2: uart2-grp {
+		lombo,pins = "gpe-0", "gpe-3";
+		lombo,pin-function = <4>;
+		lombo,pin-pud = <DISABLE_PULL_UP_DOWN>;
+		lombo,pin-drv = <DRV_LEVEL2>;
+		lombo,pin-pud-reg = <PULL_100K>;
+	};
+
+	pinctrl_uart3: uart3-grp {
+		lombo,pins = "gpe-8", "gpe-9";
+		lombo,pin-function = <4>;
+		lombo,pin-pud = <DISABLE_PULL_UP_DOWN>;
+		lombo,pin-drv = <DRV_LEVEL2>;
+		lombo,pin-pud-reg = <PULL_100K>;
+	};
+
+	/* mosi(D0), miso(D1) */
+	pinctrl_spi0_0: spi0-grp0 {
+		lombo,pins = "gpa-8", "gpa-9";
+		lombo,pin-function = <3>;
+		lombo,pin-drv = <DRV_LEVEL2>;
+		lombo,pin-pud = <DISABLE_PULL_UP_DOWN>;
+	};
+
+	pinctrl_spi0_0_1: spi0-grp0-1 {
+		lombo,pins = "gpa-8", "gpa-9";
+		lombo,pin-function = <3>;
+		lombo,pin-drv = <DRV_LEVEL3>;
+		lombo,pin-pud = <DISABLE_PULL_UP_DOWN>;
+	};
+
+	pinctrl_spi0_0_2: spi0-grp0-2 {
+		lombo,pins = "gpa-8", "gpa-9";
+		lombo,pin-function = <3>;
+		lombo,pin-drv = <DRV_LEVEL4>;
+		lombo,pin-pud = <DISABLE_PULL_UP_DOWN>;
+	};
+
+	/* clk */
+	pinctrl_spi0_1: spi0-grp1 {
+		lombo,pins = "gpa-7";
+		lombo,pin-function = <3>;
+		lombo,pin-drv = <DRV_LEVEL3>;
+		lombo,pin-pud = <ENABLE_PULL_DOWN>;
+		lombo,pin-pud-reg = <PULL_100K>;
+	};
+
+	pinctrl_spi0_1_1: spi0-grp1-1 {
+		lombo,pins = "gpa-7";
+		lombo,pin-function = <3>;
+		lombo,pin-drv = <DRV_LEVEL4>;
+		lombo,pin-pud = <ENABLE_PULL_DOWN>;
+		lombo,pin-pud-reg = <PULL_100K>;
+	};
+
+	pinctrl_spi0_1_2: spi0-grp1-2 {
+		lombo,pins = "gpa-7";
+		lombo,pin-function = <3>;
+		lombo,pin-drv = <DRV_LEVEL5>;
+		lombo,pin-pud = <ENABLE_PULL_DOWN>;
+		lombo,pin-pud-reg = <PULL_100K>;
+	};
+
+	/* cs0 */
+	pinctrl_spi0_2: spi0-grp2 {
+		lombo,pins = "gpa-6";
+		lombo,pin-function = <3>;
+		lombo,pin-drv = <DRV_LEVEL1>;
+		lombo,pin-pud = <ENABLE_PULL_UP>;
+		lombo,pin-pud-reg = <PULL_100K>;
+	};
+
+	pinctrl_spi0_2_1: spi0-grp2-1 {
+		lombo,pins = "gpa-6";
+		lombo,pin-function = <3>;
+		lombo,pin-drv = <DRV_LEVEL2>;
+		lombo,pin-pud = <ENABLE_PULL_UP>;
+		lombo,pin-pud-reg = <PULL_100K>;
+	};
+
+	pinctrl_spi0_2_2: spi0-grp2-2 {
+		lombo,pins = "gpa-6";
+		lombo,pin-function = <3>;
+		lombo,pin-drv = <DRV_LEVEL3>;
+		lombo,pin-pud = <ENABLE_PULL_UP>;
+		lombo,pin-pud-reg = <PULL_100K>;
+	};
+
+	/* wp(D2), hold(D3) */
+	pinctrl_spi0_3: spi0-grp3 {
+		lombo,pins = "gpa-10", "gpa-11";
+		lombo,pin-function = <3>;
+		lombo,pin-drv = <DRV_LEVEL2>;
+		lombo,pin-pud = <ENABLE_PULL_UP>;
+		lombo,pin-pud-reg = <PULL_20K>;
+	};
+
+	pinctrl_spi0_3_1: spi0-grp3-1 {
+		lombo,pins = "gpa-10", "gpa-11";
+		lombo,pin-function = <3>;
+		lombo,pin-drv = <DRV_LEVEL3>;
+		lombo,pin-pud = <ENABLE_PULL_UP>;
+		lombo,pin-pud-reg = <PULL_20K>;
+	};
+
+	pinctrl_spi0_3_2: spi0-grp3-2 {
+		lombo,pins = "gpa-10", "gpa-11";
+		lombo,pin-function = <3>;
+		lombo,pin-drv = <DRV_LEVEL4>;
+		lombo,pin-pud = <ENABLE_PULL_UP>;
+		lombo,pin-pud-reg = <PULL_20K>;
+	};
+
+	/* mosi(D0), miso(D1) */
+	pinctrl_spi2_0: spi2-grp0 {
+		lombo,pins = "gpe-6", "gpe-7";
+		lombo,pin-function = <3>;
+		lombo,pin-drv = <DRV_LEVEL2>;
+		lombo,pin-pud = <DISABLE_PULL_UP_DOWN>;
+	};
+
+	/* clk */
+	pinctrl_spi2_1: spi2-grp1 {
+		lombo,pins = "gpe-5";
+		lombo,pin-function = <3>;
+		lombo,pin-drv = <DRV_LEVEL3>;
+		lombo,pin-pud = <ENABLE_PULL_DOWN>;
+		lombo,pin-pud-reg = <PULL_100K>;
+	};
+
+	/* cs0 */
+	pinctrl_spi2_2: spi2-grp2 {
+		lombo,pins = "gpe-4";
+		lombo,pin-function = <3>;
+		lombo,pin-drv = <DRV_LEVEL1>;
+		lombo,pin-pud = <ENABLE_PULL_UP>;
+		lombo,pin-pud-reg = <PULL_100K>;
+	};
+
+	pinctrl_i2s0: i2s0-grp {
+		lombo,pins = "gpe-10", "gpe-11", "gpe-12", "gpe-13", "gpe-14";
+		lombo,pin-function = <3>;
+		lombo,pin-pud = <DISABLE_PULL_UP_DOWN>;
+		lombo,pin-drv = <DRV_LEVEL3>;
+		lombo,pin-pud-reg = <PULL_100K>;
+	};
+
+	pinctrl_sdc0_clk: sdc0_clk-grp {
+		lombo,pins = "gpa-2";
+		lombo,pin-function = <4>;
+		lombo,pin-pud = <DISABLE_PULL_UP_DOWN>;
+		lombo,pin-drv = <DRV_LEVEL3>;
+		lombo,pin-pud-reg = <PULL_100K>;
+	};
+
+	pinctrl_sdc0_cmd_data_x4: sdc0_cmd_data_x4-grp {
+		lombo,pins = "gpa-3", "gpa-1", "gpa-0", "gpa-5", "gpa-4";
+		lombo,pin-function = <4>;
+		lombo,pin-pud = <ENABLE_PULL_UP>;
+		lombo,pin-drv = <DRV_LEVEL2>;
+		lombo,pin-pud-reg = <PULL_20K>;
+	};
+
+	pinctrl_sdc0_data_h4: sdc0_data_h4-grp {
+		lombo,pins = "gpa-6", "gpa-7", "gpa-8","gpa-9";
+		lombo,pin-function = <4>;
+		lombo,pin-pud = <ENABLE_PULL_UP>;
+		lombo,pin-drv = <DRV_LEVEL2>;
+		lombo,pin-pud-reg = <PULL_20K>;
+	};
+
+	pinctrl_sdc0_cmd_data_x1: sdc0_cmd_data_x1-grp {
+		lombo,pins = "gpa-3", "gpa-1", "gpa-4";
+		lombo,pin-function = <4>;
+		lombo,pin-pud = <ENABLE_PULL_UP>;
+		lombo,pin-drv = <DRV_LEVEL2>;
+		lombo,pin-pud-reg = <PULL_20K>;
+	};
+
+	pinctrl_sdc0_clk_uhs: sdc0_clk_uhs-grp {
+		lombo,pins = "gpa-2";
+		lombo,pin-function = <4>;
+		lombo,pin-pud = <DISABLE_PULL_UP_DOWN>;
+		lombo,pin-drv = <DRV_LEVEL7>;
+		lombo,pin-pud-reg = <PULL_100K>;
+	};
+
+	pinctrl_sdc0_cmd_data_x4_uhs: sdc0_cmd_data_x4_uhs-grp {
+		lombo,pins = "gpa-3", "gpa-1", "gpa-0", "gpa-5", "gpa-4";
+		lombo,pin-function = <4>;
+		lombo,pin-pud = <ENABLE_PULL_UP>;
+		lombo,pin-drv = <DRV_LEVEL6>;
+		lombo,pin-pud-reg = <PULL_20K>;
+	};
+
+	pinctrl_sdc0_data_h4_uhs: sdc0_data_h4_uhs-grp {
+		lombo,pins = "gpa-6", "gpa-7", "gpa-8","gpa-9";
+		lombo,pin-function = <4>;
+		lombo,pin-pud = <ENABLE_PULL_UP>;
+		lombo,pin-drv = <DRV_LEVEL6>;
+		lombo,pin-pud-reg = <PULL_20K>;
+	};
+
+	pinctrl_sdc1_clk: sdc1_clk-grp {
+		lombo,pins = "gpd-2";
+		lombo,pin-function = <3>;
+		lombo,pin-pud = <DISABLE_PULL_UP_DOWN>;
+		lombo,pin-drv = <DRV_LEVEL2>;
+		lombo,pin-pud-reg = <PULL_100K>;
+	};
+
+	pinctrl_sdc1_cmd_data_x4: sdc1_cmd_data_x4-grp {
+		lombo,pins = "gpd-3", "gpd-1", "gpd-0", "gpd-5", "gpd-4";
+		lombo,pin-function = <3>;
+		lombo,pin-pud = <ENABLE_PULL_UP>;
+		lombo,pin-drv = <DRV_LEVEL2>;
+		lombo,pin-pud-reg = <PULL_20K>;
+	};
+
+	pinctrl_sdc1_cmd_data_x1: sdc1_cmd_data_x1-grp {
+		lombo,pins = "gpd-3", "gpd-1", "gpd-4";
+		lombo,pin-function = <3>;
+		lombo,pin-pud = <ENABLE_PULL_UP>;
+		lombo,pin-drv = <DRV_LEVEL5>;
+		lombo,pin-pud-reg = <PULL_20K>;
+	};
+
+	pinctrl_sdc1_clk_uhs: sdc1_clk_uhs-grp {
+		lombo,pins = "gpd-2";
+		lombo,pin-function = <3>;
+		lombo,pin-pud = <DISABLE_PULL_UP_DOWN>;
+		lombo,pin-drv = <DRV_LEVEL7>;
+		lombo,pin-pud-reg = <PULL_100K>;
+	};
+
+	pinctrl_sdc1_cmd_data_x4_uhs: sdc1_cmd_data_x4_uhs-grp {
+		lombo,pins = "gpd-3", "gpd-1", "gpd-0", "gpd-5", "gpd-4";
+		lombo,pin-function = <3>;
+		lombo,pin-pud = <ENABLE_PULL_UP>;
+		lombo,pin-drv = <DRV_LEVEL6>;
+		lombo,pin-pud-reg = <PULL_20K>;
+	};
+
+	pinctrl_sdc2_clk: sdc2_clk-grp {
+		lombo,pins = "gpa-12";
+		lombo,pin-function = <5>;
+		lombo,pin-pud = <DISABLE_PULL_UP_DOWN>;
+		lombo,pin-drv = <DRV_LEVEL4>;
+		lombo,pin-pud-reg = <PULL_100K>;
+	};
+
+	pinctrl_sdc2_cmd_data_x4: sdc2_cmd_data_x4-grp {
+		lombo,pins = "gpa-13", "gpa-11", "gpa-10", "gpa-15", "gpa-14";
+		lombo,pin-function = <5>;
+		lombo,pin-pud = <ENABLE_PULL_UP>;
+		lombo,pin-drv = <DRV_LEVEL3>;
+		lombo,pin-pud-reg = <PULL_20K>;
+	};
+
+	pinctrl_sdc2_data_h4: sdc2_data_h4-grp {
+		lombo,pins = "gpa-6", "gpa-7", "gpa-8","gpa-9";
+		lombo,pin-function = <5>;
+		lombo,pin-pud = <ENABLE_PULL_UP>;
+		lombo,pin-drv = <DRV_LEVEL3>;
+		lombo,pin-pud-reg = <PULL_20K>;
+	};
+
+	pinctrl_sdc2_cmd_data_x1: sdc2_cmd_data_x1-grp {
+		lombo,pins = "gpa-13", "gpa-11", "gpa-14";
+		lombo,pin-function = <5>;
+		lombo,pin-pud = <ENABLE_PULL_UP>;
+		lombo,pin-drv = <DRV_LEVEL3>;
+		lombo,pin-pud-reg = <PULL_20K>;
+	};
+
+	pinctrl_sdc2_clk_uhs: sdc2_clk_uhs-grp {
+		lombo,pins = "gpa-12";
+		lombo,pin-function = <5>;
+		lombo,pin-pud = <DISABLE_PULL_UP_DOWN>;
+		lombo,pin-drv = <DRV_LEVEL7>;
+		lombo,pin-pud-reg = <PULL_100K>;
+	};
+
+	pinctrl_sdc2_cmd_data_x4_uhs: sdc2_cmd_data_x4_uhs-grp {
+		lombo,pins = "gpa-13", "gpa-11", "gpa-10", "gpa-15", "gpa-14";
+		lombo,pin-function = <5>;
+		lombo,pin-pud = <ENABLE_PULL_UP>;
+		lombo,pin-drv = <DRV_LEVEL6>;
+		lombo,pin-pud-reg = <PULL_20K>;
+	};
+
+	pinctrl_sdc2_data_h4_uhs: sdc2_data_h4_uhs-grp {
+		lombo,pins = "gpa-6", "gpa-7", "gpa-8","gpa-9";
+		lombo,pin-function = <5>;
+		lombo,pin-pud = <ENABLE_PULL_UP>;
+		lombo,pin-drv = <DRV_LEVEL6>;
+		lombo,pin-pud-reg = <PULL_20K>;
+	};
+
+	pinctrl_i2c0:i2c0-grp {
+		lombo,pins = "gpe-8", "gpe-9";
+		lombo,pin-function = <3>;
+		lombo,pin-pud = <ENABLE_PULL_UP>;
+		lombo,pin-drv = <DRV_LEVEL0>;
+		lombo,pin-pud-reg = <PULL_20K>;
+	};
+
+	pinctrl_i2c1:i2c1-grp {
+		lombo,pins = "gpc-21", "gpc-22";
+		lombo,pin-function = <3>;
+		lombo,pin-pud = <ENABLE_PULL_UP>;
+		lombo,pin-drv = <DRV_LEVEL0>;
+		lombo,pin-pud-reg = <PULL_20K>;
+	};
+
+	pinctrl_i2c1_PB:i2c1_PB-grp {
+		lombo,pins = "gpb-10", "gpb-11";
+		lombo,pin-function = <7>;
+		lombo,pin-pud = <ENABLE_PULL_UP>;
+		lombo,pin-drv = <DRV_LEVEL0>;
+		lombo,pin-pud-reg = <PULL_20K>;
+	};
+
+	pinctrl_i2c2:i2c2-grp {
+		lombo,pins = "gpe-1", "gpe-2";
+		lombo,pin-function = <4>;
+		lombo,pin-pud = <ENABLE_PULL_UP>;
+		lombo,pin-drv = <DRV_LEVEL0>;
+		lombo,pin-pud-reg = <PULL_20K>;
+	};
+
+	pinctrl_i2c3:i2c3-grp {
+		lombo,pins = "gpe-5", "gpe-6";
+		lombo,pin-function = <4>;
+		lombo,pin-pud = <ENABLE_PULL_UP>;
+		lombo,pin-drv = <DRV_LEVEL0>;
+		lombo,pin-pud-reg = <PULL_20K>;
+	};
+
+	pinctrl_vic:vic-grp {
+		lombo,pins = "gpc-2", "gpc-3",
+				"gpc-4","gpc-5", "gpc-6", "gpc-7",
+				"gpc-8", "gpc-9", "gpc-10", "gpc-11",
+				"gpc-12", "gpc-13", "gpc-14", "gpc-15",
+				"gpc-16", "gpc-17", "gpc-18", "gpc-19";
+		lombo,pin-function = <3>;
+		lombo,pin-pud = <DISABLE_PULL_UP_DOWN>;
+	};
+
+	pinctrl_vic_B_D12:vic_B_D12-grp {
+		lombo,pins = "gpb-4", "gpb-5", "gpb-12", "gpb-13",
+				"gpb-14", "gpb-15", "gpb-18", "gpb-19",
+				"gpb-20", "gpb-21", "gpb-22", "gpb-23",
+				"gpb-24", "gpb-25", "gpb-26", "gpb-27";
+		lombo,pin-function = <5>;
+		lombo,pin-pud = <DISABLE_PULL_UP_DOWN>;
+	};
+
+	pinctrl_mcsi:mcsi-grp {
+		lombo,pins = "gpc-20";
+		lombo,pin-function = <4>;
+		lombo,pin-pud = <DISABLE_PULL_UP_DOWN>;
+		lombo,pin-drv = <DRV_LEVEL3>;
+		lombo,pin-pud-reg = <PULL_20K>;
+	};
+
+	pinctrl_mcsi1:mcsi-grp1 {
+		lombo,pins = "gpb-3";
+		lombo,pin-function = <5>;
+		lombo,pin-pud = <DISABLE_PULL_UP_DOWN>;
+		lombo,pin-drv = <DRV_LEVEL3>;
+		lombo,pin-pud-reg = <PULL_20K>;
+	};
+
+	/* for prgb panel output function */
+	pinctrl_prgb: prgb-grp {
+		lombo,pins = "gpb-2", "gpb-3", "gpb-4",
+			     "gpb-5", "gpb-6", "gpb-7",
+			     "gpb-10", "gpb-11", "gpb-12",
+			     "gpb-13", "gpb-14", "gpb-15",
+			     "gpb-18", "gpb-19", "gpb-20",
+			     "gpb-21", "gpb-22", "gpb-23",
+			     "gpb-24", "gpb-25", "gpb-26", "gpb-27";
+		lombo,pin-function = <3>;
+	};
+
+	pinctrl_lvds: lvds-grp {
+		lombo,pins = "gpb-2", "gpb-3", "gpb-4",
+			     "gpb-5", "gpb-6", "gpb-7",
+			     "gpb-10", "gpb-11", "gpb-12", "gpb-13";
+		lombo,pin-function = <4>;
+	};
+
+	pinctrl_cpu: cpu-grp {
+		lombo,pins = "gpb-2", "gpb-3", "gpb-4",
+			     "gpb-5", "gpb-6", "gpb-7",
+			     "gpb-10", "gpb-11", "gpb-12",
+			     "gpb-13", "gpb-14", "gpb-15",
+			     "gpb-18", "gpb-19", "gpb-20",
+			     "gpb-21", "gpb-22",
+			     "gpb-24", "gpb-25", "gpb-26",
+			     "gpb-27";
+		lombo,pin-function = <3>;
+	};
+
+	pinctrl_ir: ir-grp {
+		lombo,pins = "gpe-14";
+		lombo,pin-function = <5>;
+		lombo,pin-pud = <ENABLE_PULL_UP>;
+		lombo,pin-drv = <DRV_LEVEL3>;
+		lombo,pin-pud-reg = <PULL_20K>;
+	};
+
+	pinctrl_pwm0: pwm0-grp {
+		lombo,pins = "gpe-0";
+		lombo,pin-function = <5>;
+		lombo,pin-pud = <ENABLE_PULL_UP>;
+		lombo,pin-drv = <DRV_LEVEL3>;
+		lombo,pin-pud-reg = <PULL_20K>;
+	};
+
+	pinctrl_pwm1: pwm1-grp {
+		lombo,pins = "gpe-1";
+		lombo,pin-function = <5>;
+		lombo,pin-pud = <ENABLE_PULL_UP>;
+		lombo,pin-drv = <DRV_LEVEL3>;
+		lombo,pin-pud-reg = <PULL_20K>;
+	};
+
+	pinctrl_pwm2: pwm2-grp {
+		lombo,pins = "gpe-2";
+		lombo,pin-function = <5>;
+		lombo,pin-pud = <ENABLE_PULL_UP>;
+		lombo,pin-drv = <DRV_LEVEL3>;
+		lombo,pin-pud-reg = <PULL_20K>;
+	};
+
+	pinctrl_pwm3: pwm3-grp {
+		lombo,pins = "gpe-3";
+		lombo,pin-function = <5>;
+		lombo,pin-pud = <ENABLE_PULL_UP>;
+		lombo,pin-drv = <DRV_LEVEL3>;
+		lombo,pin-pud-reg = <PULL_20K>;
+	};
+
+	pinctrl_pwm5: pwm5-grp {
+		lombo,pins = "gpe-11";
+		lombo,pin-function = <5>;
+		lombo,pin-pud = <ENABLE_PULL_UP>;
+		lombo,pin-drv = <DRV_LEVEL3>;
+		lombo,pin-pud-reg = <PULL_20K>;
+	};
+
+	pinctrl_pwm6: pwm6-grp {
+		lombo,pins = "gpe-12";
+		lombo,pin-function = <5>;
+		lombo,pin-pud = <ENABLE_PULL_UP>;
+		lombo,pin-drv = <DRV_LEVEL3>;
+		lombo,pin-pud-reg = <PULL_20K>;
+	};
+
+	pinctrl_pwm8: pwm8-grp {
+		lombo,pins = "gpe-8";
+		lombo,pin-function = <5>;
+		lombo,pin-pud = <ENABLE_PULL_UP>;
+		lombo,pin-drv = <DRV_LEVEL3>;
+		lombo,pin-pud-reg = <PULL_20K>;
+	};
+
+	pinctrl_gmac_mdio_1: gmac_mdio_1-grp {
+		lombo,pins = "gpc-14", "gpc-15";
+		lombo,pin-function = <6>;
+		lombo,pin-pud = <ENABLE_PULL_UP>;
+		lombo,pin-drv = <DRV_LEVEL3>;
+		lombo,pin-pud-reg = <PULL_100K>;
+	};
+
+	pinctrl_gmac_mdio_2: gmac_mdio_2-grp {
+		lombo,pins = "gpe-1", "gpe-2";
+		lombo,pin-function = <6>;
+		lombo,pin-pud = <ENABLE_PULL_UP>;
+		lombo,pin-drv = <DRV_LEVEL3>;
+		lombo,pin-pud-reg = <PULL_100K>;
+	};
+
+	pinctrl_gmac_rmii_ref_clk: gmac_rmii_ref_clk-grp {
+		lombo,pins = "gpc-4";
+		lombo,pin-function = <6>;
+		lombo,pin-pud = <ENABLE_PULL_UP>;
+		lombo,pin-drv = <DRV_LEVEL4>;
+		lombo,pin-pud-reg = <PULL_100K>;
+	};
+
+	pinctrl_gmac_rmii_tx_en: gmac_rmii_tx_en-grp {
+		lombo,pins = "gpc-5";
+		lombo,pin-function = <6>;
+		lombo,pin-pud = <ENABLE_PULL_UP>;
+		lombo,pin-drv = <DRV_LEVEL1>;
+		lombo,pin-pud-reg = <PULL_100K>;
+	};
+
+	pinctrl_gmac_rmii_tx_data: gmac_rmii_tx_data-grp {
+		lombo,pins = "gpc-8", "gpc-9";
+		lombo,pin-function = <6>;
+		lombo,pin-pud = <ENABLE_PULL_DOWN>;
+		lombo,pin-drv = <DRV_LEVEL2>;
+		lombo,pin-pud-reg = <PULL_100K>;
+	};
+
+	pinctrl_gmac_rmii_rx_dv: gmac_rmii_rx_dv-grp {
+		lombo,pins = "gpc-10";
+		lombo,pin-function = <6>;
+		lombo,pin-pud = <ENABLE_PULL_UP>;
+		lombo,pin-drv = <DRV_LEVEL3>;
+		lombo,pin-pud-reg = <PULL_100K>;
+	};
+
+	pinctrl_gmac_rmii_rx_data: gmac_rmii_rx_data-grp {
+		lombo,pins = "gpc-18", "gpc-19";
+		lombo,pin-function = <6>;
+		lombo,pin-pud = <ENABLE_PULL_UP>;
+		lombo,pin-drv = <DRV_LEVEL3>;
+		lombo,pin-pud-reg = <PULL_100K>;
+	};
+
+	pinctrl_gmac_rgmii_tx_clk: gmac_rgmii_tx_clk-grp {
+		lombo,pins = "gpc-4";
+		lombo,pin-function = <6>;
+		lombo,pin-pud = <ENABLE_PULL_UP>;
+		lombo,pin-drv = <DRV_LEVEL3>;
+		lombo,pin-pud-reg = <PULL_100K>;
+	};
+
+	pinctrl_gmac_rgmii_tx_en: gmac_rgmii_tx_en-grp {
+		lombo,pins = "gpc-5";
+		lombo,pin-function = <6>;
+		lombo,pin-pud = <ENABLE_PULL_UP>;
+		lombo,pin-drv = <DRV_LEVEL3>;
+		lombo,pin-pud-reg = <PULL_100K>;
+	};
+
+	pinctrl_gmac_rgmii_tx_data: gmac_rgmii_tx_data-grp {
+		lombo,pins = "gpc-6", "gpc-7", "gpc-8", "gpc-9";
+		lombo,pin-function = <6>;
+		lombo,pin-pud = <ENABLE_PULL_DOWN>;
+		lombo,pin-drv = <DRV_LEVEL3>;
+		lombo,pin-pud-reg = <PULL_100K>;
+	};
+
+	pinctrl_gmac_rgmii_rx_clk: gmac_rgmii_rx_clk-grp {
+		lombo,pins = "gpc-11";
+		lombo,pin-function = <6>;
+		lombo,pin-pud = <ENABLE_PULL_DOWN>;
+		lombo,pin-drv = <DRV_LEVEL3>;
+		lombo,pin-pud-reg = <PULL_100K>;
+	};
+
+	pinctrl_gmac_rgmii_rx_dv: gmac_rgmii_rx_dv-grp {
+		lombo,pins = "gpc-10";
+		lombo,pin-function = <6>;
+		lombo,pin-pud = <ENABLE_PULL_UP>;
+		lombo,pin-drv = <DRV_LEVEL3>;
+		lombo,pin-pud-reg = <PULL_100K>;
+	};
+
+	pinctrl_gmac_rgmii_rx_data: gmac_rgmii_rx_data-grp {
+		lombo,pins = "gpc-16", "gpc-17", "gpc-18", "gpc-19";
+		lombo,pin-function = <6>;
+		lombo,pin-pud = <ENABLE_PULL_UP>;
+		lombo,pin-drv = <DRV_LEVEL3>;
+		lombo,pin-pud-reg = <PULL_100K>;
+	};
+};
+
+pinctrl_sio: pinctr_sio@0400b820 {
+	compatible = "lombo,n7-sio-pinctrl";
+	reg = <0x0400b820 0x60>;
+	no-clk;
+
+	/*
+	 * Pin banks
+	 */
+
+	sio: sio {
+		gpio-controller;
+		#gpio-cells = <2>;
+		interrupt-controller;
+		#interrupt-cells = <2>;
+		interrupts = <GIC_SPI INT_SIO IRQ_TYPE_LEVEL_HIGH>;
+		clk-src = <CLK_HFEOSC>;
+		clk-src-div = <CLK_DIV_1>;
+	};
+
+	/*
+	 * Pin groups
+	 */
+
+};
+
+};

@@ -1,0 +1,157 @@
+﻿<!DOCTYPE HTML>
+<html lang="zh-cn">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title class="lang" key="device_setting">设备设置</title>
+
+	<link href="resources/plugins/bootstrap-3.3.0/css/bootstrap.min.css" rel="stylesheet"/>
+	<link href="resources/plugins/material-design-iconic-font-2.2.0/css/material-design-iconic-font.min.css" rel="stylesheet"/>
+	<link href="resources/plugins/bootstrap-table-1.11.0/bootstrap-table.min.css" rel="stylesheet"/>
+	<link href="resources/plugins/waves-0.7.5/waves.min.css" rel="stylesheet"/>
+	<link href="resources/plugins/jquery-confirm/jquery-confirm.min.css" rel="stylesheet"/>
+	<link href="resources/plugins/select2/css/select2.min.css" rel="stylesheet"/>
+
+	<link href="resources/css/common.css" rel="stylesheet"/>
+</head>
+<body>
+<div >
+
+		<div class="panel">
+			<div class="panel-body">
+				<div class="row">
+					<div class="col-md-1">
+						<label for="threshold" class="lang" key="recg_threshold">识别阈值</label>
+					</div>
+					<div class="col-md-3">
+						<input id="recg_threshold" class="alg_input" value="54"
+							   max="99" min="1" step="1" type="number"
+						oninput="if (value > 100) {value=54} else if (value < 0) {value = 54}">
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-1">
+						<label for="living" class="lang" key="living_detect">活体检测</label>
+					</div>
+					<div class="col-md-3">
+						<input id="living" class="alg_input" value="1" type="checkbox">
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-md-1">
+
+					</div>
+					<div class="col-md-3">
+						<button type="" class="btn btn-danger waves-effect waves-float lang" key="save">保存</button>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+</div>
+
+
+<script src="resources/plugins/jquery.1.12.4.min.js"></script>
+<script src="resources/plugins/bootstrap-3.3.0/js/bootstrap.min.js"></script>
+<script src="resources/plugins/bootstrap-table-1.11.0/bootstrap-table.min.js"></script>
+<script src="resources/plugins/bootstrap-table-1.11.0/locale/bootstrap-table-zh-CN.min.js"></script>
+<script src="resources/plugins/waves-0.7.5/waves.min.js"></script>
+<script src="resources/plugins/jquery-confirm/jquery-confirm.min.js"></script>
+<script src="resources/plugins/select2/js/select2.min.js"></script>
+<script src="resources/plugins/jquery.cookie.js"></script>
+<link href="resources/plugins/jquery-toastmessage/resources/css/jquery.toastmessage.css" rel="stylesheet"/>
+<script src="resources/plugins/jquery-toastmessage/javascript/jquery.toastmessage.js"></script>
+<script src="resources/js/notify.js"></script>
+<script src="resources/lang/lang.js"></script>
+<script src="resources/js/common.js"></script>
+<script>
+	$(".btn").click(function () {
+		alg_set()
+	})
+	setInterval(function () {
+		lang_load_if_change()
+	}, 500)
+	lang_load()
+	function get_alg_input(){
+		let alg = new Object()
+		$("input.alg_input").each(function (idx, e) {
+			if (e.type == "checkbox"){
+				alg[e.id] = Number($("#" + e.id).prop("checked"))
+			}else{
+				alg[e.id] = Number(e.value)
+			}
+		})
+		console.log(alg);
+		return alg
+	}
+
+	function set_alg_input(alg) {
+		for (const v in alg){
+			// console.log(v)
+			let e = $("input.alg_input").filter("#" + v)[0];
+			if (e){
+				e.value = alg[v]
+				if (e.type == "checkbox"){
+					$("#" + v).prop("checked", alg[v])
+				}
+			}
+
+		}
+		// $("input.net_input").filter(ip)
+	}
+
+	alg_get()
+
+	function alg_get() {
+		let alg = get_alg_input();
+		alg["set"] = 0;
+		alg["password"] = $.cookie("pwd")
+		$.ajax({
+			url:  '/algSetting',
+			type: 'POST',
+			contentType:"application/json",
+			dataType: "json",
+			data: JSON.stringify(alg),
+			beforeSend: function() {
+
+			},
+			success: function(json){
+				console.log("done", json)
+				set_alg_input(json);
+			},
+			error: function(error){
+				console.log("error::::",error);
+			}
+		});
+	}
+	function alg_set() {
+		let alg = get_alg_input();
+		alg["set"] = 1;
+		alg["password"] = $.cookie("pwd")
+		$.ajax({
+			url:  '/algSetting',
+			type: 'POST',
+			contentType:"application/json",
+			dataType: "json",
+			data: JSON.stringify(alg),
+			beforeSend: function() {
+
+			},
+			success: function(json){
+				console.log("done")
+			   let field=window.lang.setting_success;
+			   notify(field);
+			},
+			error: function(error){
+				console.log("error::::",error);
+				let field=window.lang.setting_fail;
+			   notify(field);
+			}
+		});
+	}
+</script>
+</body>
+</html>

@@ -1,0 +1,25 @@
+#!/bin/sh
+
+[ -f /lib/modules/$(uname -r)/bcmdhd.ko ] || exit 0
+[ -f /system/etc/firmware/wifi_sta.bin ] || exit 0
+
+case "$1" in
+	start)
+		insmod /lib/modules/$(uname -r)/bcmdhd.ko \
+			"firmware_path=/system/etc/firmware/wifi_sta.bin"
+		[ $? = 0 ] && echo "OK" || echo "FAIL"
+		;;
+	stop)
+		rmmod bcmdhd
+		[ $? = 0 ] && echo "OK" || echo "FAIL"
+		;;
+	restart|reload)
+		$0 stop
+		$0 start
+		;;
+	*)
+		echo "Usage: $0 {start|stop|restart}"
+		exit 1
+esac
+
+exit 0

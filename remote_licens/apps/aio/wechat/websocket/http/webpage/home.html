@@ -1,0 +1,351 @@
+<!DOCTYPE HTML>
+<html lang="zh-cn">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title class="lang" key="home_title">设备管理系统</title>
+
+	<link href="resources/plugins/fullPage/jquery.fullPage.css" rel="stylesheet"/>
+	<link href="resources/plugins/bootstrap-3.3.0/css/bootstrap.min.css" rel="stylesheet"/>
+	<link href="resources/plugins/material-design-iconic-font-2.2.0/css/material-design-iconic-font.min.css" rel="stylesheet"/>
+	<link href="resources/plugins/waves-0.7.5/waves.min.css" rel="stylesheet"/>
+	<link href="resources/plugins/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.min.css" rel="stylesheet"/>
+	<link href="resources/css/admin.css" rel="stylesheet"/>
+	<style>
+	/** skins **/
+	#zheng-upms-server #header {background: #29A176;}
+	#zheng-upms-server .content_tab{background: #29A176;}
+	#zheng-upms-server .s-profile>a{background: url(resources/images/zheng-upms.png) left top no-repeat;}
+	
+	#zheng-cms-admin #header {background: #455EC5;}
+	#zheng-cms-admin .content_tab{background: #455EC5;}
+	#zheng-cms-admin .s-profile>a{background: url(resources/images/zheng-cms.png) left top no-repeat;}
+	
+	#zheng-pay-admin #header {background: #F06292;}
+	#zheng-pay-admin .content_tab{background: #F06292;}
+	#zheng-pay-admin .s-profile>a{background: url(resources/images/zheng-pay.png) left top no-repeat;}
+	
+	#zheng-ucenter-home #header {background: #6539B4;}
+	#zheng-ucenter-home .content_tab{background: #6539B4;}
+	#zheng-ucenter-home .s-profile>a{background: url(resources/images/zheng-ucenter.png) left top no-repeat;}
+	
+	#zheng-oss-web #header {background: #0B8DE5;}
+	#zheng-oss-web .content_tab{background: #0B8DE5;}
+	#zheng-oss-web .s-profile>a{background: url(resources/images/zheng-oss.png) left top no-repeat;}
+	
+	#test #header {background: test;}
+	#test .content_tab{background: test;}
+	#test .s-profile>a{background: url(test) left top no-repeat;}
+	</style>
+
+	<style>
+
+		.dropdown-submenu {
+			position: relative;
+		}
+
+		.dropdown-submenu>.dropdown-menu {
+			top: 0;
+			left: 100%;
+			margin-top: -6px;
+			margin-left: -1px;
+			-webkit-border-radius: 0 6px 6px 6px;
+			-moz-border-radius: 0 6px 6px;
+			border-radius: 0 6px 6px 6px;
+		}
+
+		.dropdown-submenu:hover>.dropdown-menu {
+			display: block;
+		}
+
+		.dropdown-submenu>a:after {
+			display: block;
+			content: " ";
+			float: right;
+			width: 0;
+			height: 0;
+			border-color: transparent;
+			border-style: solid;
+			border-width: 5px 0 5px 5px;
+			border-left-color: #ccc;
+			margin-top: 5px;
+			margin-right: -10px;
+		}
+
+		.dropdown-submenu:hover>a:after {
+			border-left-color: #fff;
+		}
+
+		.dropdown-submenu.pull-left {
+			float: none;
+		}
+
+		.dropdown-submenu.pull-left>.dropdown-menu {
+			left: -100%;
+			margin-left: 10px;
+			-webkit-border-radius: 6px 0 6px 6px;
+			-moz-border-radius: 6px 0 6px 6px;
+			border-radius: 6px 0 6px 6px;
+		}
+	</style>
+</head>
+<body>
+<header id="header">
+	<ul id="menu">
+		<li id="guide" class="line-trigger">
+			<div class="line-wrap">
+				<div class="line top"></div>
+				<div class="line center"></div>
+				<div class="line bottom"></div>
+			</div>
+		</li>
+		<li id="logo" class="hidden-xs">
+			<a href="home.html">
+<!--				<img src="resources/images/logo.png"/>-->
+				<span id="system_title" class="lang" key="system_title">设备管理系统</span>
+			</a>
+
+		</li>
+		<li class="pull-right">
+			<ul class="hi-menu">
+				<!-- 搜索 -->
+				<li class="dropdown">
+					<a class="waves-effect waves-light" data-toggle="dropdown" href="javascript:;">
+						<i class="him-icon zmdi zmdi-search"></i>
+					</a>
+					<ul class="dropdown-menu dm-icon pull-right">
+						<form id="search-form" class="form-inline">
+							<div class="input-group">
+								<input id="keywords" type="text" name="keywords" class="form-control" placeholder=""/>
+								<div class="input-group-btn">
+									<button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
+								</div>
+							</div>
+						</form>
+					</ul>
+				</li>
+				<li class="dropdown">
+					<a class="waves-effect waves-light" data-toggle="dropdown" href="javascript:;">
+						<i class="him-icon zmdi zmdi-dropbox"></i>
+					</a>
+					<ul class="dropdown-menu dm-icon pull-right">
+						<li class="skin-switch lang"  key="skin-switch">
+							请选择系统切换
+						</li>
+						<li class="divider"></li>
+						<li>
+							<a class="waves-effect switch-systems lang" key="system_drop_menu_0"
+							   href="javascript:;" systemid="1" systemname="zheng-upms-server" >
+								<i class="zmdi zmdi-shield-security"></i> 设备配置系统</a>
+						</li>
+						
+
+					</ul>
+				</li>
+				<li class="dropdown">
+					<a class="waves-effect waves-light" data-toggle="dropdown" href="javascript:;">
+						<i class="him-icon zmdi zmdi-more-vert"></i>
+					</a>
+					<ul class="dropdown-menu dm-icon pull-right multi-level">
+						<li class="hidden-xs">
+							<a class="waves-effect lang" data-ma-action="fullscreen"
+							   key="system_drop_menu_full_screen"
+							   href="javascript:fullPage();"><i class="zmdi zmdi-fullscreen"></i> 全屏模式</a>
+						</li>
+<!--						<li>-->
+<!--							<a class="waves-effect" href="javascript:;"><i class="zmdi zmdi-settings"></i> 系统设置</a>-->
+<!--						</li>-->
+<!--						<li>-->
+<!--							<a class="waves-effect" href="javascript:;"><i class="zmdi zmdi-run"></i> 退出登录</a>-->
+<!--						</li>-->
+						<li class="divider"></li>
+						<li class="dropdown-submenu pull-left" >
+							<a tabindex="-1" href="#" class="lang" key="system_drop_menu_language"><i
+									class="zmdi zmdi-settings "
+									></i> 语言</a>
+							<ul class="dropdown-menu " id="language_ul">
+								<li><a tabindex="-1" href="javascript:">中文</a></li>
+								<li><a tabindex="-1" href="javascript:">English</a></li>
+							</ul>
+						</li>
+
+
+					</ul>
+				</li>
+			</ul>
+		</li>
+	</ul>
+</header>
+<section id="main">
+	<!-- 左侧导航区 -->
+	<aside id="sidebar">
+		<!-- 个人资料区 -->
+		<div class="s-profile">
+			<a class="waves-effect waves-light" href="javascript:;">
+				<div class="sp-pic">
+					<img src="resources/images/avatar.jpg"/>
+				</div>
+				<div class="sp-info lang" key="main_sp_info">
+					您好！
+					<i class="zmdi zmdi-caret-down"></i>
+				</div>
+			</a>
+			<ul class="main-menu">
+				<li>
+					<a class="waves-effect lang" key="main_navi_menu_0"
+					   href="javascript:;"><i class="zmdi zmdi-settings"></i> 系统设置</a>
+				</li>
+				<li>
+					<a class="waves-effect lang" key="main_navi_menu_1"
+					   href="javascript:handle_logout();"><i class="zmdi zmdi-run"></i> 退出登录</a>
+				</li>
+			</ul>
+		</div>
+		<!-- /个人资料区 -->
+		<!-- 菜单区 -->
+		<ul class="main-menu">
+			<li>
+			<a class="waves-effect lang"
+			   key="main_menu_home" href="javascript:Tab.addTab(lang.main_menu_home, 'home', 'main_menu_home');"><i class="zmdi zmdi-home"></i> 首页</a>
+			</li>
+			<!--
+			<li class="sub-menu system_menus system_1 0">
+			<a class="waves-effect" href="javascript:;"><i class="zmdi zmdi-accounts-list"></i> 系统组织管理</a>
+			<ul>
+				<li><a class="waves-effect" href="javascript:Tab.addTab('系统管理', 'crud.html');">系统管理</a></li>
+				<li><a class="waves-effect" href="javascript:Tab.addTab('组织管理', '/manage/organization/index');">组织管理</a></li>
+				<li><a class="waves-effect" href="javascript:Tab.addTab('组织管理', '/manage/organization/index');">组织管理</a></li>
+			</ul>
+			</li>
+			--->
+			<li class="sub-menu system_menus system_1 0">
+				<a class="waves-effect lang" key="system_1_0_menu_title" href="javascript:;">
+					<i class="zmdi zmdi-accounts-list"></i> 设备配置管理</a>
+				<ul>
+					<li><a class="waves-effect lang" key="system_1_0_menu_item_alg"
+						   href="javascript: Tab.addTab(window.lang.system_1_0_menu_item_alg, 'alg_setting.html', 'system_1_0_menu_item_alg');">算法</a></li>
+					<li><a class="waves-effect lang" key="system_1_0_menu_item_net"
+						   href="javascript:Tab.addTab(window.lang.system_1_0_menu_item_net, 'net_setting.html', 'system_1_0_menu_item_net');">网络</a></li>
+					<li><a class="waves-effect lang" key="system_1_0_menu_item_sys"
+						   href="javascript:Tab.addTab(window.lang.system_1_0_menu_item_sys, 'sys_setting.html', 'system_1_0_menu_item_sys');">系统</a></li>
+				</ul>
+			</li>
+
+			
+			<li>
+			<div class="upms-version">
+				&copy; EZ-WEB V1.0.0
+			</div>
+			</li>
+		</ul>
+		<!-- /菜单区 -->
+	</aside>
+	<!-- /左侧导航区 -->
+	<section id="content">
+		<div class="content_tab">
+			<div class="tab_left">
+				<a class="waves-effect waves-light" href="javascript:;"><i class="zmdi zmdi-chevron-left"></i></a>
+			</div>
+			<div class="tab_right">
+				<a class="waves-effect waves-light" href="javascript:;"><i class="zmdi zmdi-chevron-right"></i></a>
+			</div>
+			<ul id="tabs" class="tabs">
+				<li id="tab_home" data-index="home" data-closeable="false" class="cur">
+					<span class="waves-effect waves-light lang" key="main_menu_home">首页</span>
+				</li>
+			</ul>
+		</div>
+		<div class="content_main">
+			<div id="iframe_home" class="iframe cur">
+				<h2>
+					<div class="row">
+						<label class="lang" key="device_name">设备名称:</label>
+						<span id="device_name" class="device_info"></span>
+					</div>
+					<div class="row">
+						<label class="lang" key="firmware_version">固件版本:</label>
+						<span id="firmware_version" class="device_info"></span>
+
+					</div>
+					<div class="row">
+						<label class="lang" key="alg_version" >算法版本:</label>
+						<span id="face_recg_alg_version" class="device_info"></span>
+					</div>
+				</h2>
+			</div>
+		</div>
+	</section>
+</section>
+<footer id="footer"></footer>
+
+<script src="resources/plugins/jquery.1.12.4.min.js"></script>
+<script src="resources/plugins/bootstrap-3.3.0/js/bootstrap.min.js"></script>
+<script src="resources/plugins/waves-0.7.5/waves.min.js"></script>
+<script src="resources/plugins/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js"></script>
+<script src="resources/plugins/BootstrapMenu.min.js"></script>
+<script src="resources/plugins/device.min.js"></script>
+<script src="resources/plugins/fullPage/jquery.fullPage.min.js"></script>
+<script src="resources/plugins/fullPage/jquery.jdirk.min.js"></script>
+<script src="resources/plugins/jquery.cookie.js"></script>
+<link href="resources/plugins/jquery-toastmessage/resources/css/jquery.toastmessage.css" rel="stylesheet"/>
+<script src="resources/plugins/jquery-toastmessage/javascript/jquery.toastmessage.js"></script>
+<script src="resources/js/notify.js"></script>
+<script src="resources/lang/lang.js"></script>
+<script src="resources/js/admin.js"></script>
+
+
+<script>
+	get_device()
+	check_permission()
+	function handle_logout(){
+		location.href = "index.html"
+	}
+	$("#language_ul > li").each(function (idx, ele) {
+		ele.idx=idx
+		console.log("set:",idx)
+		ele.onclick = function () {
+
+			console.log("language_ul click",this.idx)
+			if (lang_idx() != this.idx)
+				lang_change(this.idx)
+		}
+	})
+
+	function get_device() {
+		let send = new Object()
+		send["password"] = $.cookie("pwd")
+		console.log(send)
+
+		$.ajax({
+			url:  '/getDeviceVersion',
+			type: 'POST',
+			contentType:"application/json",
+			dataType: "json",
+			data: JSON.stringify(send),
+			beforeSend: function() {
+
+			},
+			success: function(json){
+				console.log("done", json)
+				for (const v in json.data){
+					// console.log(v)
+					let e = $("span.device_info").filter("#" + v)[0];
+					if (e){
+						e.innerText = json.data[v]
+					}
+				}
+			},
+			error: function(error){
+				console.log("error::::",error);
+			}
+		});
+	}
+
+
+	$(document).ready(function() {
+	    lang_load()
+	});
+</script>
+</body>
+</html>

@@ -1,0 +1,27 @@
+
+obj-$(CONFIG_LOMBO_AR0230_DVP)		+= ar0230_dvp.o
+obj-$(CONFIG_LOMBO_OV5640_DVP)		+= ov5640_dvp.o
+obj-$(CONFIG_LOMBO_OV2718_DVP)		+= ov2718_dvp.o
+obj-$(CONFIG_LOMBO_OV2710_DVP)		+= ov2710_dvp.o
+obj-$(CONFIG_LOMBO_GC2145_DVP)		+= gc2145_dvp.o
+obj-$(CONFIG_LOMBO_PR2000K)		+= pr2000k.o
+obj-$(CONFIG_LOMBO_TP3810)		+= tp3810.o
+obj-$(CONFIG_LOMBO_GC2145_MIPI)		+= gc2145_mipi.o
+obj-$(CONFIG_LOMBO_GC2053_MIPI)		+= gc2053_mipi.o
+obj-$(CONFIG_LOMBO_OV2718_MIPI)		+= ov2718_mipi.o
+obj-$(CONFIG_LOMBO_IMX307_MIPI)		+= imx307_mipi.o
+obj-$(CONFIG_LOMBO_IMX327_MIPI)		+= imx327_mipi.o
+obj-$(CONFIG_LOMBO_OV8858_MIPI)		+= ov8858_mipi.o
+obj-$(CONFIG_LOMBO_OV9281_MIPI)		+= ov9281_mipi.o
+obj-$(CONFIG_LOMBO_OV5640_MIPI)		+= ov5640_mipi.o
+obj-$(CONFIG_LOMBO_SC2363P_MIPI)	+= sc2363p_mipi.o
+obj-$(CONFIG_LOMBO_OV2735_MIPI)		+= ov2735_mipi.o
+obj-$(CONFIG_LOMBO_OS02K10_MIPI)	+= os02k10_mipi.o
+obj-$(CONFIG_LOMBO_OV4689_MIPI)		+= ov4689_mipi.o
+obj-$(CONFIG_LOMBO_OV10640_MIPI)		+= ov10640_mipi.o
+obj-$(CONFIG_LOMBO_OV2685_MIPI)		+= ov2685_mipi.o
+obj-$(CONFIG_LOMBO_SP2305_DVP)		+= sp2305_dvp.o
+obj-$(CONFIG_LOMBO_OV2735_XC7021_DVP)		+= ov2735_xc7021_dvp.o
+obj-$(CONFIG_LOMBO_TW2866_DVP)		+= tw2866_dvp.o
+obj-$(CONFIG_LOMBO_GC0328_DVP)		+= gc0328_dvp.o
+obj-$(CONFIG_LOMBO_GC1054_MIPI)		+= gc1054_mipi.o

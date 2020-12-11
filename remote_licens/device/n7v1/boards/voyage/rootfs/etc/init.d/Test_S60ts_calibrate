@@ -1,0 +1,11 @@
+#!/bin/sh
+
+case "$1" in
+  start)
+    [ -f /data/calibfile.n7v1_voyage ] && exit 0
+    source /etc/ts_calibrate_env.sh
+    ts_calibrate &
+    ;;
+  *)
+    ;;
+esac

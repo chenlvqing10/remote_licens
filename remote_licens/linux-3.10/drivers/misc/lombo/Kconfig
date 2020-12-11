@@ -1,0 +1,56 @@
+#
+# lombo driver configuration
+#
+
+config MEMCTRL
+	bool "Memctrl driver"
+	default n
+	help
+	  This is a driver for memory debug.
+
+config WIRELESS_PM
+	bool "wireless pm driver"
+	default n
+	help
+	  This is a driver for power managerment of wireless module.
+
+config COMBO_MODULE
+	bool "support wifi+bt combo module"
+	depends on WIRELESS_PM
+	help
+	  This is a option for support power managerment of wifi+bt
+	  combo module.
+
+config LOMBO_MISC
+	bool "lombo misc driver"
+	default y
+	depends on ARCH_LOMBO_N7
+	help
+	  This is a driver for reading lombo chip-ID and
+	  setting upgrade flag by app, default set y because
+	  other drivers need to use.
+
+config WIEGAND_RX
+	bool "wiegand rx"
+	default n
+	help
+	  This is a driver for wiegand rx.
+
+config WIEGAND_TX
+	bool "wiegand tx"
+	default n
+	help
+	  This is a driver for wiegand tx.
+
+config RFKILL_BT
+	bool "bt rfkill driver"
+	default n
+	help
+	  This is a driver for providing bt power management control interface.
+
+config LOMBO_MOBILE_PM
+	bool "mobile network module pm driver"
+	default n
+	help
+	  This is a driver for providing mobile network module power management
+	  control interface for applicantion.

@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html>
+<head>
+ 	<meta charset="utf-8">
+        <title></title>
+        
+        <meta http-equiv="pragma" content="no-cache">
+        <meta http-equiv="cache-control" content="no-cache">
+        
+        <link rel="stylesheet" text="text/css" href="ui.css">
+        <script type="text/javascript" src="jquery.min.js"></script>
+        <script type="text/javascript" src="jquery.ui.min.js"></script>
+	
+
+</head>
+<body>
+	<script type="text/javascript" src="jschardet.js"></script>
+	<script type="text/javascript" src="papaparse.js"></script>
+	<script type="text/javascript" src="xlsx.full.min.js"></script>
+	
+	<script type="text/javascript">
+
+		var arrcsv = new Array();
+		var jsonxls;
+		var pres;
+		
+		function sleep(n){
+			var stime = new Date().getTime();
+			while(true){
+				var etime = new Date().getTime();
+				if(etime - stime > n){
+					break;
+				}
+			}
+		}
+		
+		function selectfile_csv(){
+			document.getElementById('btnfilecsv').click();
+		}
+		
+		function selectfile_xls(){
+			document.getElementById('btnfilecsv').click();
+		}
+		
+		function checkEncoding(base64Str){
+			var str = atob(base64Str.split(";base64,")[1]);
+			var encoding = jschardet.detect(str);
+			encoding = encoding.encoding;
+			if(encoding == "windows-1252"){
+				encoding = "ANSI";
+			}
+			return encoding;
+		}
+
+		function selectfileok_csv_deal(res){
+			arrcsv = [];
+			for(var i=0; i<res.length; i++){
+				arrcsv.push(res[i]);
+				
+				for(var j=0; j<res[i].length; j++){
+					console.log("["+i+","+j+"] = "+res[i][j]);
+				}
+			}
+		}
+		
+		function selectfileok_xls(){
+			var files = document.getElementById('btnfilecsv').files;
+			var file = files[0];
+			var name = file.name;
+			var size = file.size;
+			
+			$('#txtcsvname').textbox('setValue', name);
+			var reader = new FileReader();
+			
+			reader.readAsBinaryString(file);
+			reader.onload = function(){
+				var rdata = this.result;
+				
+				var xlsdata = XLSX.read(rdata, {type:'binary'});
+				var json = XLSX.utils.sheet_to_json(xlsdata.Sheets[xlsdata.SheetNames[0]]);
+				
+				jsonxls = JSON.parse(JSON.stringify(json));
+				
+				
+			}
+			
+		}
+		
+		function selectfileok_csv(){
+			var files = document.getElementById('btnfilecsv').files;
+			var file = files[0];
+			var name = file.name;
+			var size = file.size;
+			
+			$('#txtcsvname').textbox('setValue', name);
+			var reader = new FileReader();
+			
+			reader.readAsDataURL(file);
+			reader.onload = function(){
+				var rdata = this.result;
+				
+				var encoding = checkEncoding(rdata);
+				Papa.parse(file, {encoding:encoding, complete:function(results){
+					var res = results.data;
+					if(res[res.length-1] == ""){
+						res.pop();
+					}
+					pres = res;
+					selectfileok_csv_deal(res);
+				} 
+				});
+				
+			}
+			
+		}
+		
+		
+		function selectfile_pic(){
+			document.getElementById('btnfilepic').click();
+		}
+		
+		function selectfileok_pic(){
+			
+			var files = document.getElementById('btnfilepic').files;
+			var arrstr = new Array();
+			arrstr = [];
+			
+			for(var i=0; i<files.length; i++){
+				arrstr.push(files[i].name+" ");
+			}
+			
+			$('#txtpicname').textbox('setValue', arrstr);
+		}
+
+		function draw_progressbar(totalcount, count, failcount, okcount, info){
+			var pg = document.getElementById('pg');
+			var canv = document.getElementById('canvpre');
+			var ctx = canv.getContext('2d');
+				
+			pg.max = totalcount;
+			pg.value = count;
+			
+			ctx.clearRect(0,0,350,350);
+			
+			ctx.font = "40px 微软雅黑";
+			ctx.fillStyle = "black";
+			ctx.textAlign = "left";
+			ctx.fillText("全部: " + totalcount, 10, 50);
+			ctx.fillText("导入计数: " + count, 10 , 50+40+30);
+			ctx.fillText("已失败: " + failcount, 10, 50+40+30+40+30);
+			ctx.fillText("已成功: " + okcount, 10, 50+40+30+40+30+40+30);
+			
+			ctx.font = "10px 微软雅黑";
+			ctx.fillText(info, 16, 50+40+30+40+30+40+30+40+30+30);
+		}
+		
+		function add_mem(xjson, file){
+			var ret = 0;
+			for(var i=0; i<xjson.length; i++){
+				console.log("[add_mem]"+xjson[i]);
+			}
+			console.log("----[add_mem]----");
+			
+			var fmdata = new FormData();
+			fmdata.append("employee_number", xjson.人员编号);
+			fmdata.append("name", xjson.姓名);
+			fmdata.append("gender", xjson.性别);
+			fmdata.append("nationa", xjson.民族);
+			fmdata.append("id_card_number", xjson.身份证号码);
+			fmdata.append("mobile", xjson.电话号码);
+			fmdata.append("department_name", xjson.部门名称);
+			fmdata.append("access_right", xjson.人员通行权限);
+			fmdata.append("temporary_access_start_time", xjson.临时通行开始时间);
+			fmdata.append("temporary_access_end_time", xjson.临时通行截止时间);
+			fmdata.append("temporary_access_times", xjson.临时通行次数);
+			fmdata.append("remarks", xjson.备注);
+			fmdata.append("role", xjson.名单类型);
+
+			fmdata.append("file", file);
+
+			console.log(fmdata);
+			
+			$.ajax({
+				type: 'POST',
+				url: '/action/addmember',
+				async: false,
+				data: fmdata, 
+				cache: false,
+				processData: false,
+				contentType: false,
+				success: function(data){
+					console.log("[add_mem] import OK");
+					ret = 0;
+				},
+				error: function(){
+					console.log("[add_mem] import FAIL");
+					ret = 1;
+				}
+			});
+			
+			console.log("[add_mem]111ret="+ret);
+			return ret;
+		}
+		
+		function import_mems(){
+				var files = document.getElementById('btnfilepic').files;
+				var pg = document.getElementById('pg');
+				
+				var totalcount = jsonxls.length;
+				var failcount = 0;
+				var okcount = 0;
+				var curcount = 0;
+				
+				console.log("[totalcount]1111="+totalcount);
+				
+				draw_progressbar(totalcount, 0, 0, "");
+				
+				for(var i=0; i<jsonxls.length; i++){
+					console.log(jsonxls[i]);
+				}
+				
+				console.log("[import_mems]totalcount="+totalcount); 
+				
+				var nochangetimes = 0;
+				var lastcurcount = 0;
+				var interval = setInterval(function(){
+					draw_progressbar(totalcount, curcount, failcount, okcount, "");
+					
+					if(curcount>=totalcount){
+						console.log("clearInterval:"+curcount);
+						clearInterval(interval);
+					}
+					
+					if(lastcurcount == curcount){
+						nochangetimes += 1;
+					}else{
+						nochangetimes = 0;
+						lastcurcount = curcount;
+					}
+					
+					if(nochangetimes >= 10){
+						clearInterval(interval);
+						draw_progressbar(totalcount, curcount, failcount, okcount, "Err: Little Select PicFile of CsvFile!");
+					}
+					
+				}, 1000);
+				
+				for(var i=0; i<jsonxls.length; i++){
+					let itmp = i;
+					for(var j=0; j<files.length; j++){
+						let jtmp = j;
+						console.log(jsonxls[i].登记照片名 + "?=" + files[j].name );
+						if (jsonxls[i].登记照片名 == files[j].name){
+							
+							setTimeout(function(){
+								curcount++;
+								var ret = add_mem(jsonxls[itmp], files[jtmp]);
+								console.log("[add_mem]222ret="+ret);
+								if(ret != 0){
+									failcount++;
+									console.log("add_mem fail");
+								}else{
+									okcount++;
+									console.log("add_mem ok");
+								}
+								
+								console.log("[totalcount]222="+totalcount);
+								console.log("[curcount]222="+curcount);
+
+							}, itmp*1000); 
+						}
+					}
+					
+					
+				}
+				
+		}
+
+	</script>
+	
+	
+	<div style="height:643px;">
+		<div style="padding-top:10px; padding-left:50px;">
+			<label>批量文件:</label> <input id="txtcsvname" class="easyui-textbox" value="" style="width:70%;height:30px;" readonly="true" data-options="required:false">
+			<div style="display:inline-block; width:80px; padding-left:10px;">
+				 <button id="btncvs" style="width:30px; height:20px;" onclick="selectfile_xls()">...</button>
+				 <input type="file" id="btnfilecsv" style="display:none" onchange="selectfileok_xls()" accept=".xls,.xlsx">
+			</div>
+		</div>
+		<div style="padding-top:20px; padding-left:50px;">
+			<label>批量图片:</label> <input id="txtpicname" class="easyui-textbox" value="" style="width:70%;height:30px;" readonly="true" data-options="required:false">
+			<div style="display:inline-block; width:80px; padding-left:10px;">
+				<button id="btnpic" style="width:30px; height:20px;" onclick="selectfile_pic()">...</button>
+				<input type="file" id="btnfilepic" style="display:none" onchange="selectfileok_pic()" accept="image/*" multiple>
+			</div>
+		</div>
+		<div style="padding-top:20px;">
+			<div style="float:left;">
+				<div style="padding-left:50px;">
+				<button id="btn2" style="width:80px;height:30px;" onclick="import_mems()">开始导入</button>
+				</div>
+			</div>
+			<div style="float:left; padding-left:100px;">
+				<canvas id='canvpre' width="400" height="350" style="background:#f7f7f7"></canvas>
+			</div>
+			<div style="clear:both">
+			</div>
+		</div>
+		<div style="padding-top:15px; padding-left:230px;">
+			<progress id="pg" max="100" value="0" style="width:400px; height:20px"></progress>
+		</div>
+	</div>
+</body>
+</html>

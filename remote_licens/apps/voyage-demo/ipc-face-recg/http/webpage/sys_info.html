@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+ 	<meta charset="utf-8">
+        <title></title>
+        
+        <meta http-equiv="pragma" content="no-cache">
+        <meta http-equiv="cache-control" content="no-cache">
+        
+        <link rel="stylesheet" text="text/css" href="ui.css">
+        <script type="text/javascript" src="jquery.min.js"></script>
+        <script type="text/javascript" src="jquery.ui.min.js"></script>
+
+
+</head>
+<body>
+	<script type="text/javascript" src="cookie.js"></script>
+	
+	<script type="text/javascript">
+		$.ajax({
+			type: "get",
+			url: "/action/sysinfo",
+			dataType: "json", 
+			success: function(data){
+				document.getElementById('build_date').innerHTML = data["build_date"];
+				document.getElementById('build_author').innerHTML = data["build_author"];
+				document.getElementById('build_host').innerHTML = data["build_host"];
+				document.getElementById('model').innerHTML = data["model"];
+			},
+			error: function(){
+				console.log("error");
+			}
+		
+		});
+		
+	</script>
+	
+	<div style="height:643px;">
+		<div style="padding-top:20px; padding-left:20px;">
+			<label style="font-size:24px;">系统信息</label>
+		</div>
+		
+		<div style="padding-top:50px; padding-left:150px;">
+			<label>编译时间:</label> <span id="build_date">n7</span>
+		</div>
+		<div style="padding-top:20px; padding-left:150px;">
+			<label>编译作者:</label> <span id="build_author">V1.0</span>
+		</div>
+		<div style="padding-top:20px; padding-left:150px;">
+			<label>编译主机:</label> <span id="build_host">builder2019</span>
+		</div>
+		<div style="padding-top:20px; padding-left:150px;">
+			<label>型号:</label> <span id="model">00-01</span>
+		</div>
+		
+	</div>
+</body>
+</html>

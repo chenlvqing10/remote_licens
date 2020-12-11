@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">UVCCameraProject</string>
+    <string name="firmware_version">固件版本：</string>
+    <string name="app_version">apk版本：</string>
+    <string name="resolution">分辨率：</string>
+    <string name="threshold">阈值：</string>
+    <string name="min_face_pixel">最小识别人脸像素：</string>
+    <string name="max_face_pixel">最大识别人脸像素：</string>
+    <string name="max_track_faces">最多人脸跟踪数：</string>
+    <string name="user_name">用户名：</string>
+    <string name="about">关于</string>
+</resources>

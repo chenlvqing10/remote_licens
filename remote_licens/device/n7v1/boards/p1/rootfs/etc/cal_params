@@ -1,0 +1,13 @@
+[default]
+xScaleMean=0.680238
+xOffsetMean=-11
+kX=-0.223881
+bX=34.014927
+xDetaMin=-27
+xDetaMax=18
+yScaleMean=0.690650
+yOffsetMean=-7
+kY=0.032808
+bY=-19.053808
+yDetaMin=-12
+yDetaMax=13

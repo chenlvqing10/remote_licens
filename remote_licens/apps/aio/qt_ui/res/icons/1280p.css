@@ -1,0 +1,165 @@
+
+/*工厂测试按扭*/
+#factory_lcd_ok_btn,
+#factory_lcd_fail_btn,
+#factory_touch_test_btn,
+#factory_touch_ok_btn,
+#factory_touch_fail_btn,
+#factory_camera_ok_btn,
+#factory_camera_fail_btn,
+#open_wifi_btn,
+#search_wifi_btn,
+#close_wifi_btn,
+#factory_wifi_ok_btn,
+#factory_wifi_fail_btn,
+#open_ble_btn,
+#close_ble_btn,
+#factory_ble_ok_btn,
+#factory_ble_fail_btn,
+#factory_rtc_test_btn,
+#factory_rtc_ok_btn,
+#factory_rtc_fail_btn,
+#factory_net_test_btn,
+#factory_net_ok_btn,
+#factory_net_fail_btn,
+#factory_range_sensor_test_btn,
+#factory_range_sensor_ok_btn,
+#factory_range_sensor_fail_btn,
+#factory_light_sensor_test_btn,
+#factory_light_sensor_ok_btn,
+#factory_light_sensor_fail_btn,
+#open_light_btn,
+#close_light_btn,
+#factory_light_ok_btn,
+#factory_light_fail_btn,
+#open_ir_btn,
+#close_ir_btn,
+#factory_ir_ok_btn,
+#factory_ir_fail_btn,
+#factory_speaker_test_btn,
+#factory_speaker_ok_btn,
+#factory_speaker_fail_btn,
+#factory_relay_ok_btn,
+#factory_relay_fail_btn,
+#factory_rs485_ok_btn,
+#factory_rs485_fail_btn,
+#factory_wiegand_ok_btn,
+#factory_wiegand_fail_btn,
+#factory_alarm_ok_btn,
+#factory_alarm_fail_btn{
+    min-width:374px;
+    max-width:374px;
+    min-height:86px;
+    max-height:86px;
+    font-size:38px;
+    border:1px solid #102050;
+    border-radius:5px;
+}
+#factory_flowlayout_widget QPushButton {
+	min-width:374px;
+    max-width:374px;
+    min-height:86px;
+    max-height:86px;
+    font-size:38px;
+    border:1px solid #102050;
+    border-radius:5px;
+}
+
+#user_tableView {
+
+}
+
+#user_view_foot {
+    min-height: 72px;
+    max-height: 72px;
+	margin-bottom: 70px;
+}
+
+#rec_tip_label {
+	min-height: 72px;
+  max-height: 72px;
+  margin-left: 72px;
+}
+
+#first_btn,
+#last_btn,
+#next_btn,
+#prev_btn {
+	min-width: 72px;
+	max-width: 72px;
+	min-height: 72px;
+	max-height: 72px;
+	margin-left: 30px;
+	margin-right: 30px;
+}
+
+#search_btn,
+#output_btn {
+	min-width: 120px;
+	max-width: 120px;
+	min-height: 72px;
+	max-height: 72px;
+	margin-left: 60px;
+	padding-left: 60px;
+}
+
+#lab_pinying_ {
+	background-color: #4f5769;
+	min-width: 1000px;
+	max-width: 1000px;
+	min-height: 56px;
+	max-height: 56px;
+	border-radius: 10px;
+	margin-left: 123px;
+}
+
+#ui_access_setting,
+#ui_access_time_setting,
+#ui_attendance_setting {
+	background-color: #0a143c;
+}
+
+#access_title_widget,
+#access_time_title_widget,
+#attendance_title_widget {
+	background-color:#010c1d;
+	min-height:79px;
+    border:none;
+    margin:0;
+}
+
+#access_title_label,
+#access_time_title_label,
+#attendance_title_label {
+	background-color:#010c1d;
+    font-size:42px;
+}
+#temp_box
+{
+  min-width:1280px;
+  min-height:720px;
+  margin-top:80px;
+  margin-bottom:256px;
+}
+
+/*网络设置页的输入框*/
+#ui_eth_setting .QLineEdit{
+    font-size:30px;
+    color:#ccc;
+    font-family: "SourceHanSansCN-Normal";
+}
+
+#authentication_label
+{
+	min-height:80px;
+	max-height:80px;
+	background-color:#00d2cc;
+}
+
+#authentication_bg
+{
+  min-width:1280px;
+  min-height:720px;
+  margin-top:-70px;
+  margin-bottom:79px;
+}

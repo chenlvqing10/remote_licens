@@ -1,0 +1,14 @@
+#
+# DMA engine configuration for lombotech
+#
+
+config LOMBO_DMAC
+	tristate "Support lombo dma"
+	depends on ARCH_LOMBO
+	select DMA_ENGINE
+	help
+	  This is the common config for lombo dma controller, for use
+	  dma engine framework to apply interface for ohter drivers.
+
+	  If you want to use drivers that require dma operations,
+	  answer Y or M. Otherwise say N.

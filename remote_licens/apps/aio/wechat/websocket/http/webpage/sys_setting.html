@@ -1,0 +1,295 @@
+﻿<!DOCTYPE HTML>
+<html lang="zh-cn">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title class="lang" key="device_setting">设备设置</title>
+
+	<link href="resources/plugins/bootstrap-3.3.0/css/bootstrap.min.css" rel="stylesheet"/>
+	<link href="resources/plugins/material-design-iconic-font-2.2.0/css/material-design-iconic-font.min.css" rel="stylesheet"/>
+	<link href="resources/plugins/bootstrap-table-1.11.0/bootstrap-table.min.css" rel="stylesheet"/>
+	<link href="resources/plugins/waves-0.7.5/waves.min.css" rel="stylesheet"/>
+	<link href="resources/plugins/jquery-confirm/jquery-confirm.min.css" rel="stylesheet"/>
+	<link href="resources/plugins/select2/css/select2.min.css" rel="stylesheet"/>
+
+	<link href="resources/css/common.css" rel="stylesheet"/>
+
+	<script src="resources/plugins/jquery.1.12.4.min.js"></script>
+	<script src="resources/plugins/bootstrap-3.3.0/js/bootstrap.min.js"></script>
+	<script src="resources/plugins/bootstrap-table-1.11.0/bootstrap-table.min.js"></script>
+	<script src="resources/plugins/bootstrap-table-1.11.0/locale/bootstrap-table-zh-CN.min.js"></script>
+	<script src="resources/plugins/waves-0.7.5/waves.min.js"></script>
+	<script src="resources/plugins/jquery-confirm/jquery-confirm.min.js"></script>
+	<script src="resources/plugins/select2/js/select2.min.js"></script>
+	<script src="resources/plugins/jquery.cookie.js"></script>
+	<link href="resources/plugins/jquery-toastmessage/resources/css/jquery.toastmessage.css" rel="stylesheet"/>
+	<script src="resources/plugins/jquery-toastmessage/javascript/jquery.toastmessage.js"></script>
+	<script src="resources/js/notify.js"></script>
+	<script src="resources/js/common.js"></script>
+	<script src="resources/lang/lang.js"></script>
+
+
+
+	<style type="text/css">
+		.progress {
+			width: 600px;
+			height: 10px;
+			border: 1px solid #ccc;
+			border-radius: 10px;
+			margin: 10px 0px;
+			overflow: hidden;
+		}
+
+		.progress > div {
+			width: 0px;
+			height: 100%;
+			background-color: yellowgreen;
+			transition: all .3s ease;
+		}
+	</style>
+</head>
+<body>
+
+<div >
+		<div class="panel">
+			<div class="panel-body">
+				<div class="row">
+					<div class="col-md-3">
+						<input id="upg_file" type="file" style="display: none" onchange="load_file()">
+						<button onclick="$('#upg_file').click()" class="lang" key="select_file">选择文件</button>
+						<input id="upg_path" readonly >
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-1">
+
+					</div>
+					<div class="col-md-3">
+						<button id="upg_start" type="" class="btn btn-danger waves-effect waves-float lang"
+								key="start_upgrade"
+								href="javascript:;" onclick="upload()">开始升级</button>
+					</div>
+				</div>
+				<div class="row">
+					<div class="progress">
+						<div></div>
+					</div>
+				</div>
+
+			</div>
+			<div class="panel-footer">
+				<div class="row">
+					<div class="col-md-1">
+
+					</div>
+					<div class="col-md-3">
+						<button id="reset_device" type="" class="btn btn-danger waves-effect waves-float lang"
+								key="factory_default"
+								href="javascript:;" onclick="resetAction()">恢复出厂</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+</div>
+
+<div id="resetDialog" class="crudDialog" hidden>
+	<form>
+	</form>
+</div>
+
+<div id="uploadDialog" class="crudDialog" hidden>
+	<form>
+	</form>
+</div>
+
+
+<script>
+	lang_load()
+	function load_file() {
+        let files = $("#upg_file")[0].files
+        let path = document.getElementById("upg_file").files[0].name
+
+		console.log("select",$("#upg_file").val(), "path:", path)
+
+		//$('#upg_path').val($("#upg_file").val())
+        $('#upg_path').val(path)
+        
+	}
+	function resetAction() {
+		$.confirm({
+			type: 'dark',
+			animationSpeed: 300,
+			title: window.lang.is_restore_factory_setting,
+			content: $('#resetDialog').html(),
+			buttons: {
+				confirm: {
+					text: window.lang.confirm,
+					btnClass: 'waves-effect waves-button',
+					action: function () {
+						 // $.alert('确认');
+						 let send = new Object()
+						send["password"] = $.cookie("pwd")
+						$.ajax({
+							url:  '/factoryDefault',
+							type: 'POST',
+							async: false,
+							contentType:"application/json",
+							dataType: "json",
+							data: JSON.stringify(send),
+							beforeSend: function() {
+
+							},
+							success: function(json){
+								console.log(json)
+							},
+							error: function(error){
+								console.log("reset error::::",error);
+								notify(window.lang.failed)
+							},
+							always: function () {
+							}
+						})
+					}
+				},
+				cancel:{
+					text: window.lang.cancel,
+					btnClass: 'waves-effect waves-button',
+					action: function () {
+						// $.alert('取消成功');
+						// $().toastmessage('showNoticeToast', "66666取消成功");
+						//$().toastmessage("showWarningToast", "6666")
+						// notify("7777")
+					}
+				}
+			}
+		});
+	}
+
+	function basename(str) {
+		let idx = str.lastIndexOf('/')
+		idx = idx > -1 ? idx : str.lastIndexOf('\\')
+		if (idx < 0) {
+			return str
+		}
+		return str.substring(idx + 1);
+	}
+
+	function set_progress_ani(progressRate) {
+		$('.progress > div').css('width', progressRate);
+	}
+	function upload() {
+		$.confirm({
+			type: 'dark',
+			animationSpeed: 300,
+			title: window.lang.is_start_upgrade,
+			content: $('#uploadDialog').html(),
+			buttons: {
+				confirm: {
+					text: window.lang.confirm,
+					btnClass: 'waves-effect waves-button',
+					action: function () {
+						// $.alert('确认');
+						// console.log($("#upg_file"))
+						let file = $("#upg_file")[0].files[0]
+						// console.log($("#upg_file"), file)
+						if (file){
+							let fmdata = new FormData();
+							fmdata.append("name", basename($('#upg_path').val()));
+							fmdata.append("employee_number", "");
+							fmdata.append("file", file);
+
+							// console.log(fmdata);
+							let url = ""
+							url = '/webUpgrade' + "?password="+ $.cookie("pwd")
+							$.ajax({
+								type:'POST',
+								url: url,
+								data: fmdata,
+								cache: false,
+								processData: false,
+								contentType: false,
+								async: true,
+								xhr: function() {
+									let xhr = new XMLHttpRequest();
+									//使用XMLHttpRequest.upload监听上传过程，注册progress事件，打印回调函数中的event事件
+									xhr.upload.addEventListener('progress', function (e) {
+										console.log(e);
+										//loaded代表上传了多少
+										//total代表总数为多少
+										var progressRate = (e.loaded / e.total)  * 80 + '%';
+
+										//通过设置进度条的宽度达到效果
+										set_progress_ani(progressRate)
+										if (e.loaded == e.total)
+											notify(window.lang.upgrade_about_to_verify, true)
+									})
+
+									return xhr;
+								},
+								success: function(data){
+									// alert("上传文件成功");
+									// console.log("recv data: " + data);
+									let resp = JSON.parse(data)
+									let action = ""
+									function action1(){
+										// notify("上传文件成功,但是升级文件不完整")
+										notify(window.lang.upgrade_file_incomplete, true)
+									}
+									function action2(){
+										// notify("上传文件成功,即将重启升级")
+										notify(window.lang.upgrade_about_to_reboot, true)
+									}
+									function action3(){
+										// notify("上传文件成功,但是启动升级失败")
+										notify(window.lang.upgrade_start_upgrade_failed, true)
+									}
+									let rate = "0%"
+									if (resp.result == -3){
+
+										action = action1
+
+									}else if (resp.result == 0){
+										action = action2
+										rate = "100%"
+
+									}else{
+										action = action3
+									}
+									set_progress_ani(rate)
+									setTimeout(action,500)
+								},
+								error:function(error){
+									// console.log(error);
+									// console.log(error.status);
+									// console.log(error.responseText);
+									let rate = "0%"
+									set_progress_ani(rate)
+									notify( window.lang.unknown_error
+											+error.responseText, true);
+								}
+							});
+						}else{
+							notify("请选择升级文件");
+						}
+
+					}
+				},
+				cancel:{
+					text: window.lang.cancel,
+					btnClass: 'waves-effect waves-button',
+					action: function () {
+						// $.alert('取消成功');
+					}
+				}
+			}
+		});
+	}
+
+	setInterval(function () {
+		lang_load_if_change()
+	}, 200)
+</script>
+</body>
+</html>

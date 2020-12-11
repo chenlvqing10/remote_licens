@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+ 	<meta charset="utf-8">
+        <title></title>
+        
+        <meta http-equiv="pragma" content="no-cache">
+        <meta http-equiv="cache-control" content="no-cache">
+        
+        <link rel="stylesheet" text="text/css" href="ui.css">
+        <script type="text/javascript" src="jquery.min.js"></script>
+        <script type="text/javascript" src="jquery.ui.min.js"></script>
+	
+	<script type="text/javascript" src="cookie.js"></script>
+	
+	<script>
+		
+		function getBrowser(){
+			var userAgent = navigator.userAgent;
+			if(userAgent.indexOf("Firefox")>0){
+				return "Firefox";
+			}
+			
+		}
+		
+		function login(){
+			var username = $('#username').textbox('getValue');
+			var password = $('#password').textbox('getValue');
+			$.ajax({
+				type:'POST',
+				url:'/action/login',
+				dataType:'json',
+				data:{
+					username: username,
+					password: password
+				},
+				success:function(data){
+					alert("登录成功");
+					//setCookie("uname", "xiaowei", 180);
+					setCookie("uname", username);
+					
+					if(getBrowser()=="Firefox"){
+					}else{
+						
+					}
+					parent.location.href = "main.html";
+					
+				},
+				error:function(xhr,status,error){
+					alert("登录失败");
+				}
+			
+			
+			});
+		}
+	</script>
+</head>
+<body style="text-align:center">
+        <div id="main_panel" class="easyui-panel" style="width:800px;height:500px;">
+			<div style="margin-top:150px; padding-left:300px;">
+			<label style="padding-left:10px">用户名:</label> <input id="username" class="easyui-textbox" value="" style="width:28%;height:30px;" data-options="required:false">
+			</div>
+			<div style="margin-top:20px; padding-left:300px;">
+			<label style="padding-left:20px">密码:</label> <input id="password" type="password" class="easyui-textbox" value="" style="width:28%;height:30px;" data-options="required:false">
+			</div>
+			<div style="padding-top:30px;padding-left:400px;">
+				<button id="btn1" style="width:20%;height:30px;" onclick="login()">登录 </button>
+			</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,15 @@
+#ifndef ___TVE__USER__H___
+#define ___TVE__USER__H___
+
+#define TVE_VER_OFF			(0x00000080)
+#define TVE_CLK_CTRL_OFF		(0x00000088)
+#define TVE_RESYNC_CTRL_OFF		(0x0000008C)
+#define TVE_DAC_CTRL0_OFF		(0x00000090)
+#define TVE_DAC_CTRL1_OFF		(0x00000094)
+#define TVE_DAC_CTRL2_OFF		(0x00000098)
+#define TVE_DAC_CTRL3_OFF		(0x0000009C)
+#define TVE_INT_EN_OFF			(0x000000A0)
+#define TVE_INT_PD_OFF			(0x000000A4)
+#define TVE_INT_CLR_OFF			(0x000000A8)
+
+#endif /* ___TVE__USER__H___ */

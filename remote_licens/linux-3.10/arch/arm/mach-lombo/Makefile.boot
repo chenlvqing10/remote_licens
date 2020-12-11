@@ -1,0 +1,1 @@
+zreladdr-$(CONFIG_ARCH_LOMBO)	+= 0x40008000

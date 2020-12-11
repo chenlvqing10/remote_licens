@@ -1,0 +1,12 @@
+#!/bin/sh
+
+export LD_PRELOAD=/usr/lib/libdebugger.so
+
+case "$1" in
+  start)
+    logcat -v time -r2048 -n 5 -f "/data/log/`date +%Y%m%d-%H-%M-%S`.log" &
+    uvc-face-recg
+    ;;
+  *)
+    ;;
+esac

@@ -1,0 +1,32 @@
+#!/bin/sh
+
+case "$1" in
+	start)
+		if [ ! -f /data/wifi/wpa_supplicant.conf ];then
+			if [ -f /etc/wpa_supplicant.conf  ];then
+				mkdir -p /data/wifi && cp /etc/wpa_supplicant.conf /data/wifi
+				sync
+			fi
+		fi
+
+		if [ ! -f /data/wifi/hostapd.conf ];then
+			if [ -f /etc/hostapd.conf  ];then
+				mkdir -p /data/wifi && cp /etc/hostapd.conf /data/wifi
+				sync
+			fi
+		fi
+		[ $? = 0 ] && echo "OK" || echo "FAIL"
+		;;
+	stop)
+		[ $? = 0 ] && echo "OK" || echo "FAIL"
+		;;
+	restart|reload)
+		$0 stop
+		$0 start
+		;;
+	*)
+		echo "Usage: $0 {start|stop|restart}"
+		exit 1
+esac
+
+exit 0

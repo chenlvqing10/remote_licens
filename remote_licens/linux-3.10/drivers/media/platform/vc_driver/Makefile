@@ -1,0 +1,1 @@
+obj-$(CONFIG_VIDEO_VC_N7) += vc_drv.o
